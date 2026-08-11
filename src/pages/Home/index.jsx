@@ -2,6 +2,8 @@ import React from "react";
 import Hero from "./sections/Hero";
 import AppPreview from "./sections/AppPreview";
 import SmartRvm from "./sections/SmartRvm";
+import BoxEcocash from "./sections/BoxEcocash";
+import SmartTruck from "./sections/SmartTruck";
 import LocationMap from "./sections/LocationMap";
 import RefundTypes from "./sections/RefundTypes";
 import Ecosystem from "./sections/Ecosystem";
@@ -22,25 +24,31 @@ export default function Home() {
       {/* 3. Smart RVM & Smart Containers Grid */}
       <SmartRvm />
 
-      {/* 4. Interactive Location Map */}
+      {/* 4. Box Eco Cash */}
+      <BoxEcocash />
+
+      {/* 5. Smart Truck */}
+      <SmartTruck />
+
+      {/* 6. Interactive Location Map */}
       <LocationMap />
 
-      {/* 5. Refund Types (Jenis Pengembalian) */}
+      {/* 7. Refund Types (Jenis Pengembalian) */}
       <RefundTypes />
 
-      {/* 6. Ecosystem Banner & Overview */}
+      {/* 8. Ecosystem Banner & Overview */}
       <Ecosystem />
 
-      {/* 7. Guidelines (Panduan Kelayakan Barang Daur Ulang) */}
+      {/* 9. Guidelines (Panduan Kelayakan Barang Daur Ulang) */}
       <Guidelines />
 
-      {/* 8. Community & Social Movement */}
+      {/* 10. Community & Social Movement */}
       <Community />
 
-      {/* 9. News Section (Berita EcoCash.id) */}
+      {/* 11. News Section (Berita EcoCash.id) */}
       <News />
 
-      {/* 10. FAQ (Frequently Asked Questions - Accordion) */}
+      {/* 12. FAQ (Frequently Asked Questions - Accordion) */}
       <Faq />
     </main>
   );
