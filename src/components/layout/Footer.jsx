@@ -7,9 +7,9 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-16 border-t-[6px] border-eco-dark relative overflow-hidden">
+    <footer className="bg-slate-900 text-slate-300 py-16 border-t-[6px] border-eco-secondary relative overflow-hidden">
       {/* Dekorasi aksen di sudut */}
-      <div className="absolute top-0 right-0 w-64 h-64 bg-eco-dark/10 blur-[80px] rounded-full pointer-events-none"></div>
+      <div className="absolute top-0 right-0 w-64 h-64 bg-eco-secondary/10 blur-[80px] rounded-full pointer-events-none"></div>
 
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -28,7 +28,7 @@ export default function Footer() {
               {/* LinkedIn */}
               <a
                 href="#linkedin"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-dark hover:text-white transition-colors duration-300"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
               >
                 <img
                   src={"img/link.png"}
@@ -39,7 +39,7 @@ export default function Footer() {
               {/* Instagram */}
               <a
                 href="#instagram"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-dark hover:text-white transition-colors duration-300"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
               >
                 <img
                   src={"img/Instagram.png"}
@@ -50,7 +50,7 @@ export default function Footer() {
               {/* Twitter */}
               <a
                 href="#twitter"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-dark hover:text-white transition-colors duration-300"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
               >
                 <img
                   src={"img/Twitter.png"}
@@ -61,7 +61,7 @@ export default function Footer() {
               {/* Facebook */}
               <a
                 href="#facebook"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-dark hover:text-white transition-colors duration-300"
+                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
               >
                 <img
                   src={"img/Facebook.png"}
@@ -72,7 +72,7 @@ export default function Footer() {
               {/* TikTok */}
               <a
                 href="#tiktok"
-                className="w-10 h-10 rounded-full mt-0.5 bg-slate-800 flex items-center justify-center hover:bg-eco-dark hover:text-white transition-colors duration-300"
+                className="w-10 h-10 rounded-full mt-0.5 bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
               >
                 <img
                   src={"img/TikTok.png"}
@@ -83,7 +83,7 @@ export default function Footer() {
               {/* YouTube */}
               <a
                 href="#youtube"
-                className="w-10 h-10 rounded-full mt-0.5 bg-slate-800 flex items-center justify-center hover:bg-eco-dark hover:text-white transition-colors duration-300"
+                className="w-10 h-10 rounded-full mt-0.5 bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
               >
                 <img
                   src={"img/YouTube.png"}
@@ -103,36 +103,36 @@ export default function Footer() {
               <li>
                 <a
                   href="#app"
-                  className="hover:text-sky-accent transition-colors flex items-center gap-2"
+                  className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-accent"></span>{" "}
+                  <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
                   Aplikasi Mobile
                 </a>
               </li>
               <li>
                 <a
                   href="#smart-rvm"
-                  className="hover:text-sky-accent transition-colors flex items-center gap-2"
+                  className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-accent"></span>{" "}
+                  <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
                   Smart RVM
                 </a>
               </li>
               <li>
                 <a
                   href="#location-map"
-                  className="hover:text-sky-accent transition-colors flex items-center gap-2"
+                  className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-accent"></span>{" "}
+                  <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
                   Lokasi Drop Point
                 </a>
               </li>
               <li>
                 <a
                   href="#ecosystem"
-                  className="hover:text-sky-accent transition-colors flex items-center gap-2"
+                  className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
-                  <span className="w-1.5 h-1.5 rounded-full bg-sky-accent"></span>{" "}
+                  <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
                   EcoCash Bisnis
                 </a>
               </li>
@@ -148,7 +148,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#about"
-                  className="hover:text-sky-accent transition-colors"
+                  className="hover:text-eco-cyan transition-colors"
                 >
                   Tentang Kami
                 </a>
@@ -156,7 +156,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#news"
-                  className="hover:text-sky-accent transition-colors"
+                  className="hover:text-eco-cyan transition-colors"
                 >
                   Edukasi & Berita
                 </a>
@@ -164,7 +164,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#contact"
-                  className="hover:text-sky-accent transition-colors"
+                  className="hover:text-eco-cyan transition-colors"
                 >
                   Hubungi Kami
                 </a>
@@ -172,7 +172,7 @@ export default function Footer() {
               <li>
                 <a
                   href="#career"
-                  className="hover:text-sky-accent transition-colors"
+                  className="hover:text-eco-cyan transition-colors"
                 >
                   Karir
                 </a>
@@ -226,7 +226,7 @@ export default function Footer() {
               <br />
               Kec. Cileunyi, Jawa Barat 40393
             </p>
-            <div className="mt-2 text-sky-accent font-mono text-xs">
+            <div className="mt-2 text-eco-cyan font-mono text-xs">
               <span className="text-slate-400 font-sans">BSI:</span> 7234567890
               (A.N. PT Ideas Edvolution Technology)
             </div>

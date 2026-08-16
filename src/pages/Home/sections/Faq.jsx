@@ -13,13 +13,13 @@ export default function Faq() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
         {/* Bagian Teks Kiri (Sticky) */}
         <div className="space-y-6 lg:sticky lg:top-28">
-          <span className="inline-block px-5 py-2 bg-teal-500/10 text-eco-dark text-sm font-bold rounded-full tracking-wide">
+          <span className="inline-block px-5 py-2 bg-eco-cyan/10 text-eco-primary text-sm font-bold rounded-full tracking-wide">
             Frequently Asked Questions
           </span>
 
           <h2 className="text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight font-heading">
             Apa itu{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-dark to-sky-accent">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
               EcoCash.id?
             </span>
           </h2>
@@ -46,16 +46,16 @@ export default function Faq() {
                 onClick={() => toggleFaq(faq.id)}
                 className={`bg-white rounded-3xl p-6 transition-all duration-300 cursor-pointer group ${
                   isOpen
-                    ? "border-2 border-teal-500/30 shadow-xl shadow-teal-500/5"
-                    : "border border-slate-200 hover:border-teal-500/50 hover:shadow-lg hover:shadow-teal-500/10"
+                    ? "border-2 border-eco-cyan/30 shadow-xl shadow-eco-cyan/5"
+                    : "border border-slate-200 hover:border-eco-cyan/50 hover:shadow-lg hover:shadow-eco-cyan/10"
                 }`}
               >
                 <div className="flex justify-between items-center">
                   <h4
                     className={`font-bold text-lg font-heading transition-colors ${
                       isOpen
-                        ? "text-eco-dark"
-                        : "text-slate-700 group-hover:text-eco-dark"
+                        ? "text-eco-cyan"
+                        : "text-slate-700 group-hover:text-eco-cyan"
                     }`}
                   >
                     {faq.q}
@@ -64,8 +64,8 @@ export default function Faq() {
                   <div
                     className={`flex-shrink-0 w-10 h-10 flex items-center justify-center rounded-full transition-all duration-300 ${
                       isOpen
-                        ? "bg-orange-500/10 text-[#f97316] rotate-180"
-                        : "bg-slate-50 text-slate-400 group-hover:bg-teal-500/10 group-hover:text-eco-dark"
+                        ? "bg-eco-accent/10 text-eco-accent rotate-180"
+                        : "bg-slate-50 text-slate-400 group-hover:bg-eco-cyan/10 group-hover:text-eco-primary"
                     }`}
                   >
                     {isOpen ? (

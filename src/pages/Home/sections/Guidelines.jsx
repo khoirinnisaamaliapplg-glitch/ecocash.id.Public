@@ -14,13 +14,13 @@ export default function Guidelines() {
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 font-heading leading-tight">
                 Panduan Kelayakan Barang <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-dark to-sky-accent">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
                   Daur Ulang EcoCash
                 </span>
               </h2>
               <p className="text-slate-600 text-lg font-body">
                 Biar proses pemindaian AI lancar dan poinmu berhasil masuk,{" "}
-                <span className="text-[#f97316] font-bold">
+                <span className="text-eco-secondary font-bold">
                   yuk perhatikan kategori berikut:
                 </span>
               </p>
@@ -84,7 +84,7 @@ export default function Guidelines() {
             </div>
 
             {/* Alert Penting */}
-            <div className="bg-orange-50 border-l-4 border-[#f97316] p-5 rounded-r-3xl flex items-start gap-4 shadow-sm">
+            <div className="bg-orange-50 border-l-4 border-eco-accent p-5 rounded-r-3xl flex items-start gap-4 shadow-sm">
               <span className="text-2xl mt-0.5">⚠️</span>
               <p className="font-body text-orange-950 text-sm leading-relaxed">
                 <strong className="font-heading text-base">Perhatian:</strong>{" "}

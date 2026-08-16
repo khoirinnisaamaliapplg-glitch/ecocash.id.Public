@@ -20,13 +20,14 @@ export default function BoxEcocash() {
         {/* Bagian Kanan: Teks & Fitur */}
         <div className="space-y-6 order-1 lg:order-2">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 bg-sky-50 text-sky-700 px-5 py-2.5 rounded-full font-heading text-sm font-semibold border border-sky-100">
-            <span className="text-[#0ea5e9] text-lg">📦</span> EcoCash Drop Box
+          <div className="inline-flex items-center gap-2 bg-sky-50 text-eco-cyan px-5 py-2.5 rounded-full font-heading text-sm font-semibold border border-eco-cyan/20">
+            <span className="text-eco-cyan/80 text-lg">📦</span> EcoCash Drop
+            Box
           </div>
 
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight font-heading">
             Solusi Praktis di <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#064e3b] to-[#0ea5e9]">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
               Ruang Publik
             </span>
           </h2>

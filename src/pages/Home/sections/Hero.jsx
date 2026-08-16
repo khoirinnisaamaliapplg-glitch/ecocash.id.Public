@@ -10,7 +10,7 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto px-6 pt-4 lg:px-10 relative z-20">
         <div className="max-w-3xl space-y-6  text-left">
           {/* Judul Utama */}
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-eco-dark to-sky-accent tracking-tight font-heading leading-[1.15]">
+          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan tracking-tight font-heading leading-[1.15]">
             Ubah Sampah Jadi Uang
           </h1>
 
@@ -24,7 +24,7 @@ export default function Hero() {
           <div className="flex flex-wrap items-center gap-4 pt-4">
             <a
               href="#location-map"
-              className="bg-sky-accent hover:bg-[#0284c7] text-white px-7 py-3.5 rounded-xl font-heading font-bold text-sm shadow-lg shadow-sky-500/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center"
+              className="bg-eco-cyan hover:bg-eco-secondary text-white px-7 py-3.5 rounded-xl font-heading font-bold text-sm shadow-lg shadow-eco-cyan/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center"
             >
               Mulai Sekarang
             </a>
@@ -53,12 +53,6 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-6 pt-2 opacity-90">
               {/* Logo 1 */}
               <img src={"img/logo.png"} className="h-8" />
-              {/* Logo 2 */}
-              <img src={"img/mekari.png"} className="h-8" />
-
-              <div className="flex items-center gap-1 font-bold text-[#009ae0] text-sm tracking-tighter">
-                <span className="text-sky-600">🌐</span> crozdesk
-              </div>
             </div>
           </div>
         </div>
@@ -87,7 +81,7 @@ export default function Hero() {
           href="https://wa.me/6281214161614"
           target="_blank"
           rel="noreferrer"
-          className="w-14 h-14 bg-eco-light hover:bg-eco-dark text-white rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110"
+          className="w-14 h-14 bg-eco-primary hover:bg-eco-secondary text-white rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110"
         >
           <img src={"img/WhatsApp.png"} alt="WhatsApp" className="w-8 h-8 " />
         </a>

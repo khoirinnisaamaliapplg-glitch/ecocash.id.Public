@@ -1,3 +1,10 @@
+import berita1 from "../../public/img/berita-1.png";
+import berita2 from "../../public/img/berita-2.png";
+import berita3 from "../../public/img/berita-3.png";
+import berita4 from "../../public/img/berita-4.png";
+import berita5 from "../../public/img/berita-5.png";
+import berita6 from "../../public/img/berita-6.png";
+
 // Data Menu Navigasi Utama & Submenu
 export const NAV_ITEMS = [
   {
@@ -15,6 +22,7 @@ export const NAV_ITEMS = [
       { label: "EcoCash Box", url: "#revolution" },
       { label: "Smart Truck", url: "#smart-truck" },
       { label: "Layanan Bisnis", url: "#ecosystem" },
+      { label: "Request Custom RVM", url: "/request-rvm" },
     ],
   },
   {
@@ -104,5 +112,63 @@ export const LOCATION_DATA = [
     top: "20%",
     left: "45%",
     hours: "06.00 – 22.00 WIB",
+  },
+];
+
+// Data Berita
+export const newsList = [
+  {
+    id: 1,
+    img: berita1,
+    category: "Inovasi",
+    title: "Sampah Plastik Jadi Rupiah",
+    desc: "Ecocash.id resmi meluncurkan aplikasi inovatif yang memungkinkan masyarakat menukarkan sampah plastik langsung...",
+    content: `Ecocash.id resmi meluncurkan aplikasi inovatif yang memungkinkan masyarakat menukarkan sampah plastik langsung menjadi rupiah digital. Dengan teknologi AI canggih, pengguna dapat memindai sampah mereka melalui aplikasi, dan sistem akan secara otomatis menghitung nilai eco-refund yang dapat dicairkan ke e-wallet pilihan mereka.
+    Aplikasi ini bertujuan untuk mendorong kesadaran lingkungan dan memberikan insentif ekonomi bagi masyarakat untuk berpartisipasi dalam program daur ulang. Dengan fitur pelacakan real-time, pengguna dapat melihat riwayat transaksi mereka, serta mendapatkan tips dan panduan tentang pengelolaan sampah yang lebih baik.`,
+  },
+  {
+    id: 2,
+    img: berita2,
+    category: "Peluncuran",
+    title: "Aplikasi Ecocash.id Resmi Rilis",
+    desc: "Ecocash.id resmi meluncurkan aplikasi seluler pertamanya di Indonesia untuk mempermudah masyarakat...",
+    content: `Ecocash.id resmi meluncurkan aplikasi seluler pertamanya di Indonesia untuk mempermudah masyarakat dalam menukarkan sampah menjadi nilai ekonomi. Aplikasi ini dilengkapi dengan fitur pemindaian barcode pada kemasan, yang memungkinkan pengguna untuk mengetahui nilai eco-refund dari sampah yang mereka miliki.
+    Selain itu, aplikasi ini juga menyediakan peta lokasi Smart RVM dan Drop Box terdekat, sehingga pengguna dapat dengan mudah menemukan tempat untuk menukarkan sampah mereka. Dengan antarmuka yang user-friendly, Ecocash.id berharap dapat meningkatkan partisipasi masyarakat dalam program daur ulang dan mendukung ekonomi sirkular di Indonesia.`,
+  },
+  {
+    id: 3,
+    img: berita3,
+    category: "Kolaborasi",
+    title: "Ecocash.id Gandeng Bank Sampah",
+    desc: "Ecocash.id mengumumkan kolaborasi strategis dengan jaringan bank sampah lokal guna memperluas jangkauan...",
+    content: `Ecocash.id mengumumkan kolaborasi strategis dengan jaringan bank sampah lokal guna memperluas jangkauan program daur ulang di berbagai kota di Indonesia. Melalui kemitraan ini, masyarakat dapat menukarkan sampah mereka di bank sampah terdekat dan mendapatkan eco-refund yang dapat dicairkan melalui aplikasi Ecocash.id.
+    Kolaborasi ini bertujuan untuk memberdayakan komunitas lokal dan meningkatkan kesadaran akan pentingnya pengelolaan sampah yang berkelanjutan. Dengan dukungan teknologi dari Ecocash.id, bank sampah dapat mengoptimalkan proses pengumpulan dan pemrosesan sampah, sehingga memberikan manfaat ekonomi bagi masyarakat sekaligus menjaga lingkungan.`,
+  },
+  {
+    id: 4,
+    img: berita4,
+    category: "Ekspansi",
+    title: "Perluas Jangkauan di Pulau Jawa",
+    desc: "Ecocash.id kini hadir di lebih dari 100 titik di Pulau Jawa, memperluas akses masyarakat untuk menukarkan sampah...",
+    content: `Ecocash.id kini hadir di lebih dari 100 titik di Pulau Jawa, memperluas akses masyarakat untuk menukarkan sampah menjadi eco-refund digital. Dengan penambahan lokasi Smart RVM dan Drop Box, masyarakat di berbagai kota kini dapat dengan mudah berpartisipasi dalam program daur ulang.
+    Perluasan ini merupakan bagian dari komitmen Ecocash.id untuk mendukung ekonomi sirkular dan mengurangi dampak lingkungan dari sampah plastik. Masyarakat dapat menggunakan aplikasi Ecocash.id untuk menemukan lokasi terdekat, memeriksa jenis sampah yang diterima, dan menukarkan sampah mereka dengan cepat dan efisien.`,
+  },
+  {
+    id: 5,
+    img: berita5,
+    category: "Peluncuran",
+    title: "Ecocash Hadir di Kota Bandung",
+    desc: "Ecocash.id kini hadir di Kota Bandung, memberikan kemudahan bagi masyarakat untuk menukarkan sampah...",
+    content: `Ecocash.id kini hadir di Kota Bandung, memberikan kemudahan bagi masyarakat untuk menukarkan sampah menjadi eco-refund digital. Dengan peluncuran ini, warga Bandung dapat mengakses berbagai lokasi Smart RVM dan Drop Box yang tersebar di seluruh kota.
+    Aplikasi Ecocash.id memungkinkan pengguna untuk memindai sampah mereka, mengetahui nilai eco-refund, dan mencairkannya ke e-wallet pilihan mereka. Inisiatif ini bertujuan untuk meningkatkan kesadaran lingkungan dan mendorong partisipasi aktif masyarakat dalam program daur ulang, sambil memberikan manfaat ekonomi bagi mereka yang berkontribusi pada pengelolaan sampah yang berkelanjutan.`,
+  },
+  {
+    id: 6,
+    img: berita6,
+    category: "Peluncuran",
+    title: "Ecocash Hadir di Kota Surabaya",
+    desc: "Ecocash.id kini hadir di Kota Surabaya, memberikan kemudahan bagi masyarakat untuk menukarkan sampah...",
+    content: `Ecocash.id kini hadir di Kota Surabaya, memberikan kemudahan bagi masyarakat untuk menukarkan sampah menjadi eco-refund digital. Dengan peluncuran ini, warga Surabaya dapat mengakses berbagai lokasi Smart RVM dan Drop Box yang tersebar di seluruh kota.
+    Aplikasi Ecocash.id memungkinkan pengguna untuk memindai sampah mereka, mengetahui nilai eco-refund, dan mencairkannya ke e-wallet pilihan mereka. Inisiatif ini bertujuan untuk meningkatkan kesadaran lingkungan dan mendorong partisipasi aktif masyarakat dalam program daur ulang, sambil memberikan manfaat ekonomi bagi mereka yang berkontribusi pada pengelolaan sampah yang berkelanjutan.`,
   },
 ];

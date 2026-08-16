@@ -2,10 +2,16 @@
 
 /* 1. Gunakan @theme untuk mendaftarkan warna kustom agar menjadi class Tailwind */
 @theme {
-  --color-eco-dark: #064e3b;
+  /* --color-eco-dark: #064e3b;
   --color-eco-light: #0d9488;
   --color-sky-accent: #0ea5e9;
-  --color-sunset-orange: #f97316;
+  --color-sunset-orange: #f97316; */
+  /* Palet Utama Baru EcoCash (Earthy & Modern Tech) */
+  --color-eco-primary: #387f79; /* Muted Sea Green (Tombol Utama / Teks Heading) */
+  --color-eco-secondary: #76b2a8; /* Soft Teal (Banner / Background Section Lembut) */
+  --color-eco-accent: #d57934; /* Terracotta Orange (Tombol CTA / Highlight / Peringatan) */
+  --color-eco-lime: #c8d743; /* Lime Green (Aksen Sukses / Dekorasi Modern) */
+  --color-eco-cyan: #28c9c4; /* Bright Cyan (Aksen Garis / Efek Glow) */
 }
 
 /* 2. Kustomisasi Scrollbar dan Shadow dimasukkan ke layer utilities */
@@ -28,6 +34,6 @@
 
   /* Efek LED Glow (Saya perbaiki nilai RGB-nya agar sesuai dengan Sunset Orange) */
   .shadow-led-glow {
-    box-shadow: 0 0 8px rgba(115, 249, 22, 0.4);
+    box-shadow: 0 0 15px rgba(40, 201, 196, 0.4);
   }
 }

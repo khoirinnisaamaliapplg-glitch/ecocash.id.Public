@@ -10,14 +10,14 @@ export default function SmartTruck() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           {/* Bagian Kiri: Teks */}
           <div className="space-y-6">
-            <div className="inline-flex items-center gap-2 bg-orange-50 text-orange-700 px-5 py-2.5 rounded-full font-heading text-sm font-semibold border border-orange-100">
-              <span className="text-[#f97316] text-lg">🚚</span> Layanan Bisnis
+            <div className="inline-flex items-center gap-2 bg-eco-accent/10 text-eco-accent px-5 py-2.5 rounded-full font-heading text-sm font-semibold border border-eco-accent/20">
+              <span className="text-eco-accent text-lg">🚚</span> Layanan Bisnis
               & B2B
             </div>
 
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight font-heading">
               Armada Smart Truck <br />
-              <span className="text-eco-dark">EcoCash</span>
+              <span className="text-eco-primary">EcoCash</span>
             </h2>
 
             <h4 className="text-xl font-bold text-slate-900">

@@ -7,8 +7,8 @@ import SmartTruck from "./sections/SmartTruck";
 import LocationMap from "./sections/LocationMap";
 import RefundTypes from "./sections/RefundTypes";
 import Ecosystem from "./sections/Ecosystem";
-import Guidelines from "./sections/Guidelines";
 import Community from "./sections/Community";
+import Guidelines from "./sections/Guidelines";
 import News from "./sections/News";
 import Faq from "./sections/Faq";
 
@@ -39,11 +39,11 @@ export default function Home() {
       {/* 8. Ecosystem Banner & Overview */}
       <Ecosystem />
 
-      {/* 9. Guidelines (Panduan Kelayakan Barang Daur Ulang) */}
-      <Guidelines />
-
-      {/* 10. Community & Social Movement */}
+      {/* 9. Community & Social Movement */}
       <Community />
+
+      {/* 10. Guidelines (Panduan Kelayakan Barang Daur Ulang) */}
+      <Guidelines />
 
       {/* 11. News Section (Berita EcoCash.id) */}
       <News />

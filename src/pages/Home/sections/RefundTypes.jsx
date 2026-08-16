@@ -39,7 +39,7 @@ export default function RefundTypes() {
         </h2>
         <p className="text-lg text-slate-600 font-body">
           Setiap botol atau kaleng yang kamu kembalikan bernilai eco-refund.{" "}
-          <span className="text-sky-accent font-bold">
+          <span className="text-eco-cyan font-bold">
             Yuk, pilih metode pencairan EcoCash sesukamu!
           </span>
         </p>
@@ -53,15 +53,15 @@ export default function RefundTypes() {
               key={idx}
               className={`bg-white rounded-3xl p-6 border border-slate-100 shadow-sm transition-all duration-300 group relative overflow-hidden ${
                 isOrange
-                  ? "hover:shadow-xl hover:shadow-orange-500/10 hover:border-orange-500/40"
-                  : "hover:shadow-xl hover:shadow-teal-500/10 hover:border-teal-500/40"
+                  ? "hover:shadow-xl hover:shadow-orange-500/10 hover:border-eco-accent/40"
+                  : "hover:shadow-xl hover:shadow-eco-cyan/10 hover:border-eco-cyan/40"
               }`}
             >
               <div
                 className={`absolute top-0 right-0 w-24 h-24 rounded-bl-full -z-10 transition-colors ${
                   isOrange
                     ? "bg-orange-500/5 group-hover:bg-orange-500/10"
-                    : "bg-teal-500/5 group-hover:bg-teal-500/10"
+                    : "bg-eco-cyan/5 group-hover:bg-eco-cyan/10"
                 }`}
               ></div>
 
@@ -69,7 +69,7 @@ export default function RefundTypes() {
                 className={`w-14 h-14 rounded-2xl flex items-center justify-center text-3xl mb-6 group-hover:scale-110 transition-all duration-300 ${
                   isOrange
                     ? "bg-orange-500/10 group-hover:-rotate-6"
-                    : "bg-teal-500/10 group-hover:rotate-6"
+                    : "bg-eco-cyan/10 group-hover:rotate-6"
                 }`}
               >
                 {item.icon}

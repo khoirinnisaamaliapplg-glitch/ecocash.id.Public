@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { NAV_ITEMS } from "../../constants/dummyData";
-// import logoImg from "img/logo.png";
-// import waIcon from "img/wa.png";
 
 export default function Navbar() {
   const [openSidebar, setOpenSidebar] = useState(false);
@@ -34,10 +32,10 @@ export default function Navbar() {
                 onMouseLeave={() => setActiveDropdown(null)}
               >
                 {/* Tombol Navigasi Utama (Kapsul) */}
-                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-slate-600 hover:text-emerald-900 hover:bg-teal-500/10 transition-all duration-200 text-sm tracking-wide focus:outline-none">
+                <button className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-slate-600 hover:text-eco-primary hover:bg-eco-secondary/10 transition-all duration-200 text-sm tracking-wide focus:outline-none">
                   {item.name}
                   <svg
-                    className={`w-4 h-4 text-slate-400 group-hover:text-emerald-900 transition-transform duration-300 ${activeDropdown === index ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 text-slate-400 group-hover:text-eco-primary transition-transform duration-300 ${activeDropdown === index ? "rotate-180" : ""}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -56,13 +54,13 @@ export default function Navbar() {
                   <div className="absolute top-full left-0 pt-3 w-64 z-50">
                     <div className="bg-white/95 backdrop-blur-xl border border-slate-100 shadow-xl shadow-slate-200/60 rounded-3xl p-3 flex flex-col gap-1 relative overflow-hidden">
                       {/* Aksen Garis Kombinasi Hijau-Biru Booth Pameran */}
-                      <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-eco-dark to-sky-accent"></div>
+                      <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-eco-primary to-eco-cyan"></div>
 
                       {item.submenu.map((sub, subIdx) => (
                         <a
                           key={subIdx}
                           href={sub.url}
-                          className="flex items-center px-4 py-3 rounded-full font-heading text-sm font-semibold text-slate-600 hover:text-emerald-900 hover:bg-teal-500/10 transition-all duration-200 group/link"
+                          className="flex items-center px-4 py-3 rounded-full font-heading text-sm font-semibold text-slate-600 hover:text-eco-primary hover:bg-eco-cyan/10 transition-all duration-200 group/link"
                         >
                           <span className="transform group-hover/link:translate-x-1 transition-transform duration-200">
                             {sub.label}
@@ -78,7 +76,7 @@ export default function Navbar() {
 
           {/* Actions (Bahasa & CTA WhatsApp) */}
           <div className="hidden lg:flex items-center space-x-5 relative z-50">
-            <button className="text-slate-600 hover:text-emerald-900 font-medium text-sm flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-slate-100 transition">
+            <button className="text-slate-600 hover:text-eco-primary font-medium text-sm flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-slate-100 transition">
               🌐 <span>ID</span>
               <svg
                 className="w-4 h-4 text-slate-400"
@@ -100,7 +98,7 @@ export default function Navbar() {
               href="https://wa.me/6281214161614"
               target="_blank"
               rel="noreferrer"
-              className="bg-eco-light hover:bg-eco-light shadow-led-glow text-white px-7 py-3 rounded-full font-heading font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2"
+              className="bg-eco-primary hover:bg-eco-secondary shadow-led-glow text-white px-7 py-3 rounded-full font-heading font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2"
             >
               <span>WhatsApp kami</span>
             </a>
@@ -171,7 +169,7 @@ export default function Navbar() {
                       onClick={() =>
                         setActiveSubMobile(activeSubMobile === idx ? null : idx)
                       }
-                      className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-full transition-all ${activeSubMobile === idx ? "bg-teal-500/10 text-eco-dark" : "text-slate-700 hover:bg-slate-50"}`}
+                      className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-full transition-all ${activeSubMobile === idx ? "bg-teal-500/10 text-eco-primary" : "text-slate-700 hover:bg-slate-50"}`}
                     >
                       {item.name}
                       <svg
@@ -196,7 +194,7 @@ export default function Navbar() {
                             key={sIdx}
                             href={sub.url}
                             onClick={() => setOpenSidebar(false)}
-                            className="font-body text-sm font-semibold text-slate-600 hover:text-eco-dark hover:bg-teal-500/10 px-4 py-2.5 rounded-full transition-colors"
+                            className="font-body text-sm font-semibold text-slate-600 hover:text-eco-primary hover:bg-teal-500/10 px-4 py-2.5 rounded-full transition-colors"
                           >
                             {sub.label}
                           </a>
@@ -214,7 +212,7 @@ export default function Navbar() {
                 href="https://wa.me/6281214161614"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full bg-[#f97316] hover:bg-orange-600 text-white font-heading font-bold py-4 rounded-full flex items-center justify-center shadow-led-glow transition-all transform hover:-translate-y-0.5"
+                className="w-full bg-eco-primary hover:bg-eco-secondary text-white font-heading font-bold py-4 rounded-full flex items-center justify-center shadow-led-glow transition-all transform hover:-translate-y-0.5"
               >
                 Hubungi via WhatsApp
               </a>

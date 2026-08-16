@@ -31,7 +31,7 @@ export default function LocationMap() {
           </h2>
           <p className="text-lg text-slate-600 font-body mt-3">
             Temukan lokasi mesin penukaran pintar terdekat dan mulai kumpulkan{" "}
-            <span className="text-sky-accent font-bold">#EcoReward</span> Anda
+            <span className="text-eco-primary font-bold">#EcoReward</span> Anda
             hari ini.
           </p>
         </div>
@@ -58,7 +58,7 @@ export default function LocationMap() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari kota, jalan, atau nama RVM..."
-              className="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-full focus:ring-2 focus:ring-teal-500/50 focus:border-teal-500 focus:bg-white outline-none transition-all font-body text-sm text-slate-700 shadow-sm"
+              className="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-full focus:ring-2 focus:ring-eco-cyan/50 focus:border-eco-cyan focus:bg-white outline-none transition-all font-body text-sm text-slate-700 shadow-sm"
             />
             <svg
               className="absolute left-4 top-4 w-5 h-5 text-slate-400"
@@ -111,20 +111,20 @@ export default function LocationMap() {
                   onClick={() => setSelectedId(loc.id)}
                   className={`group p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden ${
                     selectedId === loc.id
-                      ? "border-sky-accent bg-orange-50/50 shadow-md"
-                      : "border-slate-100 hover:border-teal-500/30 hover:bg-slate-50"
+                      ? "border-eco-cyan bg-orange-50/50 shadow-md"
+                      : "border-slate-100 hover:border-eco-cyan/30 hover:bg-slate-50"
                   }`}
                 >
                   {selectedId === loc.id && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-sky-accent"></div>
+                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-eco-cyan"></div>
                   )}
 
                   <div className="flex justify-between items-start mb-2">
                     <p
                       className={`font-bold font-heading text-[15px] transition-colors leading-tight pr-2 ${
                         selectedId === loc.id
-                          ? "text-sky-accent"
-                          : "text-slate-800 group-hover:text-eco-dark"
+                          ? "text-eco-cyan"
+                          : "text-slate-800 group-hover:text-eco-primary"
                       }`}
                     >
                       {loc.name}
@@ -185,13 +185,13 @@ export default function LocationMap() {
           <div className="absolute top-6 right-6 z-40 flex flex-col gap-2">
             <button
               onClick={zoomIn}
-              className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-center text-slate-600 hover:text-eco-dark hover:bg-teal-500/10 transition-all font-bold text-xl border border-slate-100"
+              className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-center text-slate-600 hover:text-eco-primary hover:bg-teal-500/10 transition-all font-bold text-xl border border-slate-100"
             >
               +
             </button>
             <button
               onClick={zoomOut}
-              className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-center text-slate-600 hover:text-eco-dark hover:bg-teal-500/10 transition-all font-bold text-xl border border-slate-100"
+              className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-center text-slate-600 hover:text-eco-primary hover:bg-teal-500/10 transition-all font-bold text-xl border border-slate-100"
             >
               −
             </button>
@@ -251,8 +251,8 @@ export default function LocationMap() {
                   <div
                     className={`relative flex items-center justify-center w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
                       selectedId === loc.id
-                        ? "bg-emerald-500 scale-110 shadow-emerald-500/40"
-                        : "bg-white border-2 border-eco-dark scale-100 hover:scale-110"
+                        ? "bg-eco-cyan scale-110 shadow-eco-cyan/40"
+                        : "bg-white border-2 border-eco-primary scale-100 hover:scale-110"
                     }`}
                   >
                     <span
@@ -272,7 +272,7 @@ export default function LocationMap() {
                       ⭐
                     </span>
                     {selectedId === loc.id && (
-                      <span className="absolute inset-0 rounded-full border-[3px] border-emerald-500 animate-ping opacity-60"></span>
+                      <span className="absolute inset-0 rounded-full border-[3px] border-eco-cyan animate-ping opacity-60"></span>
                     )}
                   </div>
                 </div>
