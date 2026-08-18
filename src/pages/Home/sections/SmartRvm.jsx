@@ -34,10 +34,9 @@ export default function SmartRvm() {
           {/* Teks */}
           <div className="space-y-6">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight font-heading">
-              Smart{" "}
-              <span className="text-eco-primary">Reverse Vending Machine</span>
+              Smart Reverse Vending Machine
             </h2>
-            <h3 className="text-xl font-semibold text-slate-800 font-heading">
+            <h3 className="text-xl font-semibold text-eco-primary font-heading">
               Apa itu Smart RVM?
             </h3>
             <p className="text-lg text-slate-600 leading-relaxed font-body">
@@ -47,7 +46,7 @@ export default function SmartRvm() {
             </p>
             <p className="text-lg text-slate-600 leading-relaxed font-body">
               Pengguna hanya perlu memasukkan sampah yang sesuai, kemudian{" "}
-              <strong className="text-slate-800 font-semibold">
+              <strong className="text-eco-primary font-semibold">
                 sistem AI EcoCash
               </strong>{" "}
               akan melakukan verifikasi jenis material sebelum reward diberikan

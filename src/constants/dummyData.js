@@ -67,51 +67,90 @@ export const FAQ_DATA = [
   },
 ];
 
-// Data Lokasi RVM
+// Data Lokasi RVM & EcoCash Box (Diperbarui untuk Fitur Cluster & Detail Lengkap)
 export const LOCATION_DATA = [
   {
     id: 1,
-    name: "Smart RVM Asia Afrika",
-    address: "Jl. Asia Afrika No. 12, Bandung",
-    status: "Tutup",
-    statusColor: "text-rose-500 bg-rose-50",
-    dotColor: "bg-rose-500",
-    top: "45%",
-    left: "35%",
-    hours: "07.00 – 20.00 WIB",
+    name: "Smart RVM Braga CityWalk",
+    type: "Machine",
+    address: "Jl. Braga No. 99-101, Sumur Bandung, Kota Bandung, 40111",
+    lat: -6.9175,
+    lng: 107.609,
+    status: "Buka Sekarang",
+    openingHours: "Buka 24 Jam",
+    availability: {
+      kaca: {
+        status: "Open",
+        color: "text-emerald-600",
+        bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
+      },
+      plastikKaleng: {
+        status: "Almost Full",
+        color: "text-eco-accent",
+        bars: ["bg-eco-accent", "bg-eco-accent", "bg-slate-200"],
+      },
+    },
+    features: [
+      "Self Service",
+      "Refund via app (E-Wallet)",
+      "Cash refund voucher*",
+      "Donations available",
+    ],
+    redeemInfo:
+      "Voucher dari mesin ini dapat ditukarkan dengan uang tunai atau potongan belanja di kasir Braga CityWalk Supermarket.",
+    gmapsLink: "https://maps.app.goo.gl/dummy1",
   },
   {
     id: 2,
-    name: "Smart RVM Braga",
-    address: "Jl. Braga No. 45, Bandung",
-    status: "Buka Sekarang",
-    statusColor: "text-emerald-800 bg-emerald-100",
-    dotColor: "bg-emerald-500",
-    top: "55%",
-    left: "50%",
-    hours: "24 Jam",
+    name: "EcoCash Box Asia Afrika",
+    type: "Drop Box",
+    address: "Jl. Asia Afrika No. 12, Sumur Bandung, Kota Bandung, 40111",
+    lat: -6.9218,
+    lng: 107.6062,
+    status: "Tutup",
+    openingHours: "Buka besok pukul 08:00 WIB",
+    availability: {
+      kaca: {
+        status: "Closed",
+        color: "text-rose-600",
+        bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
+      },
+      plastikKaleng: {
+        status: "Closed",
+        color: "text-rose-600",
+        bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
+      },
+    },
+    features: ["Self Service", "Refund via app (E-Wallet)"],
+    redeemInfo:
+      "Hanya melayani pencairan langsung ke aplikasi EcoCash. Pastikan barcode scan terbaca dengan jelas.",
+    gmapsLink: "https://maps.app.goo.gl/dummy2",
   },
   {
     id: 3,
-    name: "Smart RVM Dago",
-    address: "Jl. Dago No. 88, Bandung",
-    status: "Tutup",
-    statusColor: "text-rose-500 bg-rose-50",
-    dotColor: "bg-rose-500",
-    top: "30%",
-    left: "60%",
-    hours: "08.00 – 17.00 WIB",
-  },
-  {
-    id: 4,
-    name: "Smart RVM Setiabudi",
-    address: "Jl. Setiabudi No. 101, Bandung",
+    name: "Smart RVM Alun-Alun Bandung",
+    type: "Machine",
+    address: "Jl. Dalem Kaum, Balonggede, Regol, Kota Bandung, 40251",
+    lat: -6.9213,
+    lng: 107.6071, // Berdekatan dengan id 1 dan 2 agar membentuk Cluster
     status: "Buka Sekarang",
-    statusColor: "text-emerald-800 bg-emerald-100",
-    dotColor: "bg-emerald-500",
-    top: "20%",
-    left: "45%",
-    hours: "06.00 – 22.00 WIB",
+    openingHours: "Tutup hari ini pukul 22:00 WIB",
+    availability: {
+      kaca: {
+        status: "Open",
+        color: "text-emerald-600",
+        bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
+      },
+      plastikKaleng: {
+        status: "Open",
+        color: "text-emerald-600",
+        bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
+      },
+    },
+    features: ["Self Service", "Donations available"],
+    redeemInfo:
+      "Mesin generasi terbaru ini menerima segala jenis kemasan botol plastik dan kaleng tanpa perlu dipilah manual.",
+    gmapsLink: "https://maps.app.goo.gl/dummy3",
   },
 ];
 
@@ -119,6 +158,8 @@ export const LOCATION_DATA = [
 export const newsList = [
   {
     id: 1,
+    author: "Tim EcoCash.id",
+    date: "2024-06-15",
     img: berita1,
     category: "Inovasi",
     title: "Sampah Plastik Jadi Rupiah",
@@ -128,6 +169,8 @@ export const newsList = [
   },
   {
     id: 2,
+    author: "Tim EcoCash.id",
+    date: "2024-06-20",
     img: berita2,
     category: "Peluncuran",
     title: "Aplikasi Ecocash.id Resmi Rilis",
@@ -137,6 +180,8 @@ export const newsList = [
   },
   {
     id: 3,
+    author: "Tim EcoCash.id",
+    date: "2024-06-25",
     img: berita3,
     category: "Kolaborasi",
     title: "Ecocash.id Gandeng Bank Sampah",
@@ -146,6 +191,8 @@ export const newsList = [
   },
   {
     id: 4,
+    author: "Tim EcoCash.id",
+    date: "2024-07-01",
     img: berita4,
     category: "Ekspansi",
     title: "Perluas Jangkauan di Pulau Jawa",
@@ -155,6 +202,8 @@ export const newsList = [
   },
   {
     id: 5,
+    author: "Tim EcoCash.id",
+    date: "2024-07-10",
     img: berita5,
     category: "Peluncuran",
     title: "Ecocash Hadir di Kota Bandung",
@@ -164,6 +213,8 @@ export const newsList = [
   },
   {
     id: 6,
+    author: "Tim EcoCash.id",
+    date: "2024-07-15",
     img: berita6,
     category: "Peluncuran",
     title: "Ecocash Hadir di Kota Surabaya",

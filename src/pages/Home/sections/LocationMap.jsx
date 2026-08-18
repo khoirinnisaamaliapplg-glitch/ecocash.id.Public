@@ -1,296 +1,308 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import {
+  GoogleMap,
+  useJsApiLoader,
+  Marker,
+  MarkerClusterer,
+} from "@react-google-maps/api";
 import { LOCATION_DATA } from "../../../constants/dummyData";
-// import mapsImg from "img/maps.png";
+
+const containerStyle = {
+  width: "100%",
+  height: "750px",
+  borderRadius: "1.5rem",
+};
+
+// Titik tengah default (Kota Bandung - Area yang berdekatan)
+const defaultCenter = {
+  lat: -6.9195,
+  lng: 107.6075,
+};
 
 export default function LocationMap() {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedId, setSelectedId] = useState(null);
-  const [zoomLevel, setZoomLevel] = useState(100);
+  const [selectedLoc, setSelectedLoc] = useState(null);
+  const [map, setMap] = useState(null);
 
-  // Fungsi Zooming
-  const zoomIn = () => setZoomLevel((prev) => Math.min(prev + 30, 250));
-  const zoomOut = () => setZoomLevel((prev) => Math.max(prev - 30, 100));
-  const resetZoom = () => setZoomLevel(100);
+  const { isLoaded } = useJsApiLoader({
+    id: "google-map-script",
+    googleMapsApiKey: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+  });
 
-  // Filter lokasi berdasarkan pencarian
+  const onLoad = useCallback(function callback(map) {
+    setMap(map);
+  }, []);
+
+  const onUnmount = useCallback(function callback(map) {
+    setMap(null);
+  }, []);
+
   const filteredLocations = LOCATION_DATA.filter(
     (loc) =>
       loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       loc.address.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
+  const handleSelectLocation = (loc) => {
+    setSelectedLoc(loc);
+    if (map) {
+      map.panTo({ lat: loc.lat, lng: loc.lng });
+      map.setZoom(17); // Zoom in saat diklik
+    }
+  };
+
   return (
     <section
       id="location-map"
-      className="max-w-7xl mx-auto px-6 lg:px-10 py-24 bg-white"
+      className="max-w-7xl mx-auto px-6 lg:px-10 py-24"
     >
-      <div className="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 font-heading">
-            Lokasi RVM & Drop Point
-          </h2>
-          <p className="text-lg text-slate-600 font-body mt-3">
-            Temukan lokasi mesin penukaran pintar terdekat dan mulai kumpulkan{" "}
-            <span className="text-eco-primary font-bold">#EcoReward</span> Anda
-            hari ini.
-          </p>
-        </div>
-        {/* Indikator Status Cepat */}
-        <div className="flex gap-4 items-center bg-slate-50 px-5 py-2.5 rounded-full border border-slate-100 text-sm font-heading font-medium">
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>{" "}
-            Aktif
-          </div>
-          <div className="flex items-center gap-2">
-            <span className="w-2.5 h-2.5 rounded-full bg-rose-500"></span>{" "}
-            Nonaktif
-          </div>
-        </div>
+      <div className="mb-8">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 font-heading">
+          Lokasi RVM & Drop Point
+        </h2>
+        <p className="text-lg text-slate-600 font-body mt-2">
+          Temukan mesin penukaran terdekat dan kumpulkan{" "}
+          <span className="text-eco-primary font-bold">EcoReward</span> Anda.
+        </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Sidebar Lokasi List */}
-        <div className="lg:col-span-1 bg-white border border-slate-100 rounded-3xl p-5 shadow-xl shadow-slate-200/40 h-[600px] flex flex-col relative z-20">
-          {/* Search Bar Interaktif */}
-          <div className="relative mb-5">
+      <div className="relative w-full h-[750px] rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200 overflow-hidden bg-slate-100">
+        {/* Floating Search Bar */}
+        <div className="absolute top-6 left-6 z-10 w-[90%] max-w-md">
+          <div className="relative flex items-center bg-white rounded-full shadow-lg border border-slate-100 overflow-hidden">
+            <div className="pl-5 text-slate-400">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2.5"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+            </div>
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Cari kota, jalan, atau nama RVM..."
-              className="w-full pl-12 pr-10 py-3.5 bg-slate-50 border border-slate-200 rounded-full focus:ring-2 focus:ring-eco-cyan/50 focus:border-eco-cyan focus:bg-white outline-none transition-all font-body text-sm text-slate-700 shadow-sm"
+              placeholder="Cari jalan, kota, atau nama lokasi..."
+              className="w-full py-4 px-4 bg-transparent outline-none font-body text-sm text-slate-700 placeholder-slate-400"
             />
-            <svg
-              className="absolute left-4 top-4 w-5 h-5 text-slate-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
-            {searchQuery.length > 0 && (
-              <button
-                onClick={() => setSearchQuery("")}
-                className="absolute right-4 top-4 text-slate-400 hover:text-rose-500 transition-colors"
-              >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
-                </svg>
-              </button>
-            )}
           </div>
 
-          {/* List Lokasi (Scrollable) */}
-          <div className="space-y-3 overflow-y-auto pr-2 custom-scrollbar flex-1">
-            {filteredLocations.length === 0 ? (
-              <div className="flex flex-col items-center justify-center h-full opacity-60">
-                <span className="text-4xl mb-3">🔍</span>
-                <p className="text-slate-500 font-heading font-medium text-center">
-                  Ups! Lokasi tidak ditemukan.
-                </p>
-              </div>
-            ) : (
-              filteredLocations.map((loc) => (
-                <div
-                  key={loc.id}
-                  onClick={() => setSelectedId(loc.id)}
-                  className={`group p-4 rounded-2xl border transition-all duration-300 cursor-pointer relative overflow-hidden ${
-                    selectedId === loc.id
-                      ? "border-eco-cyan bg-orange-50/50 shadow-md"
-                      : "border-slate-100 hover:border-eco-cyan/30 hover:bg-slate-50"
-                  }`}
-                >
-                  {selectedId === loc.id && (
-                    <div className="absolute left-0 top-0 bottom-0 w-1 bg-eco-cyan"></div>
-                  )}
-
-                  <div className="flex justify-between items-start mb-2">
-                    <p
-                      className={`font-bold font-heading text-[15px] transition-colors leading-tight pr-2 ${
-                        selectedId === loc.id
-                          ? "text-eco-cyan"
-                          : "text-slate-800 group-hover:text-eco-primary"
-                      }`}
-                    >
-                      {loc.name}
-                    </p>
-                    <span
-                      className={`px-2.5 py-1 rounded-md text-[10px] font-bold font-heading tracking-wide whitespace-nowrap ${loc.statusColor}`}
-                    >
-                      {loc.status}
-                    </span>
-                  </div>
-
-                  <p className="text-xs text-slate-500 font-body mb-3 flex items-start gap-1.5">
-                    <svg
-                      className="w-3.5 h-3.5 mt-0.5 shrink-0 text-slate-400"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                      />
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                      />
-                    </svg>
-                    <span>{loc.address}</span>
-                  </p>
-
-                  <div className="flex items-center gap-4 border-t border-slate-100/80 pt-3">
-                    <div className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-lg">
-                      <span className="text-xs">🤖</span>
-                      <span className="text-[11px] font-semibold text-slate-600 font-heading">
-                        Smart RVM
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-1.5 bg-slate-100/80 px-2.5 py-1 rounded-lg">
-                      <span className="text-xs">🕒</span>
-                      <span className="text-[11px] font-semibold text-slate-600 font-heading">
-                        {loc.hours}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              ))
-            )}
-          </div>
-        </div>
-
-        {/* Map Area Interaktif dengan Zoom & Pan */}
-        <div className="lg:col-span-2 relative group rounded-3xl overflow-hidden shadow-xl shadow-slate-200/50 h-[600px] bg-slate-100 border border-slate-200">
-          {/* Kontrol Zoom Mengambang */}
-          <div className="absolute top-6 right-6 z-40 flex flex-col gap-2">
-            <button
-              onClick={zoomIn}
-              className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-center text-slate-600 hover:text-eco-primary hover:bg-teal-500/10 transition-all font-bold text-xl border border-slate-100"
-            >
-              +
-            </button>
-            <button
-              onClick={zoomOut}
-              className="w-10 h-10 bg-white/95 backdrop-blur-md rounded-xl shadow-lg flex items-center justify-center text-slate-600 hover:text-eco-primary hover:bg-teal-500/10 transition-all font-bold text-xl border border-slate-100"
-            >
-              −
-            </button>
-            {zoomLevel !== 100 && (
-              <button
-                onClick={resetZoom}
-                className="w-10 h-10 mt-2 bg-slate-800 text-white rounded-xl shadow-lg flex items-center justify-center hover:bg-[#f97316] transition-all border border-slate-700"
-                title="Reset Zoom"
-              >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"
-                  />
-                </svg>
-              </button>
-            )}
-          </div>
-
-          <div className="w-full h-full overflow-auto custom-scrollbar relative">
-            <div
-              className="relative transition-all duration-300 origin-top-left flex items-center justify-center min-w-full min-h-full"
-              style={{ width: `${zoomLevel}%`, height: `${zoomLevel}%` }}
-            >
-              <img
-                src={"img/maps.png"}
-                alt="Peta Lokasi RVM"
-                className="absolute inset-0 w-full h-full object-cover"
-              />
-
+          {searchQuery && filteredLocations.length > 0 && !selectedLoc && (
+            <div className="mt-2 bg-white rounded-2xl shadow-xl border border-slate-100 p-2 max-h-64 overflow-y-auto custom-scrollbar">
               {filteredLocations.map((loc) => (
                 <div
-                  key={"pin-" + loc.id}
-                  className="absolute transform -translate-x-1/2 -translate-y-1/2 cursor-pointer z-20"
-                  style={{ top: loc.top, left: loc.left }}
-                  onClick={() => setSelectedId(loc.id)}
+                  key={loc.id}
+                  onClick={() => handleSelectLocation(loc)}
+                  className="p-3 hover:bg-slate-50 rounded-xl cursor-pointer transition-colors"
                 >
-                  {selectedId === loc.id && (
-                    <div className="absolute bottom-[130%] left-1/2 -translate-x-1/2 mb-1 w-56 bg-white/95 backdrop-blur-xl p-3.5 rounded-2xl shadow-2xl border border-slate-100 pointer-events-none">
-                      <p className="text-sm font-bold font-heading text-slate-900 leading-tight mb-1.5">
-                        {loc.name}
-                      </p>
-                      <p className="text-[11px] font-body text-slate-500 leading-relaxed">
-                        {loc.address}
-                      </p>
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 border-[6px] border-transparent border-t-white/95"></div>
-                    </div>
-                  )}
-
-                  <div
-                    className={`relative flex items-center justify-center w-10 h-10 rounded-full shadow-lg transition-all duration-300 ${
-                      selectedId === loc.id
-                        ? "bg-eco-cyan scale-110 shadow-eco-cyan/40"
-                        : "bg-white border-2 border-eco-primary scale-100 hover:scale-110"
-                    }`}
-                  >
-                    <span
-                      className="text-lg"
-                      style={{
-                        display: selectedId === loc.id ? "none" : "block",
-                      }}
-                    >
-                      📍
-                    </span>
-                    <span
-                      className="text-white text-lg"
-                      style={{
-                        display: selectedId === loc.id ? "block" : "none",
-                      }}
-                    >
-                      ⭐
-                    </span>
-                    {selectedId === loc.id && (
-                      <span className="absolute inset-0 rounded-full border-[3px] border-eco-cyan animate-ping opacity-60"></span>
-                    )}
-                  </div>
+                  <p className="font-heading font-bold text-sm text-slate-800">
+                    {loc.name}
+                  </p>
+                  <p className="font-body text-xs text-slate-500 truncate">
+                    {loc.address}
+                  </p>
                 </div>
               ))}
             </div>
-          </div>
-
-          <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-slate-900/80 backdrop-blur-md px-6 py-3 rounded-full border border-slate-700 shadow-xl flex items-center gap-3 z-30">
-            <span className="relative flex h-3 w-3">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-3 w-3 bg-emerald-500"></span>
-            </span>
-            <span className="font-heading font-medium text-sm text-white">
-              <span className="font-bold">{filteredLocations.length}</span>{" "}
-              Titik Ditemukan
-            </span>
-          </div>
+          )}
         </div>
+
+        {/* Floating Detail Card (Sesuai Desain UI/UX Return and Earn) */}
+        {selectedLoc && (
+          <div className="absolute top-24 left-6 z-10 w-[90%] max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col h-[550px] overflow-hidden animate-fadeIn">
+            {/* Scrollable Content Area */}
+            <div className="p-6 overflow-y-auto custom-scrollbar flex-1 pb-4">
+              {/* Header Card */}
+              <div className="flex justify-between items-start mb-4">
+                <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-heading font-bold">
+                  {selectedLoc.type}
+                </span>
+                <button
+                  onClick={() => setSelectedLoc(null)}
+                  className="text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 p-1.5 rounded-full transition-colors"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M6 18L18 6M6 6l12 12"
+                    />
+                  </svg>
+                </button>
+              </div>
+
+              {/* Title & Address */}
+              <h3 className="text-2xl font-bold font-heading text-slate-900 mb-2 leading-tight">
+                {selectedLoc.name}
+              </h3>
+              <p className="text-sm font-body text-slate-600 mb-6">
+                {selectedLoc.address}
+              </p>
+
+              {/* Availability Section */}
+              <div className="mb-6">
+                <h4 className="text-lg font-bold font-heading text-slate-900 mb-4">
+                  Availability
+                </h4>
+
+                <div className="mb-4">
+                  <div className="flex items-center gap-2 mb-2 text-sm font-body">
+                    <span className="text-slate-700 font-medium">Glass</span>
+                    <span className="text-slate-300">•</span>
+                    <span
+                      className={`font-semibold ${selectedLoc.availability.kaca.color}`}
+                    >
+                      {selectedLoc.availability.kaca.status}
+                    </span>
+                  </div>
+                  <div className="flex gap-2 w-full h-2">
+                    {selectedLoc.availability.kaca.bars.map((bg, idx) => (
+                      <div
+                        key={idx}
+                        className={`w-1/3 rounded-full ${bg}`}
+                      ></div>
+                    ))}
+                  </div>
+                </div>
+
+                <div>
+                  <div className="flex items-center gap-2 mb-2 text-sm font-body">
+                    <span className="text-slate-700 font-medium">
+                      Plastic & Cans
+                    </span>
+                    <span className="text-slate-300">•</span>
+                    <span
+                      className={`font-semibold ${selectedLoc.availability.plastikKaleng.color}`}
+                    >
+                      {selectedLoc.availability.plastikKaleng.status}
+                    </span>
+                  </div>
+                  <div className="flex gap-2 w-full h-2">
+                    {selectedLoc.availability.plastikKaleng.bars.map(
+                      (bg, idx) => (
+                        <div
+                          key={idx}
+                          className={`w-1/3 rounded-full ${bg}`}
+                        ></div>
+                      ),
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Opening Hours */}
+              <div className="mb-6 pt-6 border-t border-slate-100">
+                <h4 className="text-lg font-bold font-heading text-slate-900 mb-3">
+                  Opening Hours
+                </h4>
+                <div className="flex items-center justify-between text-sm font-body">
+                  <div className="flex items-center gap-2">
+                    <span
+                      className={`font-bold ${selectedLoc.status === "Tutup" ? "text-rose-600" : "text-emerald-600"}`}
+                    >
+                      {selectedLoc.status}
+                    </span>
+                    <span className="text-slate-300">•</span>
+                    <span className="text-slate-600">
+                      {selectedLoc.openingHours}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Features Section (Pill Tags) */}
+              <div className="mb-6 pt-6 border-t border-slate-100">
+                <h4 className="text-lg font-bold font-heading text-slate-900 mb-4">
+                  Features
+                </h4>
+                <div className="flex flex-wrap gap-2">
+                  {selectedLoc.features.map((feature, idx) => (
+                    <span
+                      key={idx}
+                      className="bg-eco-primary/10 text-eco-primary px-3 py-1.5 rounded-full text-xs font-semibold font-body border border-eco-primary/20 flex items-center gap-1.5"
+                    >
+                      <span className="w-1.5 h-1.5 rounded-full bg-eco-primary"></span>
+                      {feature}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Redeem Info Section */}
+              <div className="pt-2">
+                <h4 className="text-lg font-bold font-heading text-slate-900 mb-3">
+                  Redeem vouchers at
+                </h4>
+                <p className="text-sm text-slate-600 font-body leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
+                  {selectedLoc.redeemInfo}
+                </p>
+              </div>
+            </div>
+
+            {/* Sticky Action Button (Menempel di Bawah) */}
+            <div className="p-4 bg-white border-t border-slate-100 shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.05)]">
+              <a
+                href={selectedLoc.gmapsLink}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full bg-[#3b82f6] hover:bg-blue-600 text-white py-3.5 rounded-xl font-heading font-bold text-sm flex items-center justify-center transition-colors"
+              >
+                Get Directions
+              </a>
+            </div>
+          </div>
+        )}
+
+        {/* Google Maps dengan Fitur Clusterer */}
+        {isLoaded ? (
+          <GoogleMap
+            mapContainerStyle={containerStyle}
+            center={defaultCenter}
+            zoom={14}
+            onLoad={onLoad}
+            onUnmount={onUnmount}
+            options={{
+              disableDefaultUI: true,
+              zoomControl: true,
+            }}
+          >
+            {/* Membungkus Marker dengan MarkerClusterer */}
+            <MarkerClusterer>
+              {(clusterer) => (
+                <>
+                  {LOCATION_DATA.map((loc) => (
+                    <Marker
+                      key={loc.id}
+                      position={{ lat: loc.lat, lng: loc.lng }}
+                      onClick={() => handleSelectLocation(loc)}
+                      clusterer={clusterer}
+                    />
+                  ))}
+                </>
+              )}
+            </MarkerClusterer>
+          </GoogleMap>
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center bg-slate-100">
+            <div className="w-10 h-10 border-4 border-eco-primary border-t-transparent rounded-full animate-spin mb-4"></div>
+            <p className="text-slate-500 font-heading font-medium">
+              Memuat Peta Interaktif...
+            </p>
+          </div>
+        )}
       </div>
     </section>
   );

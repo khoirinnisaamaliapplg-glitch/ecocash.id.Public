@@ -9,10 +9,7 @@ export default function News() {
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 font-heading">
-            Berita{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
-              EcoCash.id
-            </span>
+            Berita EcoCash.id
           </h2>
           <p className="text-slate-600 font-body mt-2">
             Ikuti terus pembaruan ekosistem dan aktivitas daur ulang kami.

@@ -19,9 +19,9 @@ export default function Faq() {
 
           <h2 className="text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight font-heading">
             Apa itu{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
-              EcoCash.id?
-            </span>
+            {/* <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
+            </span> */}
+            EcoCash.id?
           </h2>
 
           <p className="text-lg text-slate-600 leading-relaxed font-body">

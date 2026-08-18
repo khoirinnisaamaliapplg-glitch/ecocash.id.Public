@@ -32,7 +32,7 @@ export default function Hero() {
             {/* Tombol Pelajari Lebih Lanjut (Solid White tanpa blur/glassmorphism) */}
             <a
               href="#smart-rvm"
-              className="bg-white border border-slate-300 hover:border-sky-accent text-slate-700 hover:text-sky-accent px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center"
+              className="bg-white border border-slate-300 hover:border-2 hover:border-eco-secondary text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center"
             >
               Pelajari lebih lanjut
             </a>

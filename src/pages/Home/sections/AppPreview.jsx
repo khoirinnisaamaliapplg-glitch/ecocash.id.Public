@@ -21,10 +21,7 @@ export default function AppPreview() {
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading">
-                Kelola Sampah Lebih Mudah <br /> dengan{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan">
-                  EcoCash App
-                </span>
+                Kelola Sampah Lebih Mudah <br /> dengan EcoCash App
               </h2>
 
               <p className="text-lg text-slate-600 leading-relaxed font-body">
@@ -34,13 +31,9 @@ export default function AppPreview() {
                 digital.
               </p>
               <p className="text-lg text-slate-600 leading-relaxed font-body">
-                Dengan teknologi{" "}
-                <strong className="text-slate-800 font-semibold">
-                  AI dan IoT
-                </strong>
-                , EcoCash memberikan pengalaman pengelolaan sampah yang lebih
-                cepat, transparan, dan efisien untuk mendukung ekonomi sirkular
-                di Indonesia.
+                Dengan teknologi AI dan IoT , EcoCash memberikan pengalaman
+                pengelolaan sampah yang lebih cepat, transparan, dan efisien
+                untuk mendukung ekonomi sirkular di Indonesia.
               </p>
 
               <div className="pt-6">

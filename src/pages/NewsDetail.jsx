@@ -40,7 +40,7 @@ export default function NewsDetail() {
         <div className="mb-8 flex items-center gap-2 text-sm font-body text-slate-500">
           <button
             onClick={() => navigate(-1)}
-            className="hover:text-eco-primary flex items-center gap-1 transition-colors"
+            className="hover:text-eco-primary flex items-center gap-1 transition-colors cursor-pointer"
           >
             <svg
               className="w-4 h-4"
@@ -76,12 +76,13 @@ export default function NewsDetail() {
             {newsItem.title}
           </h1>
 
-          <div className="flex items-center gap-4 text-sm font-body text-slate-500 border-b border-slate-200 pb-6">
+          <div className="flex flex-col items-start gap-1 text-sm font-body text-slate-500 border-b border-slate-200 pb-6">
             <div className="flex items-center gap-1.5">
-              <span className="text-eco-accent">📅</span> {newsItem.date}
+              <span className="text-eco-accent">Date:</span> {newsItem.date}
             </div>
+
             <div className="flex items-center gap-1.5">
-              <span className="text-eco-accent">✍️</span> {newsItem.author}
+              <span className="text-eco-accent">Author:</span> {newsItem.author}
             </div>
           </div>
         </header>
