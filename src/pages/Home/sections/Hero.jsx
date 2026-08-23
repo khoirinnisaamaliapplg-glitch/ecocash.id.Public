@@ -79,9 +79,9 @@ export default function Hero() {
           href="https://wa.me/6281214161614"
           target="_blank"
           rel="noreferrer"
-          className="w-14 h-14 bg-eco-primary hover:bg-eco-secondary text-white rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110"
+          className=" bg-eco-cyan hover:bg-eco-cyan/80 text-white rounded-full shadow-2xl flex items-center justify-center transition-all transform hover:scale-110"
         >
-          <img src={"img/WhatsApp.png"} alt="WhatsApp" className="w-8 h-8 " />
+          <img src={"img/cs.png"} alt="WhatsApp" className="w-18 h-auto " />
         </a>
       </div>
     </section>
