@@ -39,6 +39,9 @@ export const NAV_ITEMS = [
       { label: "Lokasi Drop Point", url: "#location-map" },
       { label: "Mitra Korporat", url: "#ecosystem" },
       { label: "Gabung Menjadi Mitra", url: "#community" },
+      { label: "Industri Recyler & Offtaker", url: "/industries" },
+      { label: "Bank Sampah & Hub Partnership", url: "/bank-sampah" },
+      { label: "Mitra Penjemputan (collector)", url: "/collector" },
     ],
   },
 ];
@@ -68,89 +71,157 @@ export const FAQ_DATA = [
 ];
 
 // Data Lokasi RVM & EcoCash Box (Diperbarui untuk Fitur Cluster & Detail Lengkap)
+// export const LOCATION_DATA = [
+//   {
+//     id: 1,
+//     name: "Smart RVM Braga CityWalk",
+//     type: "Machine",
+//     address: "Jl. Braga No. 99-101, Sumur Bandung, Kota Bandung, 40111",
+//     lat: -6.9175,
+//     lng: 107.609,
+//     status: "Buka Sekarang",
+//     openingHours: "Buka 24 Jam",
+//     availability: {
+//       kaca: {
+//         status: "Open",
+//         color: "text-emerald-600",
+//         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
+//       },
+//       plastikKaleng: {
+//         status: "Almost Full",
+//         color: "text-eco-accent",
+//         bars: ["bg-eco-accent", "bg-eco-accent", "bg-slate-200"],
+//       },
+//     },
+//     features: [
+//       "Self Service",
+//       "Refund via app (E-Wallet)",
+//       "Cash refund voucher*",
+//       "Donations available",
+//     ],
+//     redeemInfo:
+//       "Voucher dari mesin ini dapat ditukarkan dengan uang tunai atau potongan belanja di kasir Braga CityWalk Supermarket.",
+//     gmapsLink: "https://maps.app.goo.gl/dummy1",
+//   },
+//   {
+//     id: 2,
+//     name: "EcoCash Box Asia Afrika",
+//     type: "Drop Box",
+//     address: "Jl. Asia Afrika No. 12, Sumur Bandung, Kota Bandung, 40111",
+//     lat: -6.9218,
+//     lng: 107.6062,
+//     status: "Tutup",
+//     openingHours: "Buka besok pukul 08:00 WIB",
+//     availability: {
+//       kaca: {
+//         status: "Closed",
+//         color: "text-rose-600",
+//         bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
+//       },
+//       plastikKaleng: {
+//         status: "Closed",
+//         color: "text-rose-600",
+//         bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
+//       },
+//     },
+//     features: ["Self Service", "Refund via app (E-Wallet)"],
+//     redeemInfo:
+//       "Hanya melayani pencairan langsung ke aplikasi EcoCash. Pastikan barcode scan terbaca dengan jelas.",
+//     gmapsLink: "https://maps.app.goo.gl/dummy2",
+//   },
+//   {
+//     id: 3,
+//     name: "Smart RVM Alun-Alun Bandung",
+//     type: "Machine",
+//     address: "Jl. Dalem Kaum, Balonggede, Regol, Kota Bandung, 40251",
+//     lat: -6.9213,
+//     lng: 107.6071, // Berdekatan dengan id 1 dan 2 agar membentuk Cluster
+//     status: "Buka Sekarang",
+//     openingHours: "Tutup hari ini pukul 22:00 WIB",
+//     availability: {
+//       kaca: {
+//         status: "Open",
+//         color: "text-emerald-600",
+//         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
+//       },
+//       plastikKaleng: {
+//         status: "Open",
+//         color: "text-emerald-600",
+//         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
+//       },
+//     },
+//     features: ["Self Service", "Donations available"],
+//     redeemInfo:
+//       "Mesin generasi terbaru ini menerima segala jenis kemasan botol plastik dan kaleng tanpa perlu dipilah manual.",
+//     gmapsLink: "https://maps.app.goo.gl/dummy3",
+//   },
+// ];
+
+// Data Mock menyerupai response API Backend yang sebenarnya
 export const LOCATION_DATA = [
   {
     id: 1,
-    name: "Smart RVM Braga CityWalk",
-    type: "Machine",
-    address: "Jl. Braga No. 99-101, Sumur Bandung, Kota Bandung, 40111",
-    lat: -6.9175,
-    lng: 107.609,
-    status: "Buka Sekarang",
-    openingHours: "Buka 24 Jam",
-    availability: {
-      kaca: {
-        status: "Open",
-        color: "text-emerald-600",
-        bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
-      },
-      plastikKaleng: {
-        status: "Almost Full",
-        color: "text-eco-accent",
-        bars: ["bg-eco-accent", "bg-eco-accent", "bg-slate-200"],
-      },
-    },
-    features: [
-      "Self Service",
-      "Refund via app (E-Wallet)",
-      "Cash refund voucher*",
-      "Donations available",
-    ],
-    redeemInfo:
-      "Voucher dari mesin ini dapat ditukarkan dengan uang tunai atau potongan belanja di kasir Braga CityWalk Supermarket.",
-    gmapsLink: "https://maps.app.goo.gl/dummy1",
+    machineCode: "MCH-001",
+    name: "Machine Bandung 1",
+    machineType: "CONTAINER",
+    status: "OPERATING",
+    fillLevel: "EMPTY",
+    currentWeight: 0,
+    maxWeight: 50,
+    fillPercentage: 0,
+    district: "Cipaganti",
+    subdistrict: "Coblong",
+    address:
+      "Jl. Cihampelas No.160, Cipaganti, Kecamatan Coblong, Kota Bandung, Jawa Barat 40131",
+    placeName: "Cihampelas Walk",
+    latitude: -6.8949156,
+    longitude: 107.604329,
+    locationType: "MALL",
+    accessType: "PUBLIC",
+    description: "Tukarkan voucher di supermarket Cihampelas Walk.",
+    isActive: true,
   },
   {
     id: 2,
-    name: "EcoCash Box Asia Afrika",
-    type: "Drop Box",
-    address: "Jl. Asia Afrika No. 12, Sumur Bandung, Kota Bandung, 40111",
-    lat: -6.9218,
-    lng: 107.6062,
-    status: "Tutup",
-    openingHours: "Buka besok pukul 08:00 WIB",
-    availability: {
-      kaca: {
-        status: "Closed",
-        color: "text-rose-600",
-        bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
-      },
-      plastikKaleng: {
-        status: "Closed",
-        color: "text-rose-600",
-        bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
-      },
-    },
-    features: ["Self Service", "Refund via app (E-Wallet)"],
-    redeemInfo:
-      "Hanya melayani pencairan langsung ke aplikasi EcoCash. Pastikan barcode scan terbaca dengan jelas.",
-    gmapsLink: "https://maps.app.goo.gl/dummy2",
+    machineCode: "MCH-002",
+    name: "Machine Alun-Alun",
+    machineType: "STANDALONE",
+    status: "OPERATING",
+    fillLevel: "HALF_FULL",
+    currentWeight: 25,
+    maxWeight: 50,
+    fillPercentage: 50,
+    district: "Balonggede",
+    subdistrict: "Regol",
+    address: "Jl. Dalem Kaum, Balonggede, Regol, Kota Bandung",
+    placeName: "Alun-Alun Bandung",
+    latitude: -6.9213,
+    longitude: 107.6071,
+    locationType: "PUBLIC_SQUARE",
+    accessType: "PUBLIC",
+    description: "Berada di dekat gerbang masuk utama timur.",
+    isActive: true,
   },
   {
     id: 3,
-    name: "Smart RVM Alun-Alun Bandung",
-    type: "Machine",
-    address: "Jl. Dalem Kaum, Balonggede, Regol, Kota Bandung, 40251",
-    lat: -6.9213,
-    lng: 107.6071, // Berdekatan dengan id 1 dan 2 agar membentuk Cluster
-    status: "Buka Sekarang",
-    openingHours: "Tutup hari ini pukul 22:00 WIB",
-    availability: {
-      kaca: {
-        status: "Open",
-        color: "text-emerald-600",
-        bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
-      },
-      plastikKaleng: {
-        status: "Open",
-        color: "text-emerald-600",
-        bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
-      },
-    },
-    features: ["Self Service", "Donations available"],
-    redeemInfo:
-      "Mesin generasi terbaru ini menerima segala jenis kemasan botol plastik dan kaleng tanpa perlu dipilah manual.",
-    gmapsLink: "https://maps.app.goo.gl/dummy3",
+    machineCode: "MCH-003",
+    name: "Machine Braga",
+    machineType: "CONTAINER",
+    status: "MAINTENANCE",
+    fillLevel: "FULL",
+    currentWeight: 50,
+    maxWeight: 50,
+    fillPercentage: 100,
+    district: "Braga",
+    subdistrict: "Sumur Bandung",
+    address: "Jl. Braga No. 99-101, Sumur Bandung, Kota Bandung",
+    placeName: "Braga CityWalk",
+    latitude: -6.9175,
+    longitude: 107.609,
+    locationType: "MALL",
+    accessType: "PUBLIC",
+    description: "Mesin sedang dalam perawatan rutin.",
+    isActive: false,
   },
 ];
 

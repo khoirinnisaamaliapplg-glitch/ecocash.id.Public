@@ -52,7 +52,7 @@ export default function Navbar() {
                 {/* Dropdown Content */}
                 {activeDropdown === index && (
                   <div className="absolute top-full left-0 pt-3 w-64 z-50">
-                    <div className="bg-white/95 backdrop-blur-xl border border-slate-100 shadow-xl shadow-slate-200/60 rounded-3xl p-3 flex flex-col gap-1 relative overflow-hidden">
+                    <div className="bg-white/95 backdrop-blur-sm border border-slate-100 shadow-sm shadow-slate-200/60 rounded-3xl p-3 flex flex-col gap-1 relative overflow-hidden">
                       {/* Aksen Garis Kombinasi Hijau-Biru Booth Pameran */}
                       <div className="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-eco-primary to-eco-cyan"></div>
 
@@ -98,7 +98,7 @@ export default function Navbar() {
               href="https://wa.me/6281214161614"
               target="_blank"
               rel="noreferrer"
-              className="bg-eco-primary hover:bg-eco-secondary shadow-led-glow text-white px-7 py-3 rounded-full font-heading font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2"
+              className="bg-eco-cyan hover:bg-eco-cyan/80 shadow-led-glow text-white px-7 py-3 rounded-full font-heading font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2"
             >
               <span>WhatsApp kami</span>
             </a>

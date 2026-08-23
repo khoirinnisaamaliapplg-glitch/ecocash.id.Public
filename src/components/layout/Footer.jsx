@@ -7,7 +7,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-16 border-t-[6px] border-eco-secondary relative overflow-hidden">
+    <footer className="bg-slate-900 text-slate-300 py-16 border-t-[2px] border-eco-secondary relative overflow-hidden">
       {/* Dekorasi aksen di sudut */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-eco-secondary/10 blur-[80px] rounded-full pointer-events-none"></div>
 
