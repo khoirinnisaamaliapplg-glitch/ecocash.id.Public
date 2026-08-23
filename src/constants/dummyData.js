@@ -10,38 +10,101 @@ export const NAV_ITEMS = [
   {
     name: "Cara Kerja",
     submenu: [
-      { label: "Panduan Daur Ulang", url: "#guidelines" },
-      { label: "Jenis Sampah Diterima", url: "#refund-types" },
-      { label: "Tanya Jawab (FAQ)", url: "#faq" },
+      {
+        label: "Untuk Pengguna",
+        text: "Mulai daur ulang dan kumpulkan poin",
+        url: "#for-users",
+      },
+      {
+        label: "Pengelolaan Lokasi",
+        text: "Manajemen titik RVM dan Area",
+        url: "#location-management",
+      },
+      {
+        label: "Mitra Lapangan",
+        text: "Proses penjemputan dan distribusi",
+        url: "#field-partners",
+      },
+      {
+        label: "Teknologi RVM & AI",
+        text: "Cara kerja sensor dan sistem cerdas",
+        url: "#technology",
+      },
     ],
   },
   {
     name: "Solusi",
     submenu: [
-      { label: "Smart RVM", url: "#smart-rvm" },
-      { label: "EcoCash Box", url: "#revolution" },
-      { label: "Smart Truck", url: "#smart-truck" },
-      { label: "Layanan Bisnis", url: "#ecosystem" },
-      { label: "Request Custom RVM", url: "/request-rvm" },
+      {
+        label: "Koprasi & ESG",
+        text: "Solusi keberlanjutan untuk perusahaan",
+        url: "#cooperatives-esg",
+      },
+      {
+        label: "Sekolah & Kampus",
+        text: "Edukasi daur ulang di lingkungan pendidikan",
+        url: "#schools-universities",
+      },
+      {
+        label: "Ritel & Mall",
+        text: "Integrasi RVM dipusat pembelanjaan",
+        url: "#retail-malls",
+      },
+      {
+        label: "Kepemerintahan",
+        text: "Pengelolaan sampah di lingkungan daerah",
+        url: "#government",
+      },
     ],
   },
   {
     name: "Edukasi",
     submenu: [
-      { label: "Artikel Lingkungan", url: "#news" },
-      { label: "Berita Terbaru", url: "#news" },
-      { label: "Video Panduan", url: "#news" },
+      {
+        label: "Panduan Material",
+        text: "Jenis sampah yang bisa didaur ulang",
+        url: "#material-guides",
+      },
+      {
+        label: "EcoCash Akademi",
+        text: "Pelatihan dan sertifikasi daur ulang",
+        url: "#academy",
+      },
+      {
+        label: "Kalkulator Karbon",
+        text: "Hitung jejak karbon",
+        url: "#carbon-calculator",
+      },
+      {
+        label: "Program Donasi",
+        text: "Salurkan poin untuk kegiatan alam",
+        url: "#donation-programs",
+      },
     ],
   },
   {
     name: "Partner",
     submenu: [
-      { label: "Lokasi Drop Point", url: "#location-map" },
-      { label: "Mitra Korporat", url: "#ecosystem" },
-      { label: "Gabung Menjadi Mitra", url: "#community" },
-      { label: "Industri Recyler & Offtaker", url: "/industries" },
-      { label: "Bank Sampah & Hub Partnership", url: "/bank-sampah" },
-      { label: "Mitra Penjemputan (collector)", url: "/collector" },
+      {
+        label: "Mitra Penjemput",
+        text: "Gabung sebagai mitra penjemput",
+        url: "/collector",
+      },
+      {
+        label: "Industri Recyler",
+        text: "Mitra Pengelolaan hasil daur ulang",
+        url: "/industries",
+      },
+      {
+        label: "Bank Sampah",
+        text: "Jaringan pengelolaan sampah lokal",
+        url: "/bank-sampah",
+      },
+      {
+        label: "Daftar Kemitraan",
+        text: "Informasi pendaftaran partner baru",
+        url: "/partnership",
+      },
     ],
   },
 ];

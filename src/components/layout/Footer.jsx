@@ -7,7 +7,7 @@ import React from "react";
 
 export default function Footer() {
   return (
-    <footer className="bg-slate-900 text-slate-300 py-16 border-t-[2px] border-eco-secondary relative overflow-hidden">
+    <footer className="bg-slate-200 text-slate-300 py-16 shadow-sm relative overflow-hidden">
       {/* Dekorasi aksen di sudut */}
       <div className="absolute top-0 right-0 w-64 h-64 bg-eco-secondary/10 blur-[80px] rounded-full pointer-events-none"></div>
 
@@ -16,90 +16,22 @@ export default function Footer() {
           {/* Logo & About */}
           <div className="space-y-6">
             <img
-              src={"img/logo-ecocash-2.png"}
+              src={"img/logo.png"}
               alt="EcoCash by Ideas Edvolution"
               className="h-12 bg-white/10 p-1.5 rounded-2xl backdrop-blur-sm"
             />
-            <p className="text-slate-400 text-sm leading-relaxed font-body pr-4">
+            <p className="text-slate-600 text-sm leading-relaxed font-body pr-4">
               EcoCash: Solusi Modern untuk Pengelolaan Sampah yang Transparan,
               Berkelanjutan, dan Bernilai Ekonomi.
             </p>
-            <div className="flex space-x-4 space-y-1 flex-wrap items-center">
-              {/* LinkedIn */}
-              <a
-                href="#linkedin"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/link.png"}
-                  alt="LinkedIn"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a>
-              {/* Instagram */}
-              <a
-                href="#instagram"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/Instagram.png"}
-                  alt="IG"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a>
-              {/* Twitter */}
-              <a
-                href="#twitter"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/Twitter.png"}
-                  alt="Twitter"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a>
-              {/* Facebook */}
-              <a
-                href="#facebook"
-                className="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/Facebook.png"}
-                  alt="Facebook"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a>
-              {/* TikTok */}
-              <a
-                href="#tiktok"
-                className="w-10 h-10 rounded-full mt-0.5 bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/TikTok.png"}
-                  alt="TT"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a>
-              {/* YouTube */}
-              <a
-                href="#youtube"
-                className="w-10 h-10 rounded-full mt-0.5 bg-slate-800 flex items-center justify-center hover:bg-eco-secondary hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/YouTube.png"}
-                  alt="YT"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a>
-            </div>
           </div>
 
           {/* Navigasi Layanan */}
           <div>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-heading">
+            <h4 className="font-bold text-slate-900 mb-6 uppercase tracking-wider text-sm font-heading">
               Layanan
             </h4>
-            <ul className="space-y-4 text-sm font-body">
+            <ul className="text-slate-400 space-y-4 text-sm font-body">
               <li>
                 <a
                   href="#app"
@@ -141,10 +73,10 @@ export default function Footer() {
 
           {/* Perusahaan */}
           <div>
-            <h4 className="font-bold text-white mb-6 uppercase tracking-wider text-sm font-heading">
+            <h4 className="font-bold text-slate-900 mb-6 uppercase tracking-wider text-sm font-heading">
               Perusahaan
             </h4>
-            <ul className="space-y-4 text-sm font-body">
+            <ul className="text-slate-400 space-y-4 text-sm font-body">
               <li>
                 <a
                   href="#about"
@@ -183,42 +115,98 @@ export default function Footer() {
           {/* Kontak & Download */}
           <div className="space-y-8">
             <div>
-              <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-sm font-heading">
+              <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
                 Hubungi Kami
               </h4>
               <ul className="space-y-2 text-sm font-body text-slate-400">
                 <li>
-                  <strong className="text-slate-300">WA:</strong> +62
+                  <strong className="text-slate-600">WA:</strong> +62
                   812-1416-1614
                 </li>
                 <li>
-                  <strong className="text-slate-300">Email:</strong>{" "}
+                  <strong className="text-slate-600">Email:</strong>{" "}
                   info@edvolution-technology.com
                 </li>
               </ul>
-            </div>
-            <div>
-              <h4 className="font-bold text-white mb-4 uppercase tracking-wider text-sm font-heading">
-                Unduh Aplikasi
-              </h4>
-              <a
-                href="#download"
-                className="inline-block hover:opacity-80 transition-opacity"
-              >
-                <img
-                  src={"img/apk.png"}
-                  className="h-10"
-                  alt="Get it on Google Play"
-                />
-              </a>
             </div>
           </div>
         </div>
 
         {/* Rekening & Copyright */}
-        <div className="pt-8 border-t border-slate-800 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 font-body text-sm text-slate-500">
-          <div className="bg-slate-800/50 p-5 rounded-3xl border border-slate-700/50">
-            <p className="font-semibold text-slate-300 font-heading mb-1">
+        <div className="pt-4 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 font-body text-sm text-slate-500">
+          <div className=" p-5 ">
+            <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
+              Sosial Media
+            </h4>
+            <div className="flex space-x-4 space-y-1 flex-wrap items-center mb-2">
+              {/* LinkedIn */}
+              {/* <a
+                href="#linkedin"
+                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-eco-cyan transition-colors duration-300"
+              >
+                <img
+                  src={"img/link.png"}
+                  alt="LinkedIn"
+                  className="w-5 h-5 opacity-70 hover:opacity-100"
+                />
+              </a> */}
+              {/* Instagram */}
+              <a
+                href="#instagram"
+                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
+              >
+                <img
+                  src={"img/Instagram.png"}
+                  alt="IG"
+                  className="w-5 h-5 opacity-70 hover:opacity-100"
+                />
+              </a>
+              {/* Twitter */}
+              {/* <a
+                href="#twitter"
+                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
+              >
+                <img
+                  src={"img/Twitter.png"}
+                  alt="Twitter"
+                  className="w-5 h-5 opacity-70 hover:opacity-100"
+                />
+              </a> */}
+              {/* Facebook */}
+              {/* <a
+                href="#facebook"
+                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
+              >
+                <img
+                  src={"img/Facebook.png"}
+                  alt="Facebook"
+                  className="w-5 h-5 opacity-70 hover:opacity-100"
+                />
+              </a> */}
+              {/* TikTok */}
+              <a
+                href="#tiktok"
+                className="w-10 h-10 rounded-full mt-0.5 bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
+              >
+                <img
+                  src={"img/TikTok.png"}
+                  alt="TT"
+                  className="w-5 h-5 opacity-70 hover:opacity-100"
+                />
+              </a>
+              {/* YouTube */}
+              <a
+                href="#youtube"
+                className="w-10 h-10 rounded-full mt-0.5 bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
+              >
+                <img
+                  src={"img/YouTube.png"}
+                  alt="YT"
+                  className="w-5 h-5 opacity-70 hover:opacity-100"
+                />
+              </a>
+            </div>
+            <p className="font-semibold text-eco-cyan font-heading mb-1">
               PT Ideas Edvolution Technology
             </p>
             <p>
@@ -231,11 +219,25 @@ export default function Footer() {
               (A.N. PT Ideas Edvolution Technology)
             </div>
           </div>
-
-          <div className="text-left lg:text-right">
-            <p>© 2026 PT Ideas Edvolution Technology.</p>
-            <p>Hak Cipta Dilindungi Undang-Undang.</p>
+          <div>
+            <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
+              Unduh Aplikasi
+            </h4>
+            <a
+              href="#download"
+              className="inline-block hover:opacity-80 transition-opacity"
+            >
+              <img
+                src={"img/apk.png"}
+                className="h-10"
+                alt="Get it on Google Play"
+              />
+            </a>
           </div>
+        </div>
+        <div className="text-slate-400 flex justify-center text-left lg:text-right pt-4 mt-4 border-t border-slate-300">
+          <p>© 2026 PT Ideas Edvolution Technology.</p>
+          <p>Hak Cipta Dilindungi Undang-Undang.</p>
         </div>
       </div>
     </footer>
