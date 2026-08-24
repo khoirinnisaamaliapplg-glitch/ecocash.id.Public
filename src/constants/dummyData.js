@@ -78,7 +78,7 @@ export const NAV_ITEMS = [
       {
         label: "Program Donasi",
         text: "Salurkan poin untuk kegiatan alam",
-        url: "#donation-programs",
+        url: "/donation-programs",
       },
     ],
   },

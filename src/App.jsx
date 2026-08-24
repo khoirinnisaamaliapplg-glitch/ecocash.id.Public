@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import IndustriesDetail from "./pages/IndustriesDetail";
 import BankSampahDetail from "./pages/BankSampahDetail";
 import MitraCollectorDetail from "./pages/MitraCollectorDetail";
+import ProgramDonasi from "./pages/ProgramDonasi";
 
 export default function App() {
   return (
@@ -34,6 +35,8 @@ export default function App() {
             <Route path="/bank-sampah" element={<BankSampahDetail />} />
             {/* Collector Detail Page */}
             <Route path="/collector" element={<MitraCollectorDetail />} />
+            {/* Program Donasi Page */}
+            <Route path="/donation-programs" element={<ProgramDonasi />} />
           </Routes>
         </div>
         <Footer />
