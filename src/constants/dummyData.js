@@ -68,7 +68,7 @@ export const NAV_ITEMS = [
       {
         label: "EcoCash Akademi",
         text: "Pelatihan dan sertifikasi daur ulang",
-        url: "#academy",
+        url: "/academy",
       },
       {
         label: "Kalkulator Karbon",
@@ -88,7 +88,7 @@ export const NAV_ITEMS = [
       {
         label: "Mitra Penjemput",
         text: "Gabung sebagai mitra penjemput",
-        url: "/collector",
+        url: "/mitra-penjemput",
       },
       {
         label: "Industri Recyler",
@@ -356,4 +356,58 @@ export const newsList = [
     content: `Ecocash.id kini hadir di Kota Surabaya, memberikan kemudahan bagi masyarakat untuk menukarkan sampah menjadi eco-refund digital. Dengan peluncuran ini, warga Surabaya dapat mengakses berbagai lokasi Smart RVM dan Drop Box yang tersebar di seluruh kota.
     Aplikasi Ecocash.id memungkinkan pengguna untuk memindai sampah mereka, mengetahui nilai eco-refund, dan mencairkannya ke e-wallet pilihan mereka. Inisiatif ini bertujuan untuk meningkatkan kesadaran lingkungan dan mendorong partisipasi aktif masyarakat dalam program daur ulang, sambil memberikan manfaat ekonomi bagi mereka yang berkontribusi pada pengelolaan sampah yang berkelanjutan.`,
   },
+];
+
+// EcoCash Academy Pages
+// Data Dummy Artikel
+export const ARTICLES = [
+  {
+    id: 1,
+    title: "Panduan Lengkap Memilah Plastik Tipe 1-7 di Rumah Tangga",
+    category: "Edukasi Pemilahan",
+    time: "5 min read",
+    img: "img/akademi-1.jpg",
+  },
+  {
+    id: 2,
+    title: "Memahami Cara Kerja Sensor Optik pada RVM EcoCash",
+    category: "Teknologi AI & IoT",
+    time: "7 min read",
+    img: "img/akademi-2.jpg",
+  },
+  {
+    id: 3,
+    title: "Bagaimana Bank Sampah Mekar Jaya Meningkatkan Efisiensi 300%",
+    category: "Cerita Mitra",
+    time: "6 min read",
+    img: "img/akademi-3.jpg",
+  },
+  {
+    id: 4,
+    title: "Nilai Ekonomis di Balik Tutup Botol HDPE: Jangan Dibuang...",
+    category: "Edukasi Pemilahan",
+    time: "4 min read",
+    img: "img/akademi-4.jpg",
+  },
+  {
+    id: 5,
+    title: "Menghitung Jejak Karbon Pribadi dengan Fitur Terbaru Aplikasi Kami",
+    category: "Inovasi Sirkular", // Sesuai dengan filter baru atau bisa dimasukkan ke 'Teknologi AI & IoT'
+    time: "5 min read",
+    img: "img/akademi-5.jpg",
+  },
+  {
+    id: 6,
+    title: "Dari Pengumpul ke Pemasok Industri: Perjalanan Pak Anton",
+    category: "Cerita Mitra",
+    time: "8 min read",
+    img: "img/akademi-6.jpg",
+  },
+];
+// Kategori Artikel untuk Filter di Halaman EcoCash Academy
+export const CATEGORIES = [
+  "Semua",
+  "Edukasi Pemilahan",
+  "Teknologi AI & IoT",
+  "Cerita Mitra",
 ];

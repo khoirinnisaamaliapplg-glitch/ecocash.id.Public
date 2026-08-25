@@ -31,7 +31,7 @@ export default function Footer() {
             <h4 className="font-bold text-slate-900 mb-6 uppercase tracking-wider text-sm font-heading">
               Layanan
             </h4>
-            <ul className="text-slate-400 space-y-4 text-sm font-body">
+            <ul className="text-slate-600 space-y-4 text-sm font-body">
               <li>
                 <a
                   href="#app"
@@ -76,7 +76,7 @@ export default function Footer() {
             <h4 className="font-bold text-slate-900 mb-6 uppercase tracking-wider text-sm font-heading">
               Perusahaan
             </h4>
-            <ul className="text-slate-400 space-y-4 text-sm font-body">
+            <ul className="text-slate-600 space-y-4 text-sm font-body">
               <li>
                 <a
                   href="#about"
@@ -118,7 +118,7 @@ export default function Footer() {
               <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
                 Hubungi Kami
               </h4>
-              <ul className="space-y-2 text-sm font-body text-slate-400">
+              <ul className="space-y-2 text-sm font-body text-slate-600">
                 <li>
                   <strong className="text-slate-600">WA:</strong> +62
                   812-1416-1614
