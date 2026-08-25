@@ -13,7 +13,7 @@ export default function IndustriesDetail() {
         {/* Background Image & Gradient Overlay */}
         <div className="absolute inset-0 z-0">
           <img
-            src="img/factory-bg.jpg"
+            src="img/bg-industri.png"
             alt="Fasilitas Daur Ulang Skala Industri"
             className="w-full h-full object-cover object-right"
             onError={(e) => {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-export default function MitraCollectorDetail() {
+export default function MitraPenjemput() {
   // State untuk Kalkulator Interaktif
   const [jemputPerHari, setJemputPerHari] = useState(5);
   const [kgPerSesi, setKgPerSesi] = useState(10);
@@ -62,7 +62,7 @@ export default function MitraCollectorDetail() {
             {/* Bagian Kanan: Mockup Aplikasi */}
             <div className="relative w-full flex justify-center lg:justify-end">
               <img
-                src="img/app-mockup.png" // Pastikan ada gambar mockup aplikasi di folder public/img
+                src="img/cth.png"
                 alt="EcoCash Partner App"
                 className="w-full max-w-md h-auto rounded-3xl shadow-2xl object-cover"
                 onError={(e) => {
