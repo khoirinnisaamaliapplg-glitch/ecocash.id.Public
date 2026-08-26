@@ -11,6 +11,8 @@ import BankSampahDetail from "./pages/BankSampahDetail";
 import MitraPenjemput from "./pages/MitraPenjemput";
 import ProgramDonasi from "./pages/ProgramDonasi";
 import EcoCashAkademi from "./pages/EcoCashAcademy";
+import KalkulatorKarbon from "./pages/KalkulatorKarbon";
+import PanduanMaterial from "./pages/PanduanMaterial";
 
 export default function App() {
   return (
@@ -42,6 +44,10 @@ export default function App() {
             <Route path="/donation-programs" element={<ProgramDonasi />} />
             {/* EcoCash Akademi Page */}
             <Route path="/academy" element={<EcoCashAkademi />} />
+            {/* Kalkulator Karbon Page */}
+            <Route path="/carbon-calculator" element={<KalkulatorKarbon />} />
+            {/* Panduan Material Page */}
+            <Route path="/material-guides" element={<PanduanMaterial />} />
           </Routes>
         </div>
         <Footer />

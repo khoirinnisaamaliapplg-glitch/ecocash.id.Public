@@ -63,7 +63,7 @@ export const NAV_ITEMS = [
       {
         label: "Panduan Material",
         text: "Jenis sampah yang bisa didaur ulang",
-        url: "#material-guides",
+        url: "/material-guides",
       },
       {
         label: "EcoCash Akademi",
@@ -73,7 +73,7 @@ export const NAV_ITEMS = [
       {
         label: "Kalkulator Karbon",
         text: "Hitung jejak karbon",
-        url: "#carbon-calculator",
+        url: "/carbon-calculator",
       },
       {
         label: "Program Donasi",
