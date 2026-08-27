@@ -38,22 +38,22 @@ export const NAV_ITEMS = [
       {
         label: "Koprasi & ESG",
         text: "Solusi keberlanjutan untuk perusahaan",
-        url: "#cooperatives-esg",
+        url: "/cooperatives-esg",
       },
       {
         label: "Sekolah & Kampus",
         text: "Edukasi daur ulang di lingkungan pendidikan",
-        url: "#schools-universities",
+        url: "/schools-universities",
       },
       {
         label: "Ritel & Mall",
         text: "Integrasi RVM dipusat pembelanjaan",
-        url: "#retail-malls",
+        url: "/retail-malls",
       },
       {
         label: "Kepemerintahan",
         text: "Pengelolaan sampah di lingkungan daerah",
-        url: "#government",
+        url: "/government",
       },
     ],
   },

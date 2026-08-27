@@ -13,6 +13,10 @@ import ProgramDonasi from "./pages/ProgramDonasi";
 import EcoCashAkademi from "./pages/EcoCashAcademy";
 import KalkulatorKarbon from "./pages/KalkulatorKarbon";
 import PanduanMaterial from "./pages/PanduanMaterial";
+import GovernmentSolution from "./pages/GovernmentSolution";
+import UniversitySchoolSolution from "./pages/UniversitySchoolSolution";
+import RetailMallSolution from "./pages/RetailMallSolution";
+import CorporationSolution from "./pages/CorporationSolution";
 
 export default function App() {
   return (
@@ -48,6 +52,19 @@ export default function App() {
             <Route path="/carbon-calculator" element={<KalkulatorKarbon />} />
             {/* Panduan Material Page */}
             <Route path="/material-guides" element={<PanduanMaterial />} />
+
+            {/* Solution menu list */}
+            {/* Government Solution Page */}
+            <Route path="/government" element={<GovernmentSolution />} />
+            {/* University/School Solution Page */}
+            <Route
+              path="/schools-universities"
+              element={<UniversitySchoolSolution />}
+            />
+            {/* Retail/Mall Solution Page */}
+            <Route path="/retail-malls" element={<RetailMallSolution />} />
+            {/* Corporation Solution Page */}
+            <Route path="/cooperatives-esg" element={<CorporationSolution />} />
           </Routes>
         </div>
         <Footer />
