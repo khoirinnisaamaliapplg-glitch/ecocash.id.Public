@@ -17,6 +17,10 @@ import GovernmentSolution from "./pages/GovernmentSolution";
 import UniversitySchoolSolution from "./pages/UniversitySchoolSolution";
 import RetailMallSolution from "./pages/RetailMallSolution";
 import CorporationSolution from "./pages/CorporationSolution";
+import CaraKerjaPengguna from "./pages/CaraKerjaPengguna";
+import CaraKerjaTeknologiRVM from "./pages/CaraKerjaTeknologiRVM";
+import CaraKerjaKelolaLokasi from "./pages/CaraKerjaKelolaLokasi";
+import CaraKerjaMitraLapangan from "./pages/CaraKerjaMitraLapangan";
 
 export default function App() {
   return (
@@ -65,6 +69,19 @@ export default function App() {
             <Route path="/retail-malls" element={<RetailMallSolution />} />
             {/* Corporation Solution Page */}
             <Route path="/cooperatives-esg" element={<CorporationSolution />} />
+
+            {/* Cara Kerja menu list */}
+            {/* Untuk Pengguna */}
+            <Route path="/for-users" element={<CaraKerjaPengguna />} />
+            <Route path="/technology" element={<CaraKerjaTeknologiRVM />} />
+            <Route
+              path="/location-management"
+              element={<CaraKerjaKelolaLokasi />}
+            />
+            <Route
+              path="/field-partners"
+              element={<CaraKerjaMitraLapangan />}
+            />
           </Routes>
         </div>
         <Footer />

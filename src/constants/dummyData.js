@@ -13,22 +13,22 @@ export const NAV_ITEMS = [
       {
         label: "Untuk Pengguna",
         text: "Mulai daur ulang dan kumpulkan poin",
-        url: "#for-users",
+        url: "for-users",
       },
       {
         label: "Pengelolaan Lokasi",
         text: "Manajemen titik RVM dan Area",
-        url: "#location-management",
+        url: "/location-management",
       },
       {
         label: "Mitra Lapangan",
         text: "Proses penjemputan dan distribusi",
-        url: "#field-partners",
+        url: "/field-partners",
       },
       {
         label: "Teknologi RVM & AI",
         text: "Cara kerja sensor dan sistem cerdas",
-        url: "#technology",
+        url: "/technology",
       },
     ],
   },
