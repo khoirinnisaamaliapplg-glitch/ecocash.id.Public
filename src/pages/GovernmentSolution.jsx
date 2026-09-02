@@ -89,7 +89,7 @@ export default function GovernmentSolution() {
 
               <div className="relative w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl shadow-slate-200/50 bg-white border border-slate-100">
                 <img
-                  src="img/dashboard-smartcity.png"
+                  src="img/hero-sg.jpg"
                   alt="Dashboard Smart City EcoCash"
                   className="w-full h-auto object-cover"
                   onError={(e) => {
