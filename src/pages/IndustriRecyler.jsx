@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 
-export default function IndustriesDetail() {
+export default function IndustriRecyler() {
   // Fungsi agar halaman otomatis di posisi atas saat baru dibuka
   useEffect(() => {
     window.scrollTo(0, 0);

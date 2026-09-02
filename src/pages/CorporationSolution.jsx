@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { dummyChartData } from "../constants/dummyData";
 
 export default function CorporationSolution() {
   // State untuk form inkuiri Korporasi
@@ -32,12 +33,12 @@ export default function CorporationSolution() {
       {/* 1. HERO SECTION (SESUAI DESAIN GAMBAR KORPORASI) */}
       <section className="relative pt-32 pb-20 lg:pt-40 lg:pb-32 overflow-hidden bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 lg:px-10">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-10 items-center">
             {/* Hero Teks */}
             <div className="max-w-xl relative z-10">
               <h1 className="text-4xl md:text-5xl lg:text-[46px] font-extrabold text-slate-900 font-heading leading-[1.25] mb-6 tracking-tight">
-                Wujudkan Target Nol Emisi & Kepatuhan ESG Perusahaan Bersama
-                EcoCash
+                Validasi Kepatuhan ESG & Target Nol Emisi Perusahaan Melalui{" "}
+                <span className="text-[#1eb5b1]">Solusi Berbasis Data</span>
               </h1>
 
               <p className="text-base sm:text-lg text-slate-500 font-body mb-10 leading-relaxed max-w-lg">
@@ -49,26 +50,136 @@ export default function CorporationSolution() {
 
               <a
                 href="#form-korporasi"
-                className="inline-flex items-center justify-center bg-eco-cyan hover:bg-[#1eb5b1] text-white px-8 py-3.5 rounded-lg font-heading font-bold text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-eco-cyan/30"
+                className="inline-flex items-center justify-center bg-[#1eb5b1] hover:bg-[#189693] text-white px-8 py-3.5 rounded-lg font-heading font-bold text-sm transition-all transform hover:-translate-y-0.5 shadow-lg shadow-[#1eb5b1]/30"
               >
                 Konsultasi Penempatan RVM
               </a>
             </div>
 
-            {/* Hero Gambar (Dashboard ESG Mockup) */}
+            {/* Hero Gambar Kanan Diganti Menjadi UI Dashboard Analitik Interaktif */}
             <div className="relative w-full flex justify-center lg:justify-end">
-              <div className="absolute top-1/2 right-10 -translate-y-1/2 w-80 h-80 bg-eco-cyan/15 blur-[90px] rounded-full -z-10"></div>
+              {/* Efek Glow di belakang dashboard */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-80 h-80 bg-[#1eb5b1]/15 blur-[80px] rounded-full -z-10"></div>
 
-              <div className="relative w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl shadow-slate-200/60 bg-white border border-slate-100">
-                <img
-                  src="img/dashboard-esg.png"
-                  alt="Dashboard ESG EcoCash"
-                  className="w-full h-auto object-cover"
-                  onError={(e) => {
-                    e.target.style.display = "none";
-                    e.target.parentElement.innerHTML = `<div class="w-full h-[400px] flex items-center justify-center bg-slate-50 text-slate-400 font-body text-sm text-center p-6 border-2 border-dashed border-slate-200 rounded-2xl">Siapkan gambar dashboard-esg.png<br/>di folder public/img</div>`;
-                  }}
-                />
+              <div className="w-full max-w-[500px] bg-white rounded-2xl border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.08)] p-6 md:p-8 flex flex-col gap-6 relative overflow-hidden">
+                {/* Header Dashboard */}
+                <div className="flex justify-between items-center border-b border-slate-100 pb-4">
+                  <div>
+                    <h3 className="text-lg font-bold font-heading text-slate-800">
+                      ESG Performance
+                    </h3>
+                    <p className="text-xs text-slate-500">
+                      Live Analytics • Data tersinkronisasi
+                    </p>
+                  </div>
+                  <div className="bg-[#e0f8f7] text-[#1eb5b1] px-3 py-1.5 rounded-full text-[11px] font-bold flex items-center gap-2 border border-[#1eb5b1]/20">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#1eb5b1] animate-pulse"></span>
+                    Real-time
+                  </div>
+                </div>
+
+                {/* Metrik Utama (KPI Cards) */}
+                <div className="grid grid-cols-2 gap-4">
+                  {/* KPI 1 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-[#1eb5b1]/30 transition-colors">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                      CO₂ Direduksi
+                    </p>
+                    <div className="flex items-end gap-1 mb-2">
+                      <h4 className="text-2xl font-bold font-heading text-slate-800 leading-none">
+                        3,450
+                      </h4>
+                      <span className="text-sm font-semibold text-slate-500 mb-0.5">
+                        kg
+                      </span>
+                    </div>
+                    <p className="text-xs text-emerald-600 flex items-center gap-1 font-medium">
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
+                          d="M5 10l7-7m0 0l7 7m-7-7v18"
+                        />
+                      </svg>
+                      12.5% bln ini
+                    </p>
+                  </div>
+
+                  {/* KPI 2 */}
+                  <div className="bg-slate-50 rounded-xl p-4 border border-slate-100 hover:border-[#1eb5b1]/30 transition-colors">
+                    <p className="text-[11px] font-bold text-slate-500 uppercase tracking-wider mb-1">
+                      Material Terkumpul
+                    </p>
+                    <div className="flex items-end gap-1 mb-2">
+                      <h4 className="text-2xl font-bold font-heading text-slate-800 leading-none">
+                        12.8
+                      </h4>
+                      <span className="text-sm font-semibold text-slate-500 mb-0.5">
+                        Ton
+                      </span>
+                    </div>
+                    <p className="text-xs text-emerald-600 flex items-center gap-1 font-medium">
+                      <svg
+                        className="w-3 h-3"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="3"
+                          d="M5 10l7-7m0 0l7 7m-7-7v18"
+                        />
+                      </svg>
+                      8.2% bln ini
+                    </p>
+                  </div>
+                </div>
+
+                {/* Bar Chart Sederhana (Tailwind) */}
+                <div className="mt-2">
+                  <div className="flex justify-between items-end mb-4">
+                    <p className="text-sm font-bold text-slate-800">
+                      Tren Penyerapan Karbon
+                    </p>
+                    <p className="text-xs text-slate-500">6 Bulan Terakhir</p>
+                  </div>
+
+                  {/* Grafik */}
+                  <div className="flex items-end justify-between gap-2 h-32 w-full pt-4">
+                    {dummyChartData.map((data, index) => (
+                      <div
+                        key={index}
+                        className="w-1/6 flex flex-col justify-end items-center gap-2 group relative"
+                      >
+                        {/* Tooltip Hover */}
+                        <div className="absolute -top-8 bg-slate-800 text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap z-20">
+                          {data.label}
+                        </div>
+
+                        {/* Bar */}
+                        <div
+                          className={`w-full rounded-t-md transition-all duration-500 ${index === dummyChartData.length - 1 ? "bg-[#1eb5b1]" : "bg-slate-200 group-hover:bg-[#1eb5b1]/50"}`}
+                          style={{ height: `${data.value}%` }}
+                        ></div>
+
+                        {/* Label Bulan */}
+                        <span
+                          className={`text-[10px] ${index === dummyChartData.length - 1 ? "font-bold text-slate-800" : "font-medium text-slate-400"}`}
+                        >
+                          {data.month}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -262,7 +373,7 @@ export default function CorporationSolution() {
                     value={formData.perusahaan}
                     onChange={handleInputChange}
                     placeholder="PT. Inovasi Hijau"
-                    className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-eco-cyan focus:ring-2 focus:ring-eco-cyan/20 transition-all text-sm font-body"
+                    className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-[#1eb5b1] focus:ring-2 focus:ring-[#1eb5b1]/20 transition-all text-sm font-body"
                     required
                   />
                 </div>
@@ -275,7 +386,7 @@ export default function CorporationSolution() {
                       name="karyawan"
                       value={formData.karyawan}
                       onChange={handleInputChange}
-                      className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-eco-cyan focus:ring-2 focus:ring-eco-cyan/20 transition-all text-sm font-body appearance-none"
+                      className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-[#1eb5b1] focus:ring-2 focus:ring-[#1eb5b1]/20 transition-all text-sm font-body appearance-none"
                       required
                     >
                       <option value="" disabled>
@@ -318,7 +429,7 @@ export default function CorporationSolution() {
                   value={formData.kota}
                   onChange={handleInputChange}
                   placeholder="Contoh: Jakarta Selatan"
-                  className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-eco-cyan focus:ring-2 focus:ring-eco-cyan/20 transition-all text-sm font-body"
+                  className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-[#1eb5b1] focus:ring-2 focus:ring-[#1eb5b1]/20 transition-all text-sm font-body"
                   required
                 />
               </div>
@@ -335,7 +446,7 @@ export default function CorporationSolution() {
                     value={formData.namaPic}
                     onChange={handleInputChange}
                     placeholder="Nama Lengkap"
-                    className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-eco-cyan focus:ring-2 focus:ring-eco-cyan/20 transition-all text-sm font-body"
+                    className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-[#1eb5b1] focus:ring-2 focus:ring-[#1eb5b1]/20 transition-all text-sm font-body"
                     required
                   />
                 </div>
@@ -349,7 +460,7 @@ export default function CorporationSolution() {
                     value={formData.whatsapp}
                     onChange={handleInputChange}
                     placeholder="+62 812 3456 7890"
-                    className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-eco-cyan focus:ring-2 focus:ring-eco-cyan/20 transition-all text-sm font-body"
+                    className="w-full bg-slate-50 border border-slate-200 py-3.5 px-4 rounded-xl focus:outline-none focus:border-[#1eb5b1] focus:ring-2 focus:ring-[#1eb5b1]/20 transition-all text-sm font-body"
                     required
                   />
                 </div>
@@ -359,7 +470,7 @@ export default function CorporationSolution() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  className="w-full bg-eco-cyan hover:bg-[#1eb5b1] text-white py-4 rounded-xl font-heading font-bold text-sm transition-all shadow-lg shadow-eco-cyan/20 flex items-center justify-center gap-2"
+                  className="w-full bg-[#1eb5b1] hover:bg-[#189693] text-white py-4 rounded-xl font-heading font-bold text-sm transition-all shadow-lg shadow-[#1eb5b1]/20 flex items-center justify-center gap-2"
                 >
                   Kirim Permintaan Konsultasi
                 </button>

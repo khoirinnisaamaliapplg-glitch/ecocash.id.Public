@@ -13,7 +13,7 @@ export const NAV_ITEMS = [
       {
         label: "Untuk Pengguna",
         text: "Mulai daur ulang dan kumpulkan poin",
-        url: "for-users",
+        url: "/for-users",
       },
       {
         label: "Pengelolaan Lokasi",
@@ -410,4 +410,14 @@ export const CATEGORIES = [
   "Edukasi Pemilahan",
   "Teknologi AI & IoT",
   "Cerita Mitra",
+];
+
+// Data Dummy untuk simulasi chart (Nantinya diganti dengan state dari API Backend)
+export const dummyChartData = [
+  { month: "Apr", value: 30, label: "300 kg" },
+  { month: "Mei", value: 45, label: "450 kg" },
+  { month: "Jun", value: 35, label: "350 kg" },
+  { month: "Jul", value: 60, label: "600 kg" },
+  { month: "Ags", value: 80, label: "800 kg" },
+  { month: "Sep", value: 95, label: "950 kg" },
 ];

@@ -6,8 +6,9 @@ import RequestRvm from "./pages/RequestRvm";
 import NewsDetail from "./pages/NewsDetail";
 import Footer from "./components/layout/Footer";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import IndustriesDetail from "./pages/IndustriesDetail";
-import BankSampahDetail from "./pages/BankSampahDetail";
+import DaftarKemitraan from "./pages/DaftarKemitraan";
+import IndustriRecyler from "./pages/IndustriRecyler";
+import BankSampah from "./pages/BankSampah";
 import MitraPenjemput from "./pages/MitraPenjemput";
 import ProgramDonasi from "./pages/ProgramDonasi";
 import EcoCashAkademi from "./pages/EcoCashAcademy";
@@ -40,10 +41,12 @@ export default function App() {
             <Route path="/request-rvm" element={<RequestRvm />} />
 
             {/* Partner Pages List */}
+            {/* Daftar Kemitraan Page */}
+            <Route path="/partnership" element={<DaftarKemitraan />} />
             {/* Industries Detail Page */}
-            <Route path="/industries" element={<IndustriesDetail />} />
+            <Route path="/industries" element={<IndustriRecyler />} />
             {/* Bank Sampah Detail Page */}
-            <Route path="/bank-sampah" element={<BankSampahDetail />} />
+            <Route path="/bank-sampah" element={<BankSampah />} />
             {/* Collector Detail Page */}
             <Route path="/mitra-penjemput" element={<MitraPenjemput />} />
 
