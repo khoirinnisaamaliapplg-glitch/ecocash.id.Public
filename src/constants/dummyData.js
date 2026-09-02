@@ -13,22 +13,22 @@ export const NAV_ITEMS = [
       {
         label: "Untuk Pengguna",
         text: "Mulai daur ulang dan kumpulkan poin",
-        url: "#for-users",
+        url: "for-users",
       },
       {
         label: "Pengelolaan Lokasi",
         text: "Manajemen titik RVM dan Area",
-        url: "#location-management",
+        url: "/location-management",
       },
       {
         label: "Mitra Lapangan",
         text: "Proses penjemputan dan distribusi",
-        url: "#field-partners",
+        url: "/field-partners",
       },
       {
         label: "Teknologi RVM & AI",
         text: "Cara kerja sensor dan sistem cerdas",
-        url: "#technology",
+        url: "/technology",
       },
     ],
   },
@@ -38,22 +38,22 @@ export const NAV_ITEMS = [
       {
         label: "Koprasi & ESG",
         text: "Solusi keberlanjutan untuk perusahaan",
-        url: "#cooperatives-esg",
+        url: "/cooperatives-esg",
       },
       {
         label: "Sekolah & Kampus",
         text: "Edukasi daur ulang di lingkungan pendidikan",
-        url: "#schools-universities",
+        url: "/schools-universities",
       },
       {
         label: "Ritel & Mall",
         text: "Integrasi RVM dipusat pembelanjaan",
-        url: "#retail-malls",
+        url: "/retail-malls",
       },
       {
         label: "Kepemerintahan",
         text: "Pengelolaan sampah di lingkungan daerah",
-        url: "#government",
+        url: "/government",
       },
     ],
   },
@@ -63,7 +63,7 @@ export const NAV_ITEMS = [
       {
         label: "Panduan Material",
         text: "Jenis sampah yang bisa didaur ulang",
-        url: "#material-guides",
+        url: "/material-guides",
       },
       {
         label: "EcoCash Akademi",
@@ -73,7 +73,7 @@ export const NAV_ITEMS = [
       {
         label: "Kalkulator Karbon",
         text: "Hitung jejak karbon",
-        url: "#carbon-calculator",
+        url: "/carbon-calculator",
       },
       {
         label: "Program Donasi",
