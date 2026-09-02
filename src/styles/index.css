@@ -1,0 +1,48 @@
+/* Google Fonts */
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Outfit:wght@500;600;700;800&display=swap");
+
+/* Tailwind CSS */
+@import "tailwindcss";
+
+/* 1. Gunakan @theme untuk mendaftarkan warna kustom agar menjadi class Tailwind */
+@theme {
+  /* --color-eco-dark: #064e3b;
+  --color-eco-light: #0d9488;
+  --color-sky-accent: #0ea5e9;
+  --color-sunset-orange: #f97316; */
+
+  /* Palet Utama Baru EcoCash (Earthy & Modern Tech) */
+  --color-eco-primary: #387f79; /* Muted Sea Green (Tombol Utama / Teks Heading) */
+  --color-eco-secondary: #76b2a8; /* Soft Teal (Banner / Background Section Lembut) */
+  --color-eco-accent: #d57934; /* Terracotta Orange (Tombol CTA / Highlight / Peringatan) */
+  --color-eco-lime: #c8d743; /* Lime Green (Aksen Sukses / Dekorasi Modern) */
+  --color-eco-cyan: #28c9c4; /* Bright Cyan (Aksen Garis / Efek Glow) */
+
+  /* Konfigurasi Font Kustom Baru */
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+}
+
+/* 2. Kustomisasi Scrollbar dan Shadow dimasukkan ke layer utilities */
+@layer utilities {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+
+  /* Efek LED Glow */
+  .shadow-led-glow {
+    box-shadow: 0 0 15px rgba(40, 201, 196, 0.4);
+  }
+}
