@@ -1,10 +1,3 @@
-import berita1 from "../../public/img/berita-1.png";
-import berita2 from "../../public/img/berita-2.png";
-import berita3 from "../../public/img/berita-3.png";
-import berita4 from "../../public/img/berita-4.png";
-import berita5 from "../../public/img/berita-5.png";
-import berita6 from "../../public/img/berita-6.png";
-
 // Data Menu Navigasi Utama & Submenu
 export const NAV_ITEMS = [
   {
@@ -36,7 +29,7 @@ export const NAV_ITEMS = [
     name: "Solusi",
     submenu: [
       {
-        label: "Koprasi & ESG",
+        label: "Koperasi & ESG",
         text: "Solusi keberlanjutan untuk perusahaan",
         url: "/cooperatives-esg",
       },
@@ -47,11 +40,11 @@ export const NAV_ITEMS = [
       },
       {
         label: "Ritel & Mall",
-        text: "Integrasi RVM dipusat pembelanjaan",
+        text: "Integrasi RVM di pusat perbelanjaan",
         url: "/retail-malls",
       },
       {
-        label: "Kepemerintahan",
+        label: "Pemerintahan",
         text: "Pengelolaan sampah di lingkungan daerah",
         url: "/government",
       },
@@ -91,8 +84,8 @@ export const NAV_ITEMS = [
         url: "/mitra-penjemput",
       },
       {
-        label: "Industri Recyler",
-        text: "Mitra Pengelolaan hasil daur ulang",
+        label: "Industri Recycler",
+        text: "Mitra pengelolaan hasil daur ulang",
         url: "/industries",
       },
       {
@@ -133,94 +126,7 @@ export const FAQ_DATA = [
   },
 ];
 
-// Data Lokasi RVM & EcoCash Box (Diperbarui untuk Fitur Cluster & Detail Lengkap)
-// export const LOCATION_DATA = [
-//   {
-//     id: 1,
-//     name: "Smart RVM Braga CityWalk",
-//     type: "Machine",
-//     address: "Jl. Braga No. 99-101, Sumur Bandung, Kota Bandung, 40111",
-//     lat: -6.9175,
-//     lng: 107.609,
-//     status: "Buka Sekarang",
-//     openingHours: "Buka 24 Jam",
-//     availability: {
-//       kaca: {
-//         status: "Open",
-//         color: "text-emerald-600",
-//         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
-//       },
-//       plastikKaleng: {
-//         status: "Almost Full",
-//         color: "text-eco-accent",
-//         bars: ["bg-eco-accent", "bg-eco-accent", "bg-slate-200"],
-//       },
-//     },
-//     features: [
-//       "Self Service",
-//       "Refund via app (E-Wallet)",
-//       "Cash refund voucher*",
-//       "Donations available",
-//     ],
-//     redeemInfo:
-//       "Voucher dari mesin ini dapat ditukarkan dengan uang tunai atau potongan belanja di kasir Braga CityWalk Supermarket.",
-//     gmapsLink: "https://maps.app.goo.gl/dummy1",
-//   },
-//   {
-//     id: 2,
-//     name: "EcoCash Box Asia Afrika",
-//     type: "Drop Box",
-//     address: "Jl. Asia Afrika No. 12, Sumur Bandung, Kota Bandung, 40111",
-//     lat: -6.9218,
-//     lng: 107.6062,
-//     status: "Tutup",
-//     openingHours: "Buka besok pukul 08:00 WIB",
-//     availability: {
-//       kaca: {
-//         status: "Closed",
-//         color: "text-rose-600",
-//         bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
-//       },
-//       plastikKaleng: {
-//         status: "Closed",
-//         color: "text-rose-600",
-//         bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
-//       },
-//     },
-//     features: ["Self Service", "Refund via app (E-Wallet)"],
-//     redeemInfo:
-//       "Hanya melayani pencairan langsung ke aplikasi EcoCash. Pastikan barcode scan terbaca dengan jelas.",
-//     gmapsLink: "https://maps.app.goo.gl/dummy2",
-//   },
-//   {
-//     id: 3,
-//     name: "Smart RVM Alun-Alun Bandung",
-//     type: "Machine",
-//     address: "Jl. Dalem Kaum, Balonggede, Regol, Kota Bandung, 40251",
-//     lat: -6.9213,
-//     lng: 107.6071, // Berdekatan dengan id 1 dan 2 agar membentuk Cluster
-//     status: "Buka Sekarang",
-//     openingHours: "Tutup hari ini pukul 22:00 WIB",
-//     availability: {
-//       kaca: {
-//         status: "Open",
-//         color: "text-emerald-600",
-//         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
-//       },
-//       plastikKaleng: {
-//         status: "Open",
-//         color: "text-emerald-600",
-//         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
-//       },
-//     },
-//     features: ["Self Service", "Donations available"],
-//     redeemInfo:
-//       "Mesin generasi terbaru ini menerima segala jenis kemasan botol plastik dan kaleng tanpa perlu dipilah manual.",
-//     gmapsLink: "https://maps.app.goo.gl/dummy3",
-//   },
-// ];
-
-// Data Mock menyerupai response API Backend yang sebenarnya
+// Data Mock Lokasi RVM & EcoCash Box
 export const LOCATION_DATA = [
   {
     id: 1,
@@ -294,7 +200,7 @@ export const newsList = [
     id: 1,
     author: "Tim EcoCash.id",
     date: "2024-06-15",
-    img: berita1,
+    img: "/img/berita-1.png",
     category: "Inovasi",
     title: "Sampah Plastik Jadi Rupiah",
     desc: "Ecocash.id resmi meluncurkan aplikasi inovatif yang memungkinkan masyarakat menukarkan sampah plastik langsung...",
@@ -305,7 +211,7 @@ export const newsList = [
     id: 2,
     author: "Tim EcoCash.id",
     date: "2024-06-20",
-    img: berita2,
+    img: "/img/berita-2.png",
     category: "Peluncuran",
     title: "Aplikasi Ecocash.id Resmi Rilis",
     desc: "Ecocash.id resmi meluncurkan aplikasi seluler pertamanya di Indonesia untuk mempermudah masyarakat...",
@@ -316,7 +222,7 @@ export const newsList = [
     id: 3,
     author: "Tim EcoCash.id",
     date: "2024-06-25",
-    img: berita3,
+    img: "/img/berita-3.png",
     category: "Kolaborasi",
     title: "Ecocash.id Gandeng Bank Sampah",
     desc: "Ecocash.id mengumumkan kolaborasi strategis dengan jaringan bank sampah lokal guna memperluas jangkauan...",
@@ -327,7 +233,7 @@ export const newsList = [
     id: 4,
     author: "Tim EcoCash.id",
     date: "2024-07-01",
-    img: berita4,
+    img: "/img/berita-4.png",
     category: "Ekspansi",
     title: "Perluas Jangkauan di Pulau Jawa",
     desc: "Ecocash.id kini hadir di lebih dari 100 titik di Pulau Jawa, memperluas akses masyarakat untuk menukarkan sampah...",
@@ -338,7 +244,7 @@ export const newsList = [
     id: 5,
     author: "Tim EcoCash.id",
     date: "2024-07-10",
-    img: berita5,
+    img: "/img/berita-5.png",
     category: "Peluncuran",
     title: "Ecocash Hadir di Kota Bandung",
     desc: "Ecocash.id kini hadir di Kota Bandung, memberikan kemudahan bagi masyarakat untuk menukarkan sampah...",
@@ -349,7 +255,7 @@ export const newsList = [
     id: 6,
     author: "Tim EcoCash.id",
     date: "2024-07-15",
-    img: berita6,
+    img: "/img/berita-6.png",
     category: "Peluncuran",
     title: "Ecocash Hadir di Kota Surabaya",
     desc: "Ecocash.id kini hadir di Kota Surabaya, memberikan kemudahan bagi masyarakat untuk menukarkan sampah...",
@@ -358,52 +264,52 @@ export const newsList = [
   },
 ];
 
-// EcoCash Academy Pages
-// Data Dummy Artikel
+// EcoCash Academy Pages - Data Dummy Artikel
 export const ARTICLES = [
   {
     id: 1,
     title: "Panduan Lengkap Memilah Plastik Tipe 1-7 di Rumah Tangga",
     category: "Edukasi Pemilahan",
     time: "5 min read",
-    img: "img/akademi-1.jpg",
+    img: "/img/akademi-1.jpg",
   },
   {
     id: 2,
     title: "Memahami Cara Kerja Sensor Optik pada RVM EcoCash",
     category: "Teknologi AI & IoT",
     time: "7 min read",
-    img: "img/akademi-2.jpg",
+    img: "/img/akademi-2.jpg",
   },
   {
     id: 3,
     title: "Bagaimana Bank Sampah Mekar Jaya Meningkatkan Efisiensi 300%",
     category: "Cerita Mitra",
     time: "6 min read",
-    img: "img/akademi-3.jpg",
+    img: "/img/akademi-3.jpg",
   },
   {
     id: 4,
     title: "Nilai Ekonomis di Balik Tutup Botol HDPE: Jangan Dibuang...",
     category: "Edukasi Pemilahan",
     time: "4 min read",
-    img: "img/akademi-4.jpg",
+    img: "/img/akademi-4.jpg",
   },
   {
     id: 5,
     title: "Menghitung Jejak Karbon Pribadi dengan Fitur Terbaru Aplikasi Kami",
-    category: "Inovasi Sirkular", // Sesuai dengan filter baru atau bisa dimasukkan ke 'Teknologi AI & IoT'
+    category: "Inovasi Sirkular",
     time: "5 min read",
-    img: "img/akademi-5.jpg",
+    img: "/img/akademi-5.jpg",
   },
   {
     id: 6,
     title: "Dari Pengumpul ke Pemasok Industri: Perjalanan Pak Anton",
     category: "Cerita Mitra",
     time: "8 min read",
-    img: "img/akademi-6.jpg",
+    img: "/img/akademi-6.jpg",
   },
 ];
+
 // Kategori Artikel untuk Filter di Halaman EcoCash Academy
 export const CATEGORIES = [
   "Semua",
@@ -412,7 +318,7 @@ export const CATEGORIES = [
   "Cerita Mitra",
 ];
 
-// Data Dummy untuk simulasi chart (Nantinya diganti dengan state dari API Backend)
+// Data Dummy untuk simulasi chart
 export const dummyChartData = [
   { month: "Apr", value: 30, label: "300 kg" },
   { month: "Mei", value: 45, label: "450 kg" },
