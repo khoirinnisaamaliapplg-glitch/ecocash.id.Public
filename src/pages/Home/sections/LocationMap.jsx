@@ -317,7 +317,7 @@ export default function LocationMap() {
             className="w-full h-full z-0"
           >
             <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+              attribution='&copy; <Link href="https://www.openstreetmap.org/copyright">OpenStreetMap</Link>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MapController selectedLoc={selectedLoc} />
