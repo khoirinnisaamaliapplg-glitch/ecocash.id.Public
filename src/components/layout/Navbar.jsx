@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { NAV_ITEMS } from "../../constants/dummyData";
 
 // Fungsi Pembantu untuk me-render Ikon Dinamis berdasarkan Label Menu
@@ -116,13 +117,16 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto flex items-center justify-between px-6 lg:px-10 py-4">
           {/* Logo EcoCash */}
           <div className="flex items-center shrink-0">
-            <a href="/" className="flex items-center gap-2 group relative z-50">
+            <Link
+              to="/"
+              className="flex items-center gap-2 group relative z-50"
+            >
               <img
                 src={"img/logo.png"}
                 alt="Logo EcoCash"
                 className="h-10 w-auto transition-transform duration-300 group-hover:scale-105"
               />
-            </a>
+            </Link>
           </div>
 
           {/* Menu Desktop (Layar LG ke atas) */}
