@@ -22,6 +22,7 @@ import CaraKerjaPengguna from "./pages/CaraKerjaPengguna";
 import CaraKerjaTeknologiRVM from "./pages/CaraKerjaTeknologiRVM";
 import CaraKerjaKelolaLokasi from "./pages/CaraKerjaKelolaLokasi";
 import CaraKerjaMitraLapangan from "./pages/CaraKerjaMitraLapangan";
+import AllNewsPage from "./pages/AllNewsPage";
 
 export default function App() {
   return (
@@ -32,9 +33,6 @@ export default function App() {
           <Routes>
             {/* Home Page */}
             <Route path="/" element={<Home />} />
-
-            {/* News Detail Page */}
-            <Route path="/news/:id" element={<NewsDetail />} />
 
             {/* Solusi Menu List */}
             {/* Request RVM Page */}
@@ -85,6 +83,12 @@ export default function App() {
               path="/field-partners"
               element={<CaraKerjaMitraLapangan />}
             />
+
+            {/* Detail Page */}
+            {/* News Detail Page */}
+            <Route path="/news/:id" element={<NewsDetail />} />
+            {/* All News Page */}
+            <Route path="/all-news" element={<AllNewsPage />} />
           </Routes>
         </div>
         <Footer />
