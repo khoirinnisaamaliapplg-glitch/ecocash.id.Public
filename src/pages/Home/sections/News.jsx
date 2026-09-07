@@ -17,8 +17,8 @@ export default function News() {
         </div>
 
         {/* Tombol Tampilkan Lebih Banyak (Desktop) */}
-        <a
-          href="#all-news"
+        <Link
+          to="/all-news"
           className="hidden md:flex text-eco-cyan font-heading font-bold items-center hover:text-eco-cyan transition-colors group"
         >
           Lihat Semua Berita
@@ -35,7 +35,7 @@ export default function News() {
               d="M17 8l4 4m0 0l-4 4m4-4H3"
             />
           </svg>
-        </a>
+        </Link>
       </div>
 
       {/* Grid Berita */}
@@ -72,12 +72,12 @@ export default function News() {
 
       {/* Tombol Tampilkan Lebih Banyak (Mobile) */}
       <div className="mt-10 text-center md:hidden">
-        <a
-          href="#all-news"
+        <Link
+          to="/all-news"
           className="inline-flex items-center justify-center bg-slate-50 text-eco-primary font-heading font-bold px-6 py-3 rounded-full border border-slate-200 hover:bg-slate-100 transition-colors w-full"
         >
           Lihat Semua Berita
-        </a>
+        </Link>
       </div>
     </section>
   );
