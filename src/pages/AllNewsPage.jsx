@@ -4,10 +4,39 @@ import { Link } from "react-router-dom";
 
 export default function AllNewsPage() {
   const [searchQuery, setSearchQuery] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 4; // Menampilkan 4 berita per halaman
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // LOGIKA 1: Filter berita berdasarkan input pencarian
+  const filteredNews = newsList.filter((news) => {
+    const searchLower = searchQuery.toLowerCase();
+    return (
+      news.title.toLowerCase().includes(searchLower) ||
+      news.desc.toLowerCase().includes(searchLower) ||
+      news.category.toLowerCase().includes(searchLower)
+    );
+  });
+
+  // Efek Samping: Kembalikan ke Halaman 1 setiap kali user mengetik pencarian baru
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchQuery]);
+
+  // LOGIKA 2: Pagination (Pemotongan Data)
+  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
+  const indexOfLastNews = currentPage * itemsPerPage;
+  const indexOfFirstNews = indexOfLastNews - itemsPerPage;
+  const currentNews = filteredNews.slice(indexOfFirstNews, indexOfLastNews);
+
+  // Fungsi navigasi halaman
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
+  const nextPage = () =>
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <main className="w-full min-h-screen bg-[#fafafc] font-body text-slate-700 pb-20">
@@ -44,80 +73,11 @@ export default function AllNewsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
           {/* LEFT COLUMN: BLOG GRID (2/3 Width) */}
           <div className="lg:col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {newsList.map((news) => (
-                <Link
-                  key={news.id}
-                  to={`/news/${news.id}`}
-                  className="bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-md transition-all duration-300 group flex flex-col h-full overflow-hidden"
-                >
-                  {/* Thumbnail & Badge */}
-                  <div className="relative h-56 overflow-hidden bg-slate-100">
-                    <img
-                      src={news.img}
-                      alt={news.title}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                      onError={(e) => {
-                        e.target.style.display = "none";
-                        e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center text-slate-400 text-sm">Gambar Artikel</div>`;
-                      }}
-                    />
-                    <div className="absolute top-4 right-4 bg-eco-cyan text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
-                      {news.category}
-                    </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6 md:p-8 flex flex-col flex-1">
-                    <h3 className="text-xl font-bold font-heading text-slate-900 mb-3 group-hover:text-eco-cyan transition-colors leading-snug">
-                      {news.title}
-                    </h3>
-                    <p className="text-sm text-slate-500 line-clamp-3 mb-6 flex-1 leading-relaxed">
-                      {news.desc}
-                    </p>
-
-                    {/* Meta & Footer Card */}
-                    <div className="flex items-center justify-between text-xs font-medium text-slate-400 pt-5 border-t border-slate-100">
-                      <div className="flex items-center gap-2">
-                        <svg
-                          className="w-4 h-4"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                          />
-                        </svg>
-                        {news.date}
-                      </div>
-                      <span className="text-eco-cyan font-bold group-hover:underline cursor-pointer">
-                        Baca Selengkapnya
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {/* Pagination Dummy */}
-            <div className="flex justify-center items-center gap-2 mt-12">
-              <button className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan transition-colors">
-                1
-              </button>
-              <button className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan transition-colors bg-eco-cyan text-white">
-                2
-              </button>
-              <button className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan transition-colors">
-                3
-              </button>
-              <span className="text-slate-400 px-2">...</span>
-              <button className="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan transition-colors">
+            {/* Validasi jika berita tidak ditemukan */}
+            {currentNews.length === 0 ? (
+              <div className="bg-white rounded-2xl border border-slate-100 p-10 text-center">
                 <svg
-                  className="w-4 h-4"
+                  className="w-16 h-16 mx-auto text-slate-300 mb-4"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -125,12 +85,147 @@ export default function AllNewsPage() {
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5l7 7-7 7"
+                    strokeWidth="1.5"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
-              </button>
-            </div>
+                <h3 className="text-xl font-bold font-heading text-slate-800 mb-2">
+                  Berita Tidak Ditemukan
+                </h3>
+                <p className="text-slate-500 font-body">
+                  Coba gunakan kata kunci pencarian yang berbeda.
+                </p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {currentNews.map((news) => (
+                  <Link
+                    to={`/news/${news.id}`}
+                    key={news.id}
+                    className="bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full overflow-hidden"
+                  >
+                    {/* Thumbnail & Badge */}
+                    <div className="relative h-56 overflow-hidden bg-slate-100">
+                      <img
+                        src={news.img}
+                        alt={news.title}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        onError={(e) => {
+                          e.target.style.display = "none";
+                          e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center text-slate-400 text-sm bg-slate-100">Gambar Artikel</div>`;
+                        }}
+                      />
+                      <div className="absolute top-4 right-4 bg-eco-cyan text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
+                        {news.category}
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-6 md:p-8 flex flex-col flex-1">
+                      <h3 className="text-xl font-bold font-heading text-slate-900 mb-3 group-hover:text-eco-cyan transition-colors leading-snug">
+                        {news.title}
+                      </h3>
+                      <p className="text-sm text-slate-500 line-clamp-3 mb-6 flex-1 leading-relaxed">
+                        {news.desc}
+                      </p>
+
+                      {/* Meta & Footer Card */}
+                      <div className="flex items-center justify-between text-xs font-medium text-slate-400 pt-5 border-t border-slate-100">
+                        <div className="flex items-center gap-2">
+                          <svg
+                            className="w-4 h-4"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth="2"
+                              d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                            />
+                          </svg>
+                          {news.date}
+                        </div>
+                        <span className="text-eco-cyan font-bold group-hover:underline cursor-pointer">
+                          Baca Selengkapnya
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+
+            {/* Pagination Controls Terintegrasi */}
+            {totalPages > 1 && (
+              <div className="flex justify-center items-center gap-2 mt-12">
+                {/* Tombol Previous */}
+                <button
+                  onClick={prevPage}
+                  disabled={currentPage === 1}
+                  className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                    currentPage === 1
+                      ? "border-slate-200 text-slate-300 bg-slate-50 cursor-not-allowed"
+                      : "border-slate-200 text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan"
+                  }`}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M15 19l-7-7 7-7"
+                    />
+                  </svg>
+                </button>
+
+                {/* Angka Halaman Dinamis */}
+                {[...Array(totalPages)].map((_, index) => (
+                  <button
+                    key={index}
+                    onClick={() => paginate(index + 1)}
+                    className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors font-semibold text-sm ${
+                      currentPage === index + 1
+                        ? "bg-eco-cyan text-white border-eco-cyan shadow-md"
+                        : "border-slate-200 text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan"
+                    }`}
+                  >
+                    {index + 1}
+                  </button>
+                ))}
+
+                {/* Tombol Next */}
+                <button
+                  onClick={nextPage}
+                  disabled={currentPage === totalPages}
+                  className={`w-10 h-10 rounded-full border flex items-center justify-center transition-colors ${
+                    currentPage === totalPages
+                      ? "border-slate-200 text-slate-300 bg-slate-50 cursor-not-allowed"
+                      : "border-slate-200 text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan"
+                  }`}
+                >
+                  <svg
+                    className="w-4 h-4"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M9 5l7 7-7 7"
+                    />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
 
           {/* RIGHT COLUMN: SIDEBAR (1/3 Width) */}
@@ -187,14 +282,15 @@ export default function AllNewsPage() {
               </form>
             </div>
 
-            {/* Widget 3: Latest Post */}
+            {/* Widget 3: Latest Post (Statis, hanya menampilkan 3 terbaru dari raw data) */}
             <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
               <h3 className="text-lg font-bold font-heading text-slate-900 mb-6 pb-4 border-b border-slate-100">
                 Postingan Terbaru
               </h3>
               <div className="space-y-5">
                 {newsList.slice(0, 3).map((news) => (
-                  <div
+                  <Link
+                    to={`/news/${news.id}`}
                     key={news.id}
                     className="flex gap-4 items-center group cursor-pointer"
                   >
@@ -214,7 +310,7 @@ export default function AllNewsPage() {
                         {news.date}
                       </p>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </div>

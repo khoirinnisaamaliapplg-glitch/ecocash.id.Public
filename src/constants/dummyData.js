@@ -327,3 +327,55 @@ export const dummyChartData = [
   { month: "Ags", value: 80, label: "800 kg" },
   { month: "Sep", value: 95, label: "950 kg" },
 ];
+
+// Data Dummy Customer Stories (Konteks EcoCash)
+export const CUSTOMER_STORIES = [
+  {
+    id: 1,
+    name: "Simon Amour",
+    role: "TECHNICAL DIRECTOR",
+    image: "img/avatar-1.jpg", // Pastikan menambahkan gambar avatar di public/img
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: "Robbie Lee",
+    role: "FOUNDER DIRECTOR",
+    image: "img/avatar-2.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: "Emma Aria",
+    role: "SENIOR TECHNICIAN",
+    image: "img/avatar-3.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 4,
+    name: "Lopes Mads",
+    role: "GENETIC SPECIALIST",
+    image: "img/avatar-4.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: "Stellar Jade",
+    role: "SENIOR TECHNICIAN",
+    image: "img/avatar-5.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: "Molly Rissa",
+    role: "GENETIC SPECIALIST",
+    image: "img/avatar-6.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+];

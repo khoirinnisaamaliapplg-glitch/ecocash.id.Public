@@ -23,6 +23,7 @@ import CaraKerjaTeknologiRVM from "./pages/CaraKerjaTeknologiRVM";
 import CaraKerjaKelolaLokasi from "./pages/CaraKerjaKelolaLokasi";
 import CaraKerjaMitraLapangan from "./pages/CaraKerjaMitraLapangan";
 import AllNewsPage from "./pages/AllNewsPage";
+import CustomerStoriesPage from "./pages/CustomerStoriesPage";
 
 export default function App() {
   return (
@@ -89,6 +90,7 @@ export default function App() {
             <Route path="/news/:id" element={<NewsDetail />} />
             {/* All News Page */}
             <Route path="/all-news" element={<AllNewsPage />} />
+            <Route path="/customer-stories" element={<CustomerStoriesPage />} />
           </Routes>
         </div>
         <Footer />
