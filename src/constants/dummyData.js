@@ -379,3 +379,75 @@ export const CUSTOMER_STORIES = [
     rating: 5,
   },
 ];
+
+// DATA DUMMY MATERIAL (Untuk Simulasi Search Engine)
+export const MATERIAL_DATA = [
+  {
+    id: 1,
+    name: "Botol Aqua / Le Minerale",
+    category: "Botol Plastik PET (Bening)",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 2,
+    name: "Botol Sprite / Pocari",
+    category: "Botol Plastik PET (Warna/Bening)",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 3,
+    name: "Kaleng Coca Cola / Bear Brand",
+    category: "Kaleng Minuman Aluminium",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 4,
+    name: "Botol Shampo / Sabun Cair",
+    category: "Botol Plastik HDPE",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 5,
+    name: "Kemasan Saset Kopi / Mie Instan",
+    category: "Plastik Saset/Pouch",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Mesin tidak dapat memproses plastik lembaran/fleksibel.",
+  },
+  {
+    id: 6,
+    name: "Botol Bekas Minyak Goreng",
+    category: "Botol Kotor/Berminyak",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Kontaminasi minyak merusak kualitas daur ulang.",
+  },
+  {
+    id: 7,
+    name: "Galon Air Minum (Aqua/Le Minerale)",
+    category: "Galon > 3L",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Ukuran melebihi kapasitas lubang masuk mesin (maksimal 3L).",
+  },
+  {
+    id: 8,
+    name: "Botol Kaca Sirup / Bir / Kecap",
+    category: "Botol Kaca",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "RVM kami belum mendukung material kaca.",
+  },
+  {
+    id: 9,
+    name: "Kotak Susu Ultra / Teh Kotak",
+    category: "Karton Minuman (Tetra Pak)",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Material komposit berlapis belum dapat diproses RVM ini.",
+  },
+];
