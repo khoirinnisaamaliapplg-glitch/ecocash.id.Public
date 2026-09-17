@@ -1,11 +1,11 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import EcoCashLanding from "./Beranda/welcome";
 import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home";
 import RequestRvm from "./pages/RequestRvm";
 import NewsDetail from "./pages/NewsDetail";
 import Footer from "./components/layout/Footer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DaftarKemitraan from "./pages/DaftarKemitraan";
 import IndustriRecyler from "./pages/IndustriRecyler";
 import BankSampah from "./pages/BankSampah";
