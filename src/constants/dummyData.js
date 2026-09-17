@@ -100,6 +100,9 @@ export const NAV_ITEMS = [
       },
     ],
   },
+  {
+    name: "Marketplace",
+  },
 ];
 
 // Data FAQ Interaktif
@@ -451,3 +454,42 @@ export const MATERIAL_DATA = [
     reason: "Material komposit berlapis belum dapat diproses RVM ini.",
   },
 ];
+
+// Data JSON (Decision Tree) untuk Alur Obrolan Bot
+export const botFlowData = {
+  start: {
+    message:
+      "Halo! Saya asisten virtual EcoCash. Apa yang ingin Anda eksplorasi hari ini?",
+    options: [
+      { label: "Informasi Penukaran Sampah", next: "penukaran" },
+      { label: "Kemitraan & Solusi ESG", next: "kemitraan" },
+      {
+        label: "Hubungi Customer Service",
+        action: "WHATSAPP",
+        url: "https://wa.me/6281214161614",
+      },
+    ],
+  },
+  penukaran: {
+    message:
+      "Anda dapat menukarkan botol plastik dan material lain di mesin RVM kami untuk mendapatkan eco-points. Apa yang ingin Anda ketahui lebih detail?",
+    options: [
+      { label: "Cara Kerja RVM", action: "LINK", url: "#smart-rvm" },
+      { label: "Cari Lokasi RVM", action: "LINK", url: "#location-map" },
+      { label: "Kembali ke Menu Awal", next: "start" },
+    ],
+  },
+  kemitraan: {
+    message:
+      "EcoCash menyediakan solusi komprehensif mulai dari pelaporan ESG Perusahaan hingga program Kampus Hijau.",
+    options: [
+      {
+        label: "Paket Smart School / Kampus",
+        action: "LINK",
+        url: "#paket-solusi",
+      },
+      { label: "Konsultasi Korporasi", action: "LINK", url: "#form-korporasi" },
+      { label: "Kembali ke Menu Awal", next: "start" },
+    ],
+  },
+};

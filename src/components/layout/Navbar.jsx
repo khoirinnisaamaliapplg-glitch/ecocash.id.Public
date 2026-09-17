@@ -134,7 +134,7 @@ export default function Navbar() {
             {NAV_ITEMS.map((item, index) => (
               <div
                 key={index}
-                className="relative group"
+                className="relative group cursor-pointer"
                 onMouseEnter={() => setActiveDropdown(index)}
                 onMouseLeave={() => setActiveDropdown(null)}
               >
@@ -147,23 +147,26 @@ export default function Navbar() {
                   }`}
                 >
                   {item.name}
-                  <svg
-                    className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === index ? "rotate-180 text-eco-cyan" : "text-slate-400 group-hover:text-eco-cyan"}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M19 9l-7 7-7-7"
-                    />
-                  </svg>
+
+                  {item.name !== "Marketplace" && (
+                    <svg
+                      className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === index ? "rotate-180 text-eco-cyan" : "text-slate-400 group-hover:text-eco-cyan"}`}
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="2"
+                        d="M19 9l-7 7-7-7"
+                      />
+                    </svg>
+                  )}
                 </button>
 
                 {/* Dropdown Content (Mega Menu Baru sesuai UI/UX) */}
-                {activeDropdown === index && (
+                {item.name !== "Marketplace" && activeDropdown === index && (
                   // Posisi di-center terhadap menu nav dengan -translate-x-1/2
                   <div className="absolute top-full left-1/2 -translate-x-1/2 pt-5 w-[600px] z-50 animate-fadeIn ">
                     <div className="bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 rounded-3xl p-6 relative overflow-hidden">
@@ -285,7 +288,7 @@ export default function Navbar() {
 
               <div className="flex flex-col space-y-2">
                 {NAV_ITEMS.map((item, idx) => (
-                  <div key={idx} className="flex flex-col">
+                  <div key={idx} className="flex flex-col cursor-pointer">
                     <button
                       onClick={() =>
                         setActiveSubMobile(activeSubMobile === idx ? null : idx)
@@ -293,22 +296,25 @@ export default function Navbar() {
                       className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all ${activeSubMobile === idx ? "bg-eco-cyan/10 text-eco-cyan" : "text-slate-700 hover:bg-slate-50"}`}
                     >
                       {item.name}
-                      <svg
-                        className={`w-5 h-5 transition-transform duration-300 ${activeSubMobile === idx ? "rotate-180" : ""}`}
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M19 9l-7 7-7-7"
-                        />
-                      </svg>
+
+                      {item.name !== "Marketplace" && (
+                        <svg
+                          className={`w-5 h-5 transition-transform duration-300 ${activeSubMobile === idx ? "rotate-180" : ""}`}
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M19 9l-7 7-7-7"
+                          />
+                        </svg>
+                      )}
                     </button>
 
-                    {activeSubMobile === idx && (
+                    {item.name !== "Marketplace" && activeSubMobile === idx && (
                       <div className="pl-4 pr-2 py-3 flex flex-col gap-3 border-l-2 border-eco-cyan/30 ml-6 mt-1 mb-2">
                         {item.submenu.map((sub, sIdx) => (
                           <a
