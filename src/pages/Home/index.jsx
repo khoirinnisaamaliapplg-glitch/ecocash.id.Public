@@ -1,8 +1,11 @@
 import React from "react";
 import Hero from "./sections/Hero";
 import AppPreview from "./sections/AppPreview";
+import Partner from "./sections/Partner";
 import SmartRvm from "./sections/SmartRvm";
 import BoxEcocash from "./sections/BoxEcocash";
+import CarbonDataPlatform from "./sections/CarbonDataPlatform";
+import Marketplace from "./sections/Marketplace";
 import SmartTruck from "./sections/SmartTruck";
 import LocationMap from "./sections/LocationMap";
 import RefundTypes from "./sections/RefundTypes";
@@ -21,34 +24,43 @@ export default function Home() {
       {/* 2. App Preview Section */}
       <AppPreview />
 
-      {/* 3. Smart RVM & Smart Containers Grid */}
+      {/* 4. Partner App Section */}
+      <Partner />
+
+      {/* 5. Smart RVM & Smart Containers Grid */}
       <SmartRvm />
 
-      {/* 4. Box Eco Cash */}
+      {/* 6. Box Eco Cash */}
       <BoxEcocash />
 
-      {/* 5. Smart Truck */}
+      {/* 7. Carbon Data Platform */}
+      <CarbonDataPlatform />
+
+      {/* 8. Marketplace */}
+      <Marketplace />
+
+      {/* 9. Smart Truck */}
       <SmartTruck />
 
-      {/* 6. Interactive Location Map */}
+      {/* 10. Interactive Location Map */}
       <LocationMap />
 
-      {/* 7. Refund Types (Jenis Pengembalian) */}
+      {/* 11. Refund Types (Jenis Pengembalian) */}
       <RefundTypes />
 
-      {/* 8. Ecosystem Banner & Overview */}
+      {/* 12. Ecosystem Banner & Overview */}
       <Ecosystem />
 
-      {/* 9. Community & Social Movement */}
+      {/* 13. Community & Social Movement */}
       <Community />
 
-      {/* 10. Guidelines (Panduan Kelayakan Barang Daur Ulang) */}
+      {/* 14. Guidelines (Panduan Kelayakan Barang Daur Ulang) */}
       <Guidelines />
 
-      {/* 11. News Section (Berita EcoCash.id) */}
+      {/* 15. News Section (Berita EcoCash.id) */}
       <News />
 
-      {/* 12. FAQ (Frequently Asked Questions - Accordion) */}
+      {/* 16. FAQ (Frequently Asked Questions - Accordion) */}
       <Faq />
     </main>
   );
