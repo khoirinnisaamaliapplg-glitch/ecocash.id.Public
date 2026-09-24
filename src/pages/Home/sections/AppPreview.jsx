@@ -1,13 +1,17 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function AppPreview() {
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24 relative overflow-hidden">
       <div className="container gap-2">
-        <span className="text-eco-cyan font-bold text-sm flex items-center gap-2 justify-self-end cursor-pointer hover:text-eco-cyan/70 transition-colors">
-          <p className="text-eco-cyan font-bold text-sm">Custumer story</p>
+        <Link
+          to={"/customer-stories"}
+          className="text-eco-cyan font-bold text-sm flex items-center gap-2 justify-self-end cursor-pointer hover:text-eco-cyan/70 transition-colors"
+        >
+          <p className="text-eco-cyan font-bold text-sm">Customer stories</p>
           <i className="fa-solid fa-arrow-right-long"></i>
-        </span>
+        </Link>
         <div className="row">
           {/* Ambient Glow Background */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-teal-500/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>

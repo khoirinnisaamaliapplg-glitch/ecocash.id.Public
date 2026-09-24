@@ -8,6 +8,7 @@ export default function UniversitySchoolSolution() {
     jabatan: "",
     whatsapp: "",
   });
+  const [paketTerpilih, setPaketTerpilih] = useState("green-campus");
 
   // Scroll otomatis ke atas saat halaman dimuat
   useEffect(() => {
@@ -208,8 +209,32 @@ export default function UniversitySchoolSolution() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 items-stretch">
           {/* Paket Kiri: Paket Smart School */}
-          <div className="bg-white p-10 rounded-[2rem] border border-slate-200 shadow-sm flex flex-col h-full transition-all duration-300 hover:-translate-y-2 hover:shadow-xl hover:border-eco-cyan/50 group cursor-default">
-            <h3 className="text-2xl font-bold font-heading text-slate-900 mb-2 group-hover:text-eco-cyan transition-colors duration-300">
+          <div
+            onClick={() => setPaketTerpilih("smart-school")}
+            className={`bg-white p-10 rounded-[2rem] border-2 flex flex-col h-full relative transition-all duration-300 cursor-pointer group ${
+              paketTerpilih === "smart-school"
+                ? "border-eco-cyan shadow-lg shadow-eco-cyan/15 -translate-y-2"
+                : "border-slate-200 shadow-sm hover:-translate-y-2 hover:shadow-xl hover:border-eco-cyan/50"
+            }`}
+          >
+            {/* Label Kategori Relevan (Muncul statis atau saat dipilih) */}
+            <div
+              className={`absolute top-0 right-10 -translate-y-1/2 px-5 py-1.5 rounded-full text-[11px] font-bold font-heading uppercase tracking-widest shadow-md flex items-center gap-1.5 transition-all duration-300 ${
+                paketTerpilih === "smart-school"
+                  ? "bg-eco-cyan text-white"
+                  : "bg-slate-200 text-slate-500 opacity-0 group-hover:opacity-100"
+              }`}
+            >
+              Starter Pilihan
+            </div>
+
+            <h3
+              className={`text-2xl font-bold font-heading mb-2 transition-colors duration-300 ${
+                paketTerpilih === "smart-school"
+                  ? "text-eco-cyan"
+                  : "text-slate-900 group-hover:text-eco-cyan"
+              }`}
+            >
               Paket Smart School
             </h3>
             <p className="text-sm text-slate-500 font-body mb-8">
@@ -217,6 +242,7 @@ export default function UniversitySchoolSolution() {
             </p>
 
             <ul className="space-y-4 flex-1 mb-10">
+              {/* List 1 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -235,6 +261,7 @@ export default function UniversitySchoolSolution() {
                 </div>
                 1 Unit Compact RVM
               </li>
+              {/* List 2 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -253,6 +280,7 @@ export default function UniversitySchoolSolution() {
                 </div>
                 Basic Analytics Dashboard
               </li>
+              {/* List 3 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -275,20 +303,43 @@ export default function UniversitySchoolSolution() {
 
             <a
               href="#form-kolaborasi"
-              className="block text-center w-full py-3.5 rounded-xl border-2 border-slate-300 text-slate-600 font-bold font-heading text-sm transition-all duration-300 hover:border-eco-cyan hover:bg-eco-cyan/5 hover:text-eco-cyan hover:scale-[1.02] active:scale-95"
+              className={`block text-center w-full py-3.5 rounded-xl font-bold font-heading text-sm transition-all duration-300 hover:scale-[1.02] active:scale-95 ${
+                paketTerpilih === "smart-school"
+                  ? "bg-eco-cyan text-white shadow-lg shadow-eco-cyan/20 hover:bg-[#1eb5b1]"
+                  : "border-2 border-slate-300 text-slate-600 hover:border-eco-cyan hover:bg-eco-cyan/5 hover:text-eco-cyan"
+              }`}
             >
               Pilih Paket
             </a>
           </div>
 
-          {/* Paket Kanan: Paket Green Campus (Highlighted) */}
-          <div className="bg-white p-10 rounded-[2rem] border-2 border-eco-cyan shadow-lg shadow-eco-cyan/15 flex flex-col h-full relative transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-eco-cyan/30 group cursor-default">
-            {/* Badge Paling Populer (Dengan animasi ringan) */}
-            <div className="absolute top-0 right-10 -translate-y-1/2 bg-eco-cyan text-white px-5 py-1.5 rounded-full text-[11px] font-bold font-heading uppercase tracking-widest shadow-md flex items-center gap-1.5">
+          {/* Paket Kanan: Paket Green Campus (Highlighted Default) */}
+          <div
+            onClick={() => setPaketTerpilih("green-campus")}
+            className={`bg-white p-10 rounded-[2rem] border-2 flex flex-col h-full relative transition-all duration-300 cursor-pointer group ${
+              paketTerpilih === "green-campus"
+                ? "border-eco-cyan shadow-lg shadow-eco-cyan/15 -translate-y-2"
+                : "border-slate-200 shadow-sm hover:-translate-y-2 hover:shadow-xl hover:border-eco-cyan/50"
+            }`}
+          >
+            {/* Badge Paling Populer */}
+            <div
+              className={`absolute top-0 right-10 -translate-y-1/2 px-5 py-1.5 rounded-full text-[11px] font-bold font-heading uppercase tracking-widest shadow-md flex items-center gap-1.5 transition-all duration-300 ${
+                paketTerpilih === "green-campus"
+                  ? "bg-eco-cyan text-white"
+                  : "bg-slate-200 text-slate-500 opacity-0 group-hover:opacity-100"
+              }`}
+            >
               Paling Populer
             </div>
 
-            <h3 className="text-2xl font-bold font-heading text-slate-900 mb-2">
+            <h3
+              className={`text-2xl font-bold font-heading mb-2 transition-colors duration-300 ${
+                paketTerpilih === "green-campus"
+                  ? "text-slate-900"
+                  : "text-slate-900 group-hover:text-eco-cyan"
+              }`}
+            >
               Paket Green Campus
             </h3>
             <p className="text-sm text-slate-500 font-body mb-8">
@@ -296,6 +347,7 @@ export default function UniversitySchoolSolution() {
             </p>
 
             <ul className="space-y-4 flex-1 mb-10">
+              {/* List 1 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -314,6 +366,7 @@ export default function UniversitySchoolSolution() {
                 </div>
                 Multi-unit RVM Deployment
               </li>
+              {/* List 2 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -332,6 +385,7 @@ export default function UniversitySchoolSolution() {
                 </div>
                 Sustainability Dashboard for Institution
               </li>
+              {/* List 3 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -350,6 +404,7 @@ export default function UniversitySchoolSolution() {
                 </div>
                 EcoCash Academy Workshops
               </li>
+              {/* List 4 */}
               <li className="flex items-center gap-3 text-sm text-slate-700 font-body font-medium transition-transform duration-300 hover:translate-x-2 hover:text-eco-cyan">
                 <div className="w-5 h-5 rounded-full bg-[#10b981] text-white flex items-center justify-center shrink-0 shadow-sm">
                   <svg
@@ -372,7 +427,11 @@ export default function UniversitySchoolSolution() {
 
             <a
               href="#form-kolaborasi"
-              className="block text-center w-full py-3.5 rounded-xl bg-eco-cyan text-white font-bold font-heading text-sm transition-all duration-300 hover:bg-[#1eb5b1] hover:scale-[1.02] active:scale-95 shadow-lg shadow-eco-cyan/20 hover:shadow-eco-cyan/40"
+              className={`block text-center w-full py-3.5 rounded-xl font-bold font-heading text-sm transition-all duration-300 hover:scale-[1.02] active:scale-95 ${
+                paketTerpilih === "green-campus"
+                  ? "bg-eco-cyan text-white shadow-lg shadow-eco-cyan/20 hover:bg-[#1eb5b1] hover:shadow-eco-cyan/40"
+                  : "border-2 border-slate-300 text-slate-600 hover:border-eco-cyan hover:bg-eco-cyan/5 hover:text-eco-cyan"
+              }`}
             >
               Konsultasi Gratis
             </a>

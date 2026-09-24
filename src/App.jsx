@@ -1,11 +1,11 @@
 import React from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 //import EcoCashLanding from "./Beranda/welcome";
 import Navbar from "./components/layout/Navbar";
 import Home from "./pages/Home";
 import RequestRvm from "./pages/RequestRvm";
 import NewsDetail from "./pages/NewsDetail";
 import Footer from "./components/layout/Footer";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import DaftarKemitraan from "./pages/DaftarKemitraan";
 import IndustriRecyler from "./pages/IndustriRecyler";
 import BankSampah from "./pages/BankSampah";
@@ -22,6 +22,8 @@ import CaraKerjaPengguna from "./pages/CaraKerjaPengguna";
 import CaraKerjaTeknologiRVM from "./pages/CaraKerjaTeknologiRVM";
 import CaraKerjaKelolaLokasi from "./pages/CaraKerjaKelolaLokasi";
 import CaraKerjaMitraLapangan from "./pages/CaraKerjaMitraLapangan";
+import AllNewsPage from "./pages/AllNewsPage";
+import CustomerStoriesPage from "./pages/CustomerStoriesPage";
 
 export default function App() {
   return (
@@ -32,9 +34,6 @@ export default function App() {
           <Routes>
             {/* Home Page */}
             <Route path="/" element={<Home />} />
-
-            {/* News Detail Page */}
-            <Route path="/news/:id" element={<NewsDetail />} />
 
             {/* Solusi Menu List */}
             {/* Request RVM Page */}
@@ -85,6 +84,13 @@ export default function App() {
               path="/field-partners"
               element={<CaraKerjaMitraLapangan />}
             />
+
+            {/* Detail Page */}
+            {/* News Detail Page */}
+            <Route path="/news/:id" element={<NewsDetail />} />
+            {/* All News Page */}
+            <Route path="/all-news" element={<AllNewsPage />} />
+            <Route path="/customer-stories" element={<CustomerStoriesPage />} />
           </Routes>
         </div>
         <Footer />

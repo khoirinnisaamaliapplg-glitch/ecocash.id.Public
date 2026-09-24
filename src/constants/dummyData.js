@@ -100,6 +100,9 @@ export const NAV_ITEMS = [
       },
     ],
   },
+  {
+    name: "Marketplace",
+  },
 ];
 
 // Data FAQ Interaktif
@@ -327,3 +330,166 @@ export const dummyChartData = [
   { month: "Ags", value: 80, label: "800 kg" },
   { month: "Sep", value: 95, label: "950 kg" },
 ];
+
+// Data Dummy Customer Stories (Konteks EcoCash)
+export const CUSTOMER_STORIES = [
+  {
+    id: 1,
+    name: "Simon Amour",
+    role: "TECHNICAL DIRECTOR",
+    image: "img/avatar-1.jpg", // Pastikan menambahkan gambar avatar di public/img
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 2,
+    name: "Robbie Lee",
+    role: "FOUNDER DIRECTOR",
+    image: "img/avatar-2.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 3,
+    name: "Emma Aria",
+    role: "SENIOR TECHNICIAN",
+    image: "img/avatar-3.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 4,
+    name: "Lopes Mads",
+    role: "GENETIC SPECIALIST",
+    image: "img/avatar-4.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 5,
+    name: "Stellar Jade",
+    role: "SENIOR TECHNICIAN",
+    image: "img/avatar-5.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+  {
+    id: 6,
+    name: "Molly Rissa",
+    role: "GENETIC SPECIALIST",
+    image: "img/avatar-6.jpg",
+    text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
+    rating: 5,
+  },
+];
+
+// DATA DUMMY MATERIAL (Untuk Simulasi Search Engine)
+export const MATERIAL_DATA = [
+  {
+    id: 1,
+    name: "Botol Aqua / Le Minerale",
+    category: "Botol Plastik PET (Bening)",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 2,
+    name: "Botol Sprite / Pocari",
+    category: "Botol Plastik PET (Warna/Bening)",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 3,
+    name: "Kaleng Coca Cola / Bear Brand",
+    category: "Kaleng Minuman Aluminium",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 4,
+    name: "Botol Shampo / Sabun Cair",
+    category: "Botol Plastik HDPE",
+    status: "Diterima",
+    icon: "check",
+  },
+  {
+    id: 5,
+    name: "Kemasan Saset Kopi / Mie Instan",
+    category: "Plastik Saset/Pouch",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Mesin tidak dapat memproses plastik lembaran/fleksibel.",
+  },
+  {
+    id: 6,
+    name: "Botol Bekas Minyak Goreng",
+    category: "Botol Kotor/Berminyak",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Kontaminasi minyak merusak kualitas daur ulang.",
+  },
+  {
+    id: 7,
+    name: "Galon Air Minum (Aqua/Le Minerale)",
+    category: "Galon > 3L",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Ukuran melebihi kapasitas lubang masuk mesin (maksimal 3L).",
+  },
+  {
+    id: 8,
+    name: "Botol Kaca Sirup / Bir / Kecap",
+    category: "Botol Kaca",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "RVM kami belum mendukung material kaca.",
+  },
+  {
+    id: 9,
+    name: "Kotak Susu Ultra / Teh Kotak",
+    category: "Karton Minuman (Tetra Pak)",
+    status: "Ditolak",
+    icon: "cross",
+    reason: "Material komposit berlapis belum dapat diproses RVM ini.",
+  },
+];
+
+// Data JSON (Decision Tree) untuk Alur Obrolan Bot
+export const botFlowData = {
+  start: {
+    message:
+      "Halo! Saya asisten virtual EcoCash. Apa yang ingin Anda eksplorasi hari ini?",
+    options: [
+      { label: "Informasi Penukaran Sampah", next: "penukaran" },
+      { label: "Kemitraan & Solusi ESG", next: "kemitraan" },
+      {
+        label: "Hubungi Customer Service",
+        action: "WHATSAPP",
+        url: "https://wa.me/6281214161614",
+      },
+    ],
+  },
+  penukaran: {
+    message:
+      "Anda dapat menukarkan botol plastik dan material lain di mesin RVM kami untuk mendapatkan eco-points. Apa yang ingin Anda ketahui lebih detail?",
+    options: [
+      { label: "Cara Kerja RVM", action: "LINK", url: "#smart-rvm" },
+      { label: "Cari Lokasi RVM", action: "LINK", url: "#location-map" },
+      { label: "Kembali ke Menu Awal", next: "start" },
+    ],
+  },
+  kemitraan: {
+    message:
+      "EcoCash menyediakan solusi komprehensif mulai dari pelaporan ESG Perusahaan hingga program Kampus Hijau.",
+    options: [
+      {
+        label: "Paket Smart School / Kampus",
+        action: "LINK",
+        url: "#paket-solusi",
+      },
+      { label: "Konsultasi Korporasi", action: "LINK", url: "#form-korporasi" },
+      { label: "Kembali ke Menu Awal", next: "start" },
+    ],
+  },
+};
