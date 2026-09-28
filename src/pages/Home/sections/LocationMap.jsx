@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { LOCATION_DATA } from "../../../constants/dummyData";
 
-// Custom Icon Leaflet berbasis Tailwind SVG
+// Custom Icon Leaflet berbasis Tailwind SVG (Dipertahankan)
 const customMarkerIcon = new L.divIcon({
   html: `<div class="w-10 h-10 bg-eco-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white transition-transform hover:scale-110">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
@@ -15,10 +14,10 @@ const customMarkerIcon = new L.divIcon({
   iconAnchor: [20, 40],
 });
 
-// Komponen Pembantu untuk menggerakkan peta
+// Komponen Pembantu untuk menggerakkan peta ke lokasi yang dipilih
 function MapController({ selectedLoc }) {
   const map = useMap();
-  React.useEffect(() => {
+  useEffect(() => {
     if (selectedLoc) {
       map.flyTo([selectedLoc.latitude, selectedLoc.longitude], 17, {
         animate: true,
@@ -32,10 +31,56 @@ export default function LocationMap() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLoc, setSelectedLoc] = useState(null);
 
-  // Pusat Peta Awal (Kota Bandung)
-  const defaultCenter = [-6.9175, 107.609];
+  // State Management Integrasi API
+  const [locations, setLocations] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const filteredLocations = LOCATION_DATA.filter(
+  const defaultCenter = [-6.9175, 107.609]; // Pusat Peta Awal (Kota Bandung)
+
+  // Integrasi Backend: Pengambilan Data Mesin RVM
+  useEffect(() => {
+    const abortController = new AbortController();
+
+    const fetchMachines = async () => {
+      try {
+        setIsLoading(true);
+        // URL API MAPS
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+
+        const response = await fetch(`${apiUrl}/machines/public`, {
+          signal: abortController.signal,
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+        });
+
+        if (!response.ok)
+          throw new Error("Gagal memuat data lokasi mesin RVM.");
+
+        const result = await response.json();
+        // Memetakan array data dari response API
+        setLocations(result.data || []);
+      } catch (err) {
+        if (err.name !== "AbortError") {
+          console.error("Kesalahan API:", err);
+          setError(err.message);
+        }
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchMachines();
+
+    // Clean Code: Cleanup function untuk membatalkan fetch jika komponen di-unmount
+    return () => abortController.abort();
+  }, []);
+
+  // Filter dinamis berdasarkan state lokasi dari API
+  const filteredLocations = locations.filter(
     (loc) =>
       loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       loc.address.toLowerCase().includes(searchQuery.toLowerCase()),
@@ -45,7 +90,7 @@ export default function LocationMap() {
     setSelectedLoc(loc);
   };
 
-  // Fungsi Penerjemah Data Backend ke UI untuk floating card
+  // Fungsi Penerjemah Data Backend ke UI (Dipertahankan)
   const getAvailabilityUI = (fillLevel) => {
     if (fillLevel === "EMPTY" || fillLevel === "LOW") {
       return {
@@ -73,18 +118,15 @@ export default function LocationMap() {
       id="location-map"
       className="max-w-7xl mx-auto px-6 lg:px-10 py-24"
     >
-      {/* Header Section */}
       <div className="mb-6">
         <h2 className="text-3xl font-extrabold text-slate-900 font-heading">
           Lokasi RVM EcoCash
         </h2>
       </div>
 
-      {/* Main Container: Split Screen Layout */}
       <div className="flex flex-col lg:flex-row w-full h-[750px] rounded-2xl border border-slate-200 overflow-hidden shadow-sm bg-white">
-        {/* SIDEBAR KIRI: Pencarian & Daftar Lokasi */}
+        {/* SIDEBAR KIRI */}
         <div className="w-full lg:w-[400px] flex flex-col bg-white z-10 border-r border-slate-200 h-[400px] lg:h-full shrink-0">
-          {/* Kotak Pencarian */}
           <div className="p-6 border-b border-slate-100 shrink-0">
             <div className="flex items-center justify-between bg-white border border-slate-200 rounded-lg px-4 py-3 focus-within:border-eco-cyan focus-within:ring-1 focus-within:ring-eco-cyan transition-all">
               <input
@@ -93,6 +135,7 @@ export default function LocationMap() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Cari Lokasi..."
                 className="w-full bg-transparent outline-none font-body text-sm text-slate-700 placeholder-slate-400"
+                disabled={isLoading}
               />
               <svg
                 className="w-5 h-5 text-slate-400 shrink-0"
@@ -110,85 +153,106 @@ export default function LocationMap() {
             </div>
           </div>
 
-          {/* Daftar Lokasi */}
           <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-            {filteredLocations.map((loc) => {
-              const isOpen = loc.isActive;
-              return (
-                <div
-                  key={loc.id}
-                  onClick={() => handleSelectLocation(loc)}
-                  className="p-4 rounded-xl cursor-pointer group shadow-xs hover:inset-ring-2 hover:inset-ring-eco-cyan "
+            {/* UI Handling: Status Memuat Data */}
+            {isLoading && (
+              <div className="flex flex-col items-center justify-center h-40 space-y-3">
+                <div className="w-8 h-8 border-4 border-eco-cyan border-t-transparent rounded-full animate-spin"></div>
+                <span className="text-sm text-slate-500">
+                  Menyinkronkan data lokasi...
+                </span>
+              </div>
+            )}
+
+            {/* UI Handling: Status Error */}
+            {!isLoading && error && (
+              <div className="text-center p-4 bg-rose-50 rounded-xl border border-rose-100">
+                <span className="text-sm text-rose-600 font-medium">
+                  {error}
+                </span>
+                <button
+                  onClick={() => window.location.reload()}
+                  className="block mt-2 text-xs text-slate-500 underline mx-auto"
                 >
-                  {/* Status Label (Open/Closed) */}
+                  Coba Lagi
+                </button>
+              </div>
+            )}
+
+            {/* Render Daftar Lokasi dari API */}
+            {!isLoading &&
+              !error &&
+              filteredLocations.map((loc) => {
+                const isOpen = loc.isActive;
+                return (
                   <div
-                    className={`flex items-center gap-1.5 text-xs font-bold mb-1.5 ${isOpen ? "text-green-600" : "text-red-500"}`}
+                    key={loc.id}
+                    onClick={() => handleSelectLocation(loc)}
+                    className="p-4 rounded-xl cursor-pointer group shadow-xs hover:inset-ring-2 hover:inset-ring-eco-cyan "
                   >
-                    {isOpen ? "Open now" : "Closed"}
-                    <span
-                      className={`w-2 h-2 rounded-full ${isOpen ? "bg-green-500/30 ring-2 ring-green-500" : "bg-red-500/30 ring-2 ring-red-500"}`}
-                    ></span>
-                  </div>
-
-                  {/* Title & Subtitle */}
-                  <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-1 group-hover:text-eco-primary transition-colors">
-                    {loc.name}
-                  </h3>
-                  <p className="text-xs text-slate-500 mb-3">
-                    Reverse vending machine
-                  </p>
-
-                  {/* Detail Info: Address & Time */}
-                  <div className="space-y-2 text-xs text-slate-600">
-                    <div className="flex items-start gap-2">
-                      <svg
-                        className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                        />
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                        />
-                      </svg>
-                      <span className="line-clamp-2">{loc.address}</span>
+                    <div
+                      className={`flex items-center gap-1.5 text-xs font-bold mb-1.5 ${isOpen ? "text-green-600" : "text-red-500"}`}
+                    >
+                      {isOpen ? "Open now" : "Closed"}
+                      <span
+                        className={`w-2 h-2 rounded-full ${isOpen ? "bg-green-500/30 ring-2 ring-green-500" : "bg-red-500/30 ring-2 ring-red-500"}`}
+                      ></span>
                     </div>
-                    <div className="flex items-start gap-2">
-                      <svg
-                        className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                        />
-                      </svg>
-                      {/* Penyesuaian waktu operasional mengikuti visual desain */}
-                      <span>
-                        {isOpen
-                          ? "Buka pukul 07.00-20.00"
-                          : "Buka besok pukul 07.00-20.00"}
-                      </span>
+                    <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-1 group-hover:text-eco-primary transition-colors">
+                      {loc.name}
+                    </h3>
+                    <p className="text-xs text-slate-500 mb-3">
+                      Reverse vending machine
+                    </p>
+                    <div className="space-y-2 text-xs text-slate-600">
+                      <div className="flex items-start gap-2">
+                        <svg
+                          className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                          />
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                          />
+                        </svg>
+                        <span className="line-clamp-2">{loc.address}</span>
+                      </div>
+                      <div className="flex items-start gap-2">
+                        <svg
+                          className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth="2"
+                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
+                        </svg>
+                        <span>
+                          {isOpen
+                            ? "Buka pukul 07.00-20.00"
+                            : "Buka besok pukul 07.00-20.00"}
+                        </span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            {filteredLocations.length === 0 && (
+            {!isLoading && !error && filteredLocations.length === 0 && (
               <div className="text-center text-slate-400 text-sm mt-10">
                 Lokasi tidak ditemukan.
               </div>
@@ -198,7 +262,7 @@ export default function LocationMap() {
 
         {/* MAP KANAN */}
         <div className="flex-1 relative z-0 h-full bg-slate-100">
-          {/* Floating Detail Card (Dipertahankan sesuai fungsi aslinya) */}
+          {/* Floating Detail Card */}
           {selectedLoc && (
             <div className="absolute top-6 left-6 z-[1000] w-[90%] max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col max-h-[90%] overflow-hidden animate-fadeIn">
               <div className="p-6 overflow-y-auto custom-scrollbar flex-1 pb-4">
@@ -277,9 +341,12 @@ export default function LocationMap() {
                       </span>
                       <span className="text-slate-300">•</span>
                       <span className="text-slate-600">
+                        {/* Dukungan penamaan key updatedAt (umum) atau updateAt (dummy) */}
                         Update:{" "}
                         {new Date(
-                          selectedLoc.updatedAt || Date.now(),
+                          selectedLoc.updatedAt ||
+                            selectedLoc.updateAt ||
+                            Date.now(),
                         ).toLocaleDateString("id-ID")}
                       </span>
                     </div>
@@ -322,7 +389,7 @@ export default function LocationMap() {
             />
             <MapController selectedLoc={selectedLoc} />
             <MarkerClusterGroup chunkedLoading maxClusterRadius={50}>
-              {LOCATION_DATA.map((loc) => (
+              {locations.map((loc) => (
                 <Marker
                   key={loc.id}
                   position={[loc.latitude, loc.longitude]}

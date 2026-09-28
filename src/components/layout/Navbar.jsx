@@ -131,24 +131,37 @@ export default function Navbar() {
 
           {/* Menu Desktop (Layar LG ke atas) */}
           <div className="hidden lg:flex items-center space-x-1">
-            {NAV_ITEMS.map((item, index) => (
-              <div
-                key={index}
-                className="relative group cursor-pointer"
-                onMouseEnter={() => setActiveDropdown(index)}
-                onMouseLeave={() => setActiveDropdown(null)}
-              >
-                {/* Tombol Navigasi Utama */}
-                <button
-                  className={`flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none ${
-                    activeDropdown === index
-                      ? "text-eco-cyan bg-eco-cyan/5"
-                      : "text-slate-600 hover:text-eco-cyan hover:bg-eco-cyan/5"
-                  }`}
-                >
-                  {item.name}
+            {NAV_ITEMS.map((item, index) => {
+              if (item.name === "Marketplace") {
+                return (
+                  <a
+                    key={index}
+                    href={item.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none text-slate-600 hover:text-eco-cyan hover:bg-eco-cyan/5"
+                  >
+                    {item.name}
+                  </a>
+                );
+              }
 
-                  {item.name !== "Marketplace" && (
+              return (
+                <div
+                  key={index}
+                  className="relative group cursor-pointer"
+                  onMouseEnter={() => setActiveDropdown(index)}
+                  onMouseLeave={() => setActiveDropdown(null)}
+                >
+                  <button
+                    className={`flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none ${
+                      activeDropdown === index
+                        ? "text-eco-cyan bg-eco-cyan/5"
+                        : "text-slate-600 hover:text-eco-cyan hover:bg-eco-cyan/5"
+                    }`}
+                  >
+                    {item.name}
+
                     <svg
                       className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === index ? "rotate-180 text-eco-cyan" : "text-slate-400 group-hover:text-eco-cyan"}`}
                       fill="none"
@@ -162,44 +175,44 @@ export default function Navbar() {
                         d="M19 9l-7 7-7-7"
                       />
                     </svg>
-                  )}
-                </button>
+                  </button>
 
-                {/* Dropdown Content (Mega Menu Baru sesuai UI/UX) */}
-                {item.name !== "Marketplace" && activeDropdown === index && (
-                  // Posisi di-center terhadap menu nav dengan -translate-x-1/2
-                  <div className="absolute top-full left-1/2 -translate-x-1/2 pt-5 w-[600px] z-50 animate-fadeIn ">
-                    <div className="bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 rounded-3xl p-6 relative overflow-hidden">
-                      {/* Grid 2 Kolom untuk Menu */}
-                      <div className="grid grid-cols-2 gap-x-8 gap-y-6 relative z-10 ">
-                        {item.submenu.map((sub, subIdx) => (
-                          <a
-                            key={subIdx}
-                            href={sub.url}
-                            className="flex items-start gap-4 p-3 -m-3 rounded-2xl hover:bg-slate-50 transition-colors group/link  hover:bg-eco-cyan/50 rounded-sm"
-                          >
-                            {/* Ikon Box Cyan */}
-                            <div className="w-12 h-12 rounded-xl bg-eco-cyan/10 text-eco-cyan flex items-center justify-center shrink-0 group-hover/link:scale-105 group-hover/link:bg-eco-cyan group-hover/link:text-white transition-all duration-300">
-                              {getMenuIcon(sub.label)}
-                            </div>
+                  {/* Dropdown Content (Mega Menu Baru sesuai UI/UX) */}
+                  {activeDropdown === index && (
+                    // Posisi di-center terhadap menu nav dengan -translate-x-1/2
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-5 w-[600px] z-50 animate-fadeIn ">
+                      <div className="bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 rounded-3xl p-6 relative overflow-hidden">
+                        {/* Grid 2 Kolom untuk Menu */}
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-6 relative z-10 ">
+                          {item.submenu.map((sub, subIdx) => (
+                            <a
+                              key={subIdx}
+                              href={sub.url}
+                              className="flex items-start gap-4 p-3 -m-3 rounded-2xl hover:bg-slate-50 transition-colors group/link  hover:bg-eco-cyan/50 rounded-sm"
+                            >
+                              {/* Ikon Box Cyan */}
+                              <div className="w-12 h-12 rounded-xl bg-eco-cyan/10 text-eco-cyan flex items-center justify-center shrink-0 group-hover/link:scale-105 group-hover/link:bg-eco-cyan group-hover/link:text-white transition-all duration-300">
+                                {getMenuIcon(sub.label)}
+                              </div>
 
-                            {/* Teks Konten */}
-                            <div>
-                              <h4 className="text-sm font-bold text-slate-800 font-heading mb-1 group-hover/link:text-eco-cyan transition-colors">
-                                {sub.label}
-                              </h4>
-                              <p className="text-[13px] text-slate-500 font-body leading-relaxed line-clamp-2">
-                                {sub.text}
-                              </p>
-                            </div>
-                          </a>
-                        ))}
+                              {/* Teks Konten */}
+                              <div>
+                                <h4 className="text-sm font-bold text-slate-800 font-heading mb-1 group-hover/link:text-eco-cyan transition-colors">
+                                  {sub.label}
+                                </h4>
+                                <p className="text-[13px] text-slate-500 font-body leading-relaxed line-clamp-2">
+                                  {sub.text}
+                                </p>
+                              </div>
+                            </a>
+                          ))}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                  )}
+                </div>
+              );
+            })}
           </div>
 
           {/* Actions (Bahasa & CTA WhatsApp) */}
@@ -287,17 +300,34 @@ export default function Navbar() {
               </div>
 
               <div className="flex flex-col space-y-2">
-                {NAV_ITEMS.map((item, idx) => (
-                  <div key={idx} className="flex flex-col cursor-pointer">
-                    <button
-                      onClick={() =>
-                        setActiveSubMobile(activeSubMobile === idx ? null : idx)
-                      }
-                      className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all ${activeSubMobile === idx ? "bg-eco-cyan/10 text-eco-cyan" : "text-slate-700 hover:bg-slate-50"}`}
-                    >
-                      {item.name}
+                {NAV_ITEMS.map((item, idx) => {
+                  if (item.name === "Marketplace") {
+                    return (
+                      <a
+                        key={idx}
+                        href={item.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={() => setOpenSidebar(false)}
+                        className="flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all text-slate-700 hover:bg-slate-50"
+                      >
+                        {item.name}
+                      </a>
+                    );
+                  }
 
-                      {item.name !== "Marketplace" && (
+                  return (
+                    <div key={idx} className="flex flex-col cursor-pointer">
+                      <button
+                        onClick={() =>
+                          setActiveSubMobile(
+                            activeSubMobile === idx ? null : idx,
+                          )
+                        }
+                        className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all ${activeSubMobile === idx ? "bg-eco-cyan/10 text-eco-cyan" : "text-slate-700 hover:bg-slate-50"}`}
+                      >
+                        {item.name}
+
                         <svg
                           className={`w-5 h-5 transition-transform duration-300 ${activeSubMobile === idx ? "rotate-180" : ""}`}
                           fill="none"
@@ -311,30 +341,30 @@ export default function Navbar() {
                             d="M19 9l-7 7-7-7"
                           />
                         </svg>
-                      )}
-                    </button>
+                      </button>
 
-                    {item.name !== "Marketplace" && activeSubMobile === idx && (
-                      <div className="pl-4 pr-2 py-3 flex flex-col gap-3 border-l-2 border-eco-cyan/30 ml-6 mt-1 mb-2">
-                        {item.submenu.map((sub, sIdx) => (
-                          <a
-                            key={sIdx}
-                            href={sub.url}
-                            onClick={() => setOpenSidebar(false)}
-                            className="flex flex-col gap-0.5 px-4 py-2 rounded-xl transition-colors hover:bg-slate-50 group "
-                          >
-                            <span className="font-heading text-sm font-bold text-slate-800 group-hover:text-eco-cyan">
-                              {sub.label}
-                            </span>
-                            <span className="font-body text-[13px] text-slate-500 leading-snug">
-                              {sub.text}
-                            </span>
-                          </a>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                ))}
+                      {activeSubMobile === idx && (
+                        <div className="pl-4 pr-2 py-3 flex flex-col gap-3 border-l-2 border-eco-cyan/30 ml-6 mt-1 mb-2">
+                          {item.submenu.map((sub, sIdx) => (
+                            <a
+                              key={sIdx}
+                              href={sub.url}
+                              onClick={() => setOpenSidebar(false)}
+                              className="flex flex-col gap-0.5 px-4 py-2 rounded-xl transition-colors hover:bg-slate-50 group "
+                            >
+                              <span className="font-heading text-sm font-bold text-slate-800 group-hover:text-eco-cyan">
+                                {sub.label}
+                              </span>
+                              <span className="font-body text-[13px] text-slate-500 leading-snug">
+                                {sub.text}
+                              </span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
 

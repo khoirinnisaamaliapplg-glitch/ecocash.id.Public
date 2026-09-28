@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import BotAssistant from "../components/bot/BotAssistant";
 
 export default function MitraPenjemput() {
   // State untuk Kalkulator Interaktif
   const [jemputPerHari, setJemputPerHari] = useState(5);
   const [kgPerSesi, setKgPerSesi] = useState(10);
+  const [botFlowData, setBotFlowData] = useState(null);
 
   // Asumsi harga rata-rata sampah campuran adalah Rp 2.000 / kg
   // Rumus: (Jemput per hari * Kg per sesi) * 30 Hari * Harga
@@ -19,6 +21,27 @@ export default function MitraPenjemput() {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Fetch data bot flow dari API
+    const fetchBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+        const response = await fetch(`${apiUrl}/bot/tree`);
+
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setBotFlowData(result.data);
+        }
+      } catch (err) {
+        console.error("Kesalahan API Bot:", err);
+      }
+    };
+
+    fetchBotTree();
   }, []);
 
   const handleInputChange = (e) => {
@@ -424,6 +447,9 @@ export default function MitraPenjemput() {
           </div>
         </div>
       </section>
+
+      {/* Bot Assistant */}
+      <BotAssistant botFlowData={botFlowData} />
     </main>
   );
 }

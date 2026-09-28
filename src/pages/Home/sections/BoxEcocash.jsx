@@ -8,7 +8,7 @@ export default function BoxEcocash() {
         <div className="w-full relative group order-2 lg:order-1">
           <div className="absolute inset-0 bg-sky-500/10 rounded-[2.5rem] transform -rotate-3 transition-transform duration-500 group-hover:rotate-0 -z-10"></div>
           <img
-            src={"img/box.png"}
+            src={"img/box-ecocash.png"}
             alt="EcoCash Drop Box"
             className="w-full h-auto rounded-[2.5rem] shadow-xl shadow-slate-200/50 object-cover relative z-10 transition-transform duration-700 hover:scale-[1.02]"
             onError={(e) => {
