@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { dummyChartData } from "../constants/dummyData";
+import BotAssistant from "../components/bot/BotAssistant";
 
 export default function CorporationSolution() {
   // State untuk form inkuiri Korporasi
@@ -10,10 +11,32 @@ export default function CorporationSolution() {
     namaPic: "",
     whatsapp: "",
   });
+  const [botFlowData, setBotFlowData] = useState(null);
 
   // Scroll otomatis ke atas saat halaman dimuat
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Fetch data flow bot dari API
+    const fetchBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+        const response = await fetch(`${apiUrl}/bot/tree`);
+
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setBotFlowData(result.data);
+        }
+      } catch (err) {
+        console.error("Kesalahan API Bot:", err);
+      }
+    };
+
+    fetchBotTree();
   }, []);
 
   const handleInputChange = (e) => {
@@ -479,6 +502,9 @@ export default function CorporationSolution() {
           </div>
         </div>
       </section>
+
+      {/* Bot Assistant */}
+      <BotAssistant botFlowData={botFlowData} />
     </main>
   );
 }
