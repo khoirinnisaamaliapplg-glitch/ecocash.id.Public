@@ -1,14 +1,37 @@
 import React, { useEffect, useState } from "react";
 import { newsList } from "../constants/dummyData";
 import { Link } from "react-router-dom";
+import BotAssistant from "../components/bot/BotAssistant";
 
 export default function AllNewsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4; // Menampilkan 4 berita per halaman
+  const [botFlowData, setBotFlowData] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Fetch data bot flow dari API
+    const fetchBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+        const response = await fetch(`${apiUrl}/bot/tree`);
+
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setBotFlowData(result.data);
+        }
+      } catch (err) {
+        console.error("Kesalahan API Bot:", err);
+      }
+    };
+
+    fetchBotTree();
   }, []);
 
   // LOGIKA 1: Filter berita berdasarkan input pencarian
@@ -342,6 +365,9 @@ export default function AllNewsPage() {
           </aside>
         </div>
       </section>
+
+      {/* Bot Assistant */}
+      <BotAssistant botFlowData={botFlowData} />
     </main>
   );
 }

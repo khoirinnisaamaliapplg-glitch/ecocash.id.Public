@@ -1,11 +1,35 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CUSTOMER_STORIES } from "../constants/dummyData";
+import botAssistant from "../components/bot/BotAssistant";
 
 export default function CustomerStoriesPage() {
+  const [botFlowData, setBotFlowData] = useState(null);
+
   useEffect(() => {
     // Scroll ke atas saat halaman dimuat
     window.scrollTo(0, 0);
+
+    // Fetch data bot flow dari API
+    const fetchBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+        const response = await fetch(`${apiUrl}/bot/tree`);
+
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setBotFlowData(result.data);
+        }
+      } catch (err) {
+        console.error("Kesalahan API Bot:", err);
+      }
+    };
+
+    fetchBotTree();
   }, []);
 
   return (
@@ -116,6 +140,9 @@ export default function CustomerStoriesPage() {
           </div>
         </div>
       </section>
+
+      {/* Bot Assistant */}
+      <botAssistant botFlowData={botFlowData} />
     </main>
   );
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import BotAssistant from "../components/bot/BotAssistant";
 
 export default function CustomRequestForm() {
   const [formData, setFormData] = useState({
@@ -13,6 +14,29 @@ export default function CustomRequestForm() {
 
   // State khusus untuk menampung URL sementara gambar preview
   const [logoPreview, setLogoPreview] = useState(null);
+  const [botFlowData, setBotFlowData] = useState(null);
+
+  useEffect(() => {
+    const fetchBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+        const response = await fetch(`${apiUrl}/bot/tree`);
+
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setBotFlowData(result.data);
+        }
+      } catch (err) {
+        console.error("Kesalahan API Bot:", err);
+      }
+    };
+
+    fetchBotTree();
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -359,6 +383,9 @@ export default function CustomRequestForm() {
           </div>
         </div>
       </div>
+
+      {/* Bot Assistant */}
+      <BotAssistant botFlowData={botFlowData} />
     </section>
   );
 }

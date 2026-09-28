@@ -320,7 +320,9 @@ export default function Navbar() {
                     <div key={idx} className="flex flex-col cursor-pointer">
                       <button
                         onClick={() =>
-                          setActiveSubMobile(activeSubMobile === idx ? null : idx)
+                          setActiveSubMobile(
+                            activeSubMobile === idx ? null : idx,
+                          )
                         }
                         className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all ${activeSubMobile === idx ? "bg-eco-cyan/10 text-eco-cyan" : "text-slate-700 hover:bg-slate-50"}`}
                       >

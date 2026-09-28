@@ -1,13 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { ARTICLES } from "../constants/dummyData";
 import { CATEGORIES } from "../constants/dummyData";
+import BotAssistant from "../components/bot/BotAssistant";
 
 export default function EcoCashAkademi() {
   const [activeCategory, setActiveCategory] = useState("Semua");
   const [email, setEmail] = useState("");
+  const [botFlowData, setBotFlowData] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+
+    // Fetch data bot flow dari API
+    const fetchBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+        const response = await fetch(`${apiUrl}/bot/tree`);
+
+        if (!response.ok) throw new Error("Gagal mengambil data");
+
+        const result = await response.json();
+
+        if (result.success && result.data) {
+          setBotFlowData(result.data);
+        }
+      } catch (err) {
+        console.error("Kesalahan API Bot:", err);
+      }
+    };
+
+    fetchBotTree();
   }, []);
 
   const handleSubscribe = (e) => {
@@ -193,6 +216,9 @@ export default function EcoCashAkademi() {
           </div>
         </div>
       </section>
+
+      {/* Bot Assistant */}
+      <BotAssistant botFlowData={botFlowData} />
     </main>
   );
 }
