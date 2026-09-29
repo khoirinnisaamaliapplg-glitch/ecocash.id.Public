@@ -1,11 +1,9 @@
 import React from "react";
-// import logoEcocash2 from "img/logo-ecocash-2.png";
-// import igIcon from "img/Instagram.png";
-// import ytIcon from "img/YouTube.png";
-// import ttIcon from "img/TikTok.png";
-// import apkImg from "img/apk.png";
+import { useTranslation } from "react-i18next";
 
 export default function Footer() {
+  const { t } = useTranslation();
+
   return (
     <footer className="bg-slate-200 text-slate-300 py-16 shadow-sm relative overflow-hidden">
       {/* Dekorasi aksen di sudut */}
@@ -21,15 +19,17 @@ export default function Footer() {
               className="h-12 bg-white/10 p-1.5 rounded-2xl backdrop-blur-sm"
             />
             <p className="text-slate-600 text-sm leading-relaxed font-body pr-4">
-              EcoCash: Solusi Modern untuk Pengelolaan Sampah yang Transparan,
-              Berkelanjutan, dan Bernilai Ekonomi.
+              {t(
+                "footer.about",
+                "EcoCash: Solusi Modern untuk Pengelolaan Sampah yang Transparan, Berkelanjutan, dan Bernilai Ekonomi."
+              )}
             </p>
           </div>
 
           {/* Navigasi Layanan */}
           <div>
             <h4 className="font-bold text-slate-900 mb-6 uppercase tracking-wider text-sm font-heading">
-              Layanan
+              {t("footer.servicesTitle", "Layanan")}
             </h4>
             <ul className="text-slate-600 space-y-4 text-sm font-body">
               <li>
@@ -38,7 +38,7 @@ export default function Footer() {
                   className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
-                  Aplikasi Mobile
+                  {t("footer.services.mobileApp", "Aplikasi Mobile")}
                 </a>
               </li>
               <li>
@@ -47,7 +47,7 @@ export default function Footer() {
                   className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
-                  Smart RVM
+                  {t("footer.services.smartRvm", "Smart RVM")}
                 </a>
               </li>
               <li>
@@ -56,7 +56,7 @@ export default function Footer() {
                   className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
-                  Lokasi Drop Point
+                  {t("footer.services.dropPoint", "Lokasi Drop Point")}
                 </a>
               </li>
               <li>
@@ -65,7 +65,7 @@ export default function Footer() {
                   className="hover:text-eco-cyan transition-colors flex items-center gap-2"
                 >
                   <span className="w-1.5 h-1.5 rounded-full bg-eco-cyan"></span>{" "}
-                  EcoCash Bisnis
+                  {t("footer.services.business", "EcoCash Bisnis")}
                 </a>
               </li>
             </ul>
@@ -74,7 +74,7 @@ export default function Footer() {
           {/* Perusahaan */}
           <div>
             <h4 className="font-bold text-slate-900 mb-6 uppercase tracking-wider text-sm font-heading">
-              Perusahaan
+              {t("footer.companyTitle", "Perusahaan")}
             </h4>
             <ul className="text-slate-600 space-y-4 text-sm font-body">
               <li>
@@ -82,7 +82,7 @@ export default function Footer() {
                   href="#about"
                   className="hover:text-eco-cyan transition-colors"
                 >
-                  Tentang Kami
+                  {t("footer.company.aboutUs", "Tentang Kami")}
                 </a>
               </li>
               <li>
@@ -90,7 +90,7 @@ export default function Footer() {
                   href="#news"
                   className="hover:text-eco-cyan transition-colors"
                 >
-                  Edukasi & Berita
+                  {t("footer.company.news", "Edukasi & Berita")}
                 </a>
               </li>
               <li>
@@ -98,7 +98,7 @@ export default function Footer() {
                   href="#contact"
                   className="hover:text-eco-cyan transition-colors"
                 >
-                  Hubungi Kami
+                  {t("footer.company.contact", "Hubungi Kami")}
                 </a>
               </li>
               <li>
@@ -106,51 +106,37 @@ export default function Footer() {
                   href="#career"
                   className="hover:text-eco-cyan transition-colors"
                 >
-                  Karir
+                  {t("footer.company.career", "Karir")}
                 </a>
               </li>
             </ul>
           </div>
 
-          {/* Kontak & Download */}
+          {/* Kontak & Informasi */}
           <div className="space-y-8">
             <div>
               <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
-                Hubungi Kami
+                {t("footer.contactTitle", "Hubungi Kami")}
               </h4>
               <ul className="space-y-2 text-sm font-body text-slate-600">
                 <li>
-                  <strong className="text-slate-600">WA:</strong> +62
-                  812-1416-1614
+                  <strong className="text-slate-600">WA:</strong> +62 812-1416-1614
                 </li>
                 <li>
-                  <strong className="text-slate-600">Email:</strong>{" "}
-                  info@edvolution-technology.com
+                  <strong className="text-slate-600">Email:</strong> info@edvolution-technology.com
                 </li>
               </ul>
             </div>
           </div>
         </div>
 
-        {/* Rekening & Copyright */}
+        {/* Sosial Media & Rekening */}
         <div className="pt-4 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 font-body text-sm text-slate-500">
-          <div className=" p-5 ">
+          <div className="p-5">
             <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
-              Sosial Media
+              {t("footer.socialTitle", "Sosial Media")}
             </h4>
             <div className="flex space-x-4 space-y-1 flex-wrap items-center mb-2">
-              {/* LinkedIn */}
-              {/* <a
-                href="#linkedin"
-                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-eco-cyan transition-colors duration-300"
-              >
-                <img
-                  src={"img/link.png"}
-                  alt="LinkedIn"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a> */}
-              {/* Instagram */}
               <a
                 href="#instagram"
                 className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
@@ -161,29 +147,6 @@ export default function Footer() {
                   className="w-5 h-5 opacity-70 hover:opacity-100"
                 />
               </a>
-              {/* Twitter */}
-              {/* <a
-                href="#twitter"
-                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/Twitter.png"}
-                  alt="Twitter"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a> */}
-              {/* Facebook */}
-              {/* <a
-                href="#facebook"
-                className="w-10 h-10 rounded-full bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
-              >
-                <img
-                  src={"img/Facebook.png"}
-                  alt="Facebook"
-                  className="w-5 h-5 opacity-70 hover:opacity-100"
-                />
-              </a> */}
-              {/* TikTok */}
               <a
                 href="#tiktok"
                 className="w-10 h-10 rounded-full mt-0.5 bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
@@ -194,7 +157,6 @@ export default function Footer() {
                   className="w-5 h-5 opacity-70 hover:opacity-100"
                 />
               </a>
-              {/* YouTube */}
               <a
                 href="#youtube"
                 className="w-10 h-10 rounded-full mt-0.5 bg-slate-300 flex items-center justify-center hover:bg-eco-cyan hover:text-white transition-colors duration-300"
@@ -221,7 +183,7 @@ export default function Footer() {
           </div>
           <div>
             <h4 className="font-bold text-slate-900 mb-4 uppercase tracking-wider text-sm font-heading">
-              Unduh Aplikasi
+              {t("footer.downloadTitle", "Unduh Aplikasi")}
             </h4>
             <a
               href="#download"
@@ -235,9 +197,11 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="text-slate-400 flex justify-center text-left lg:text-right pt-4 mt-4 border-t border-slate-300">
-          <p>© 2026 PT Ideas Edvolution Technology.</p>
-          <p>Hak Cipta Dilindungi Undang-Undang.</p>
+
+        {/* Baris Hak Cipta */}
+        <div className="text-slate-400 flex flex-col sm:flex-row justify-between items-center pt-4 mt-4 border-t border-slate-300 gap-2 text-xs lg:text-sm">
+          <p>{t("footer.copyright", "© 2026 PT Ideas Edvolution Technology.")}</p>
+          <p>{t("footer.allRightsReserved", "Hak Cipta Dilindungi Undang-Undang.")}</p>
         </div>
       </div>
     </footer>

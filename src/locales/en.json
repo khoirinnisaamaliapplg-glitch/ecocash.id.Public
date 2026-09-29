@@ -74,5 +74,33 @@
         "desc": "New partner registration information"
       }
     }
+  },
+  "hero": {
+    "title": "Turn Waste into Money",
+    "description": "An AI, IoT, and circular economy-based waste management platform to create a cleaner and economically valuable environment.",
+    "startNow": "Get Started",
+    "learnMore": "Learn more"
+  },
+  "footer": {
+    "about": "EcoCash: Modern Solutions for Transparent, Sustainable, and Economically Valuable Waste Management.",
+    "servicesTitle": "Services",
+    "services": {
+      "mobileApp": "Mobile App",
+      "smartRvm": "Smart RVM",
+      "dropPoint": "Drop Point Locations",
+      "business": "EcoCash Business"
+    },
+    "companyTitle": "Company",
+    "company": {
+      "aboutUs": "About Us",
+      "news": "Education & News",
+      "contact": "Contact Us",
+      "career": "Careers"
+    },
+    "contactTitle": "Contact Us",
+    "socialTitle": "Social Media",
+    "downloadTitle": "Download App",
+    "copyright": "© 2026 PT Ideas Edvolution Technology.",
+    "allRightsReserved": "All Rights Reserved."
   }
 }

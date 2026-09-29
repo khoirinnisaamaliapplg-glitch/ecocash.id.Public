@@ -74,5 +74,33 @@
         "desc": "了解最新生态伙伴加盟政策"
       }
     }
+  },
+  "hero": {
+    "title": "变废为宝 创造价值",
+    "description": "基于人工智能、物联网与循环经济的废弃物综合治理平台，致力构建更清洁且兼具经济效益的生态未来。",
+    "startNow": "立即体验",
+    "learnMore": "了解更多"
+  },
+  "footer": {
+    "about": "EcoCash：透明、可持续且兼具经济价值的现代化固废管理综合解决方案。",
+    "servicesTitle": "产品与服务",
+    "services": {
+      "mobileApp": "移动端应用",
+      "smartRvm": "智能回收机 (RVM)",
+      "dropPoint": "回收网点分布",
+      "business": "EcoCash 企业版"
+    },
+    "companyTitle": "关于公司",
+    "company": {
+      "aboutUs": "关于我们",
+      "news": "科普与资讯",
+      "contact": "联系我们",
+      "career": "招贤纳士"
+    },
+    "contactTitle": "联系我们",
+    "socialTitle": "关注我们",
+    "downloadTitle": "下载应用",
+    "copyright": "© 2026 PT Ideas Edvolution Technology.",
+    "allRightsReserved": "版权所有，保留一切权利。"
   }
 }

@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import BotAssistant from "../../../components/bot/BotAssistant";
 
 export default function Hero() {
+  const { t } = useTranslation();
   const [botFlowData, setBotFlowData] = useState(null);
 
   useEffect(() => {
@@ -10,7 +12,6 @@ export default function Hero() {
         const apiUrl =
           import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
         const response = await fetch(`${apiUrl}/bot/tree`);
-        console.log("API Response:", response); // Debugging: Periksa respons API
 
         if (!response.ok) throw new Error("Gagal mengambil data");
 
@@ -40,18 +41,20 @@ export default function Hero() {
         />
       </div>
 
-      {/* Konten Teks & Tombol CTA Utama (Desain Tidak Diubah Sama Sekali) */}
+      {/* Konten Teks & Tombol CTA Utama */}
       <div className="max-w-7xl mx-auto px-6 pt-4 lg:px-10 relative z-20">
         <div className="max-w-3xl space-y-6 text-left">
           {/* Judul Utama */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan tracking-tight font-heading leading-[1.15]">
-            Ubah Sampah Jadi Uang
+            {t("hero.title", "Ubah Sampah Jadi Uang")}
           </h1>
 
           {/* Deskripsi Singkat */}
           <p className="text-base sm:text-lg text-slate-700 font-body max-w-xl leading-relaxed">
-            Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular
-            untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi.
+            {t(
+              "hero.description",
+              "Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi."
+            )}
           </p>
 
           {/* Tombol Aksi (CTA) - Solid Style */}
@@ -60,7 +63,7 @@ export default function Hero() {
               href="#location-map"
               className="bg-eco-cyan hover:bg-eco-cyan/70 text-white px-7 py-3.5 rounded-xl font-heading font-bold text-sm shadow-lg shadow-eco-cyan/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center"
             >
-              Mulai Sekarang
+              {t("hero.startNow", "Mulai Sekarang")}
             </a>
 
             {/* Tombol Pelajari Lebih Lanjut */}
@@ -68,7 +71,7 @@ export default function Hero() {
               href="#smart-rvm"
               className="bg-white border border-slate-300 hover:border-2 hover:border-eco-secondary text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center"
             >
-              Pelajari lebih lanjut
+              {t("hero.learnMore", "Pelajari lebih lanjut")}
             </a>
           </div>
 

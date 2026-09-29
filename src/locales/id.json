@@ -74,5 +74,33 @@
         "desc": "Informasi pendaftaran partner baru"
       }
     }
+  },
+  "hero": {
+    "title": "Ubah Sampah Jadi Uang",
+    "description": "Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi.",
+    "startNow": "Mulai Sekarang",
+    "learnMore": "Pelajari lebih lanjut"
+  },
+  "footer": {
+    "about": "EcoCash: Solusi Modern untuk Pengelolaan Sampah yang Transparan, Berkelanjutan, dan Bernilai Ekonomi.",
+    "servicesTitle": "Layanan",
+    "services": {
+      "mobileApp": "Aplikasi Mobile",
+      "smartRvm": "Smart RVM",
+      "dropPoint": "Lokasi Drop Point",
+      "business": "EcoCash Bisnis"
+    },
+    "companyTitle": "Perusahaan",
+    "company": {
+      "aboutUs": "Tentang Kami",
+      "news": "Edukasi & Berita",
+      "contact": "Hubungi Kami",
+      "career": "Karir"
+    },
+    "contactTitle": "Hubungi Kami",
+    "socialTitle": "Sosial Media",
+    "downloadTitle": "Unduh Aplikasi",
+    "copyright": "© 2026 PT Ideas Edvolution Technology.",
+    "allRightsReserved": "Hak Cipta Dilindungi Undang-Undang."
   }
 }
