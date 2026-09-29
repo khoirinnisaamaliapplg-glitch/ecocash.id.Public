@@ -2,23 +2,28 @@
 export const NAV_ITEMS = [
   {
     name: "Cara Kerja",
+    key: "howItWorks",
     submenu: [
       {
+        key: "forUsers",
         label: "Untuk Pengguna",
         text: "Mulai daur ulang dan kumpulkan poin",
         url: "/for-users",
       },
       {
+        key: "locationManagement",
         label: "Pengelolaan Lokasi",
         text: "Manajemen titik RVM dan Area",
         url: "/location-management",
       },
       {
+        key: "fieldPartners",
         label: "Mitra Lapangan",
         text: "Proses penjemputan dan distribusi",
         url: "/field-partners",
       },
       {
+        key: "technology",
         label: "Teknologi RVM & AI",
         text: "Cara kerja sensor dan sistem cerdas",
         url: "/technology",
@@ -27,23 +32,28 @@ export const NAV_ITEMS = [
   },
   {
     name: "Solusi",
+    key: "solutions",
     submenu: [
       {
+        key: "cooperatives",
         label: "Koperasi & ESG",
         text: "Solusi keberlanjutan untuk perusahaan",
         url: "/cooperatives-esg",
       },
       {
+        key: "schools",
         label: "Sekolah & Kampus",
         text: "Edukasi daur ulang di lingkungan pendidikan",
         url: "/schools-universities",
       },
       {
+        key: "retail",
         label: "Ritel & Mall",
         text: "Integrasi RVM di pusat perbelanjaan",
         url: "/retail-malls",
       },
       {
+        key: "government",
         label: "Pemerintahan",
         text: "Pengelolaan sampah di lingkungan daerah",
         url: "/government",
@@ -52,23 +62,28 @@ export const NAV_ITEMS = [
   },
   {
     name: "Edukasi",
+    key: "education",
     submenu: [
       {
+        key: "materialGuides",
         label: "Panduan Material",
         text: "Jenis sampah yang bisa didaur ulang",
         url: "/material-guides",
       },
       {
+        key: "academy",
         label: "EcoCash Akademi",
         text: "Pelatihan dan sertifikasi daur ulang",
         url: "/academy",
       },
       {
+        key: "carbon",
         label: "Kalkulator Karbon",
         text: "Hitung jejak karbon",
         url: "/carbon-calculator",
       },
       {
+        key: "donation",
         label: "Program Donasi",
         text: "Salurkan poin untuk kegiatan alam",
         url: "/donation-programs",
@@ -77,23 +92,28 @@ export const NAV_ITEMS = [
   },
   {
     name: "Partner",
+    key: "partner",
     submenu: [
       {
+        key: "pickupPartner",
         label: "Mitra Penjemput",
         text: "Gabung sebagai mitra penjemput",
         url: "/mitra-penjemput",
       },
       {
+        key: "recycler",
         label: "Industri Recycler",
         text: "Mitra pengelolaan hasil daur ulang",
         url: "/industries",
       },
       {
+        key: "wasteBank",
         label: "Bank Sampah",
         text: "Jaringan pengelolaan sampah lokal",
         url: "/bank-sampah",
       },
       {
+        key: "partnership",
         label: "Daftar Kemitraan",
         text: "Informasi pendaftaran partner baru",
         url: "/partnership",
@@ -102,6 +122,7 @@ export const NAV_ITEMS = [
   },
   {
     name: "Marketplace",
+    key: "marketplace",
     url: "https://marketplace.ecocash.id",
   },
 ];
@@ -338,7 +359,7 @@ export const CUSTOMER_STORIES = [
     id: 1,
     name: "Simon Amour",
     role: "TECHNICAL DIRECTOR",
-    image: "img/avatar-1.jpg", // Pastikan menambahkan gambar avatar di public/img
+    image: "img/avatar-1.jpg",
     text: "Vestibulum morbi blandit cursus risus. Augue neque gravida in fermentum et sollicitudin ac orci phasellus. Massa massa ultricies.",
     rating: 5,
   },

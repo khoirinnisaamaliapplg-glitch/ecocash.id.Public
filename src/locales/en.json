@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "howItWorks": "How It Works",
+    "solutions": "Solutions",
+    "education": "Education",
+    "partner": "Partners",
+    "marketplace": "Marketplace",
+    "whatsapp": "WhatsApp Us",
+    "whatsappMobile": "Contact via WhatsApp",
+    "menuTitle": "Navigation Menu",
+    "items": {
+      "forUsers": {
+        "label": "For Users",
+        "desc": "Start recycling and collect eco-points"
+      },
+      "locationManagement": {
+        "label": "Location Management",
+        "desc": "RVM points and area management"
+      },
+      "fieldPartners": {
+        "label": "Field Partners",
+        "desc": "Pickup and distribution processes"
+      },
+      "technology": {
+        "label": "RVM & AI Tech",
+        "desc": "How smart sensors and AI systems work"
+      },
+      "cooperatives": {
+        "label": "Cooperatives & ESG",
+        "desc": "Sustainability solutions for corporations"
+      },
+      "schools": {
+        "label": "Schools & Campuses",
+        "desc": "Recycling education for institutions"
+      },
+      "retail": {
+        "label": "Retail & Malls",
+        "desc": "RVM integration for shopping centers"
+      },
+      "government": {
+        "label": "Government",
+        "desc": "Regional solid waste management"
+      },
+      "materialGuides": {
+        "label": "Material Guides",
+        "desc": "Types of recyclable waste"
+      },
+      "academy": {
+        "label": "EcoCash Academy",
+        "desc": "Recycling training and certification"
+      },
+      "carbon": {
+        "label": "Carbon Calculator",
+        "desc": "Calculate your carbon footprint"
+      },
+      "donation": {
+        "label": "Donation Programs",
+        "desc": "Channel points into green nature projects"
+      },
+      "pickupPartner": {
+        "label": "Pickup Partners",
+        "desc": "Join as an on-demand waste collector"
+      },
+      "recycler": {
+        "label": "Industrial Recyclers",
+        "desc": "Recycled materials processing partners"
+      },
+      "wasteBank": {
+        "label": "Waste Banks",
+        "desc": "Local community waste management network"
+      },
+      "partnership": {
+        "label": "Join Partnership",
+        "desc": "New partner registration information"
+      }
+    }
+  }
+}

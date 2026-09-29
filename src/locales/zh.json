@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "howItWorks": "运作方式",
+    "solutions": "解决方案",
+    "education": "环保教育",
+    "partner": "合作伙伴",
+    "marketplace": "交易平台",
+    "whatsapp": "联系我们",
+    "whatsappMobile": "通过WhatsApp联系我们",
+    "menuTitle": "导航菜单",
+    "items": {
+      "forUsers": {
+        "label": "用户端",
+        "desc": "开启垃圾回收并获取环保积分"
+      },
+      "locationManagement": {
+        "label": "网点运营",
+        "desc": "智能回收机点位与区域管理"
+      },
+      "fieldPartners": {
+        "label": "一线运维伙伴",
+        "desc": "清运回收与物资流转流程"
+      },
+      "technology": {
+        "label": "RVM与AI技术",
+        "desc": "传感器原理与智能识别系统"
+      },
+      "cooperatives": {
+        "label": "企业ESG方案",
+        "desc": "面向企业的全套可持续发展方案"
+      },
+      "schools": {
+        "label": "校园与教育机构",
+        "desc": "校园分类回收与环境教育"
+      },
+      "retail": {
+        "label": "商超与购物中心",
+        "desc": "商业中心智能回收设备无缝接入"
+      },
+      "government": {
+        "label": "政企协同",
+        "desc": "区域化固废综合治理体系"
+      },
+      "materialGuides": {
+        "label": "分类指南",
+        "desc": "可回收废弃物种类与判定标准"
+      },
+      "academy": {
+        "label": "EcoCash学院",
+        "desc": "专业回收培训与权威技能认证"
+      },
+      "carbon": {
+        "label": "碳排放计算器",
+        "desc": "精准核算组织与个人碳足迹"
+      },
+      "donation": {
+        "label": "绿色公益捐助",
+        "desc": "将积分转化为自然保护生态基金"
+      },
+      "pickupPartner": {
+        "label": "清运加盟",
+        "desc": "申请成为专业环保清运团队"
+      },
+      "recycler": {
+        "label": "利废再生企业",
+        "desc": "资源深加工与循环产业合作伙伴"
+      },
+      "wasteBank": {
+        "label": "社区环保银行",
+        "desc": "基层垃圾分类综合服务网络"
+      },
+      "partnership": {
+        "label": "招商合作",
+        "desc": "了解最新生态伙伴加盟政策"
+      }
+    }
+  }
+}

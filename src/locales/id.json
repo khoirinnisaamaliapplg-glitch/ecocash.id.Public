@@ -1,0 +1,78 @@
+{
+  "nav": {
+    "howItWorks": "Cara Kerja",
+    "solutions": "Solusi",
+    "education": "Edukasi",
+    "partner": "Partner",
+    "marketplace": "Marketplace",
+    "whatsapp": "WhatsApp kami",
+    "whatsappMobile": "Hubungi via WhatsApp",
+    "menuTitle": "Menu Navigasi",
+    "items": {
+      "forUsers": {
+        "label": "Untuk Pengguna",
+        "desc": "Mulai daur ulang dan kumpulkan poin"
+      },
+      "locationManagement": {
+        "label": "Pengelolaan Lokasi",
+        "desc": "Manajemen titik RVM dan Area"
+      },
+      "fieldPartners": {
+        "label": "Mitra Lapangan",
+        "desc": "Proses penjemputan dan distribusi"
+      },
+      "technology": {
+        "label": "Teknologi RVM & AI",
+        "desc": "Cara kerja sensor dan sistem cerdas"
+      },
+      "cooperatives": {
+        "label": "Koperasi & ESG",
+        "desc": "Solusi keberlanjutan untuk perusahaan"
+      },
+      "schools": {
+        "label": "Sekolah & Kampus",
+        "desc": "Edukasi daur ulang di lingkungan pendidikan"
+      },
+      "retail": {
+        "label": "Ritel & Mall",
+        "desc": "Integrasi RVM di pusat perbelanjaan"
+      },
+      "government": {
+        "label": "Pemerintahan",
+        "desc": "Pengelolaan sampah di lingkungan daerah"
+      },
+      "materialGuides": {
+        "label": "Panduan Material",
+        "desc": "Jenis sampah yang bisa didaur ulang"
+      },
+      "academy": {
+        "label": "EcoCash Akademi",
+        "desc": "Pelatihan dan sertifikasi daur ulang"
+      },
+      "carbon": {
+        "label": "Kalkulator Karbon",
+        "desc": "Hitung jejak karbon"
+      },
+      "donation": {
+        "label": "Program Donasi",
+        "desc": "Salurkan poin untuk kegiatan alam"
+      },
+      "pickupPartner": {
+        "label": "Mitra Penjemput",
+        "desc": "Gabung sebagai mitra penjemput"
+      },
+      "recycler": {
+        "label": "Industri Recycler",
+        "desc": "Mitra pengelolaan hasil daur ulang"
+      },
+      "wasteBank": {
+        "label": "Bank Sampah",
+        "desc": "Jaringan pengelolaan sampah lokal"
+      },
+      "partnership": {
+        "label": "Daftar Kemitraan",
+        "desc": "Informasi pendaftaran partner baru"
+      }
+    }
+  }
+}

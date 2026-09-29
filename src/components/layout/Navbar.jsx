@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { NAV_ITEMS } from "../../constants/dummyData";
 
-// Fungsi Pembantu untuk me-render Ikon Dinamis berdasarkan Label Menu
-const getMenuIcon = (label) => {
-  const keyword = label.toLowerCase();
+// Helper me-render Ikon Dinamis berdasarkan Key / Label Menu
+const getMenuIcon = (subItem) => {
+  const key = typeof subItem === "object" ? (subItem.key || "") : "";
+  const label = typeof subItem === "object" ? (subItem.label || "") : subItem;
+  const keyword = `${key} ${label}`.toLowerCase();
 
-  if (keyword.includes("penjemput") || keyword.includes("lapangan")) {
+  if (
+    keyword.includes("pickup") ||
+    keyword.includes("field") ||
+    keyword.includes("penjemput") ||
+    keyword.includes("lapangan")
+  ) {
     return (
       <svg
         className="w-6 h-6"
@@ -24,6 +32,9 @@ const getMenuIcon = (label) => {
     );
   }
   if (
+    keyword.includes("forusers") ||
+    keyword.includes("location") ||
+    keyword.includes("wastebank") ||
     keyword.includes("bank sampah") ||
     keyword.includes("daur ulang") ||
     keyword.includes("pengguna")
@@ -45,6 +56,9 @@ const getMenuIcon = (label) => {
     );
   }
   if (
+    keyword.includes("recycler") ||
+    keyword.includes("retail") ||
+    keyword.includes("cooperative") ||
     keyword.includes("industri") ||
     keyword.includes("ritel") ||
     keyword.includes("koprasi")
@@ -66,9 +80,13 @@ const getMenuIcon = (label) => {
     );
   }
   if (
+    keyword.includes("partnership") ||
+    keyword.includes("school") ||
+    keyword.includes("government") ||
     keyword.includes("kemitraan") ||
     keyword.includes("sekolah") ||
-    keyword.includes("kepemerintahan")
+    keyword.includes("kepemerintahan") ||
+    keyword.includes("pemerintahan")
   ) {
     return (
       <svg
@@ -87,7 +105,7 @@ const getMenuIcon = (label) => {
     );
   }
 
-  // Default Icon (Buku/Edukasi/Lainnya)
+  // Default Icon (Edukasi, Akademi, Karbon, Donasi)
   return (
     <svg
       className="w-6 h-6"
@@ -106,9 +124,38 @@ const getMenuIcon = (label) => {
 };
 
 export default function Navbar() {
+  const { t, i18n } = useTranslation();
   const [openSidebar, setOpenSidebar] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [activeSubMobile, setActiveSubMobile] = useState(null);
+  const [isLangOpen, setIsLangOpen] = useState(false);
+  const langRef = useRef(null);
+
+  const LANGUAGES = [
+    { code: "id", label: "ID", name: "Bahasa Indonesia" },
+    { code: "en", label: "EN", name: "English" },
+    { code: "zh", label: "ZH", name: "中文 (Simplified)" },
+  ];
+
+  const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
+    .split("-")[0]
+    .toLowerCase();
+
+  // Menutup dropdown jika user klik di luar area tombol
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (langRef.current && !langRef.current.contains(event.target)) {
+        setIsLangOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleLanguageChange = (code) => {
+    i18n.changeLanguage(code);
+    setIsLangOpen(false);
+  };
 
   return (
     <header className="w-full sticky top-0 z-50">
@@ -132,7 +179,9 @@ export default function Navbar() {
           {/* Menu Desktop (Layar LG ke atas) */}
           <div className="hidden lg:flex items-center space-x-1">
             {NAV_ITEMS.map((item, index) => {
-              if (item.name === "Marketplace") {
+              const itemName = item.key ? t(`nav.${item.key}`, item.name) : item.name;
+
+              if (item.name === "Marketplace" || item.key === "marketplace") {
                 return (
                   <a
                     key={index}
@@ -141,7 +190,7 @@ export default function Navbar() {
                     rel="noopener noreferrer"
                     className="flex items-center gap-1.5 px-4 py-2.5 rounded-full font-heading font-bold text-sm tracking-wide transition-all duration-200 focus:outline-none text-slate-600 hover:text-eco-cyan hover:bg-eco-cyan/5"
                   >
-                    {item.name}
+                    {itemName}
                   </a>
                 );
               }
@@ -160,10 +209,14 @@ export default function Navbar() {
                         : "text-slate-600 hover:text-eco-cyan hover:bg-eco-cyan/5"
                     }`}
                   >
-                    {item.name}
+                    {itemName}
 
                     <svg
-                      className={`w-4 h-4 transition-transform duration-300 ${activeDropdown === index ? "rotate-180 text-eco-cyan" : "text-slate-400 group-hover:text-eco-cyan"}`}
+                      className={`w-4 h-4 transition-transform duration-300 ${
+                        activeDropdown === index
+                          ? "rotate-180 text-eco-cyan"
+                          : "text-slate-400 group-hover:text-eco-cyan"
+                      }`}
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -177,35 +230,38 @@ export default function Navbar() {
                     </svg>
                   </button>
 
-                  {/* Dropdown Content (Mega Menu Baru sesuai UI/UX) */}
-                  {activeDropdown === index && (
-                    // Posisi di-center terhadap menu nav dengan -translate-x-1/2
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-5 w-[600px] z-50 animate-fadeIn ">
+                  {/* Dropdown Mega Menu */}
+                  {activeDropdown === index && item.submenu && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 pt-5 w-[600px] z-50 animate-fadeIn">
                       <div className="bg-white border border-slate-100 shadow-2xl shadow-slate-200/50 rounded-3xl p-6 relative overflow-hidden">
-                        {/* Grid 2 Kolom untuk Menu */}
-                        <div className="grid grid-cols-2 gap-x-8 gap-y-6 relative z-10 ">
-                          {item.submenu.map((sub, subIdx) => (
-                            <a
-                              key={subIdx}
-                              href={sub.url}
-                              className="flex items-start gap-4 p-3 -m-3 rounded-2xl hover:bg-slate-50 transition-colors group/link  hover:bg-eco-cyan/50 rounded-sm"
-                            >
-                              {/* Ikon Box Cyan */}
-                              <div className="w-12 h-12 rounded-xl bg-eco-cyan/10 text-eco-cyan flex items-center justify-center shrink-0 group-hover/link:scale-105 group-hover/link:bg-eco-cyan group-hover/link:text-white transition-all duration-300">
-                                {getMenuIcon(sub.label)}
-                              </div>
+                        <div className="grid grid-cols-2 gap-x-8 gap-y-6 relative z-10">
+                          {item.submenu.map((sub, subIdx) => {
+                            const subLabel = sub.key ? t(`nav.items.${sub.key}.label`, sub.label) : sub.label;
+                            const subText = sub.key ? t(`nav.items.${sub.key}.desc`, sub.text) : sub.text;
 
-                              {/* Teks Konten */}
-                              <div>
-                                <h4 className="text-sm font-bold text-slate-800 font-heading mb-1 group-hover/link:text-eco-cyan transition-colors">
-                                  {sub.label}
-                                </h4>
-                                <p className="text-[13px] text-slate-500 font-body leading-relaxed line-clamp-2">
-                                  {sub.text}
-                                </p>
-                              </div>
-                            </a>
-                          ))}
+                            return (
+                              <a
+                                key={subIdx}
+                                href={sub.url}
+                                className="flex items-start gap-4 p-3 -m-3 rounded-2xl hover:bg-slate-50 transition-colors group/link hover:bg-eco-cyan/5 rounded-sm"
+                              >
+                                {/* Ikon Box Cyan */}
+                                <div className="w-12 h-12 rounded-xl bg-eco-cyan/10 text-eco-cyan flex items-center justify-center shrink-0 group-hover/link:scale-105 group-hover/link:bg-eco-cyan group-hover/link:text-white transition-all duration-300">
+                                  {getMenuIcon(sub)}
+                                </div>
+
+                                {/* Teks Konten */}
+                                <div>
+                                  <h4 className="text-sm font-bold text-slate-800 font-heading mb-1 group-hover/link:text-eco-cyan transition-colors">
+                                    {subLabel}
+                                  </h4>
+                                  <p className="text-[13px] text-slate-500 font-body leading-relaxed line-clamp-2">
+                                    {subText}
+                                  </p>
+                                </div>
+                              </a>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
@@ -215,24 +271,56 @@ export default function Navbar() {
             })}
           </div>
 
-          {/* Actions (Bahasa & CTA WhatsApp) */}
+          {/* Actions (Bahasa Interaktif & CTA WhatsApp) */}
           <div className="hidden lg:flex items-center space-x-5 relative z-50">
-            <button className="text-slate-600 hover:text-eco-cyan font-medium text-sm flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-slate-100 transition-colors">
-              <span className="text-eco-cyan">🌐</span> <span>ID</span>
-              <svg
-                className="w-4 h-4 text-slate-400"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Dropdown Bahasa Desktop */}
+            <div className="relative" ref={langRef}>
+              <button
+                type="button"
+                onClick={() => setIsLangOpen((prev) => !prev)}
+                className="text-slate-600 hover:text-eco-cyan font-medium text-sm flex items-center gap-1.5 px-3 py-2 rounded-full hover:bg-slate-100 transition-colors cursor-pointer"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </button>
+                <span className="text-eco-cyan">🌐</span>
+                <span className="uppercase font-semibold">{currentLang}</span>
+                <svg
+                  className={`w-4 h-4 text-slate-400 transition-transform duration-200 ${
+                    isLangOpen ? "rotate-180 text-eco-cyan" : ""
+                  }`}
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M19 9l-7 7-7-7"
+                  />
+                </svg>
+              </button>
+
+              {isLangOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white border border-slate-100 rounded-2xl shadow-xl py-2 z-50 animate-fadeIn">
+                  {LANGUAGES.map((lang) => (
+                    <button
+                      key={lang.code}
+                      type="button"
+                      onClick={() => handleLanguageChange(lang.code)}
+                      className={`w-full px-4 py-2.5 text-left text-sm flex items-center justify-between hover:bg-slate-50 transition-colors cursor-pointer ${
+                        currentLang === lang.code
+                          ? "text-eco-cyan font-bold bg-eco-cyan/5"
+                          : "text-slate-700"
+                      }`}
+                    >
+                      <span>{lang.name}</span>
+                      <span className="text-xs uppercase px-1.5 py-0.5 rounded bg-slate-100 text-slate-500 font-semibold">
+                        {lang.label}
+                      </span>
+                    </button>
+                  ))}
+                </div>
+              )}
+            </div>
 
             <a
               href="https://wa.me/6281214161614"
@@ -240,7 +328,7 @@ export default function Navbar() {
               rel="noreferrer"
               className="bg-eco-cyan hover:bg-[#1eb5b1] shadow-lg shadow-eco-cyan/30 text-white px-7 py-3 rounded-full font-heading font-bold text-sm transition-all duration-300 transform hover:-translate-y-0.5 flex items-center gap-2"
             >
-              WhatsApp kami
+              {t("nav.whatsapp", "WhatsApp kami")}
             </a>
           </div>
 
@@ -277,7 +365,7 @@ export default function Navbar() {
             <div className="p-6">
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-slate-100">
                 <span className="font-heading font-bold text-xl text-slate-900">
-                  Menu Navigasi
+                  {t("nav.menuTitle", "Menu Navigasi")}
                 </span>
                 <button
                   onClick={() => setOpenSidebar(false)}
@@ -301,7 +389,9 @@ export default function Navbar() {
 
               <div className="flex flex-col space-y-2">
                 {NAV_ITEMS.map((item, idx) => {
-                  if (item.name === "Marketplace") {
+                  const itemName = item.key ? t(`nav.${item.key}`, item.name) : item.name;
+
+                  if (item.name === "Marketplace" || item.key === "marketplace") {
                     return (
                       <a
                         key={idx}
@@ -311,7 +401,7 @@ export default function Navbar() {
                         onClick={() => setOpenSidebar(false)}
                         className="flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all text-slate-700 hover:bg-slate-50"
                       >
-                        {item.name}
+                        {itemName}
                       </a>
                     );
                   }
@@ -321,15 +411,21 @@ export default function Navbar() {
                       <button
                         onClick={() =>
                           setActiveSubMobile(
-                            activeSubMobile === idx ? null : idx,
+                            activeSubMobile === idx ? null : idx
                           )
                         }
-                        className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all ${activeSubMobile === idx ? "bg-eco-cyan/10 text-eco-cyan" : "text-slate-700 hover:bg-slate-50"}`}
+                        className={`flex items-center justify-between font-heading text-base font-bold px-5 py-3.5 rounded-xl transition-all ${
+                          activeSubMobile === idx
+                            ? "bg-eco-cyan/10 text-eco-cyan"
+                            : "text-slate-700 hover:bg-slate-50"
+                        }`}
                       >
-                        {item.name}
+                        {itemName}
 
                         <svg
-                          className={`w-5 h-5 transition-transform duration-300 ${activeSubMobile === idx ? "rotate-180" : ""}`}
+                          className={`w-5 h-5 transition-transform duration-300 ${
+                            activeSubMobile === idx ? "rotate-180" : ""
+                          }`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
@@ -343,23 +439,28 @@ export default function Navbar() {
                         </svg>
                       </button>
 
-                      {activeSubMobile === idx && (
+                      {activeSubMobile === idx && item.submenu && (
                         <div className="pl-4 pr-2 py-3 flex flex-col gap-3 border-l-2 border-eco-cyan/30 ml-6 mt-1 mb-2">
-                          {item.submenu.map((sub, sIdx) => (
-                            <a
-                              key={sIdx}
-                              href={sub.url}
-                              onClick={() => setOpenSidebar(false)}
-                              className="flex flex-col gap-0.5 px-4 py-2 rounded-xl transition-colors hover:bg-slate-50 group "
-                            >
-                              <span className="font-heading text-sm font-bold text-slate-800 group-hover:text-eco-cyan">
-                                {sub.label}
-                              </span>
-                              <span className="font-body text-[13px] text-slate-500 leading-snug">
-                                {sub.text}
-                              </span>
-                            </a>
-                          ))}
+                          {item.submenu.map((sub, sIdx) => {
+                            const subLabel = sub.key ? t(`nav.items.${sub.key}.label`, sub.label) : sub.label;
+                            const subText = sub.key ? t(`nav.items.${sub.key}.desc`, sub.text) : sub.text;
+
+                            return (
+                              <a
+                                key={sIdx}
+                                href={sub.url}
+                                onClick={() => setOpenSidebar(false)}
+                                className="flex flex-col gap-0.5 px-4 py-2 rounded-xl transition-colors hover:bg-slate-50 group"
+                              >
+                                <span className="font-heading text-sm font-bold text-slate-800 group-hover:text-eco-cyan">
+                                  {subLabel}
+                                </span>
+                                <span className="font-body text-[13px] text-slate-500 leading-snug">
+                                  {subText}
+                                </span>
+                              </a>
+                            );
+                          })}
                         </div>
                       )}
                     </div>
@@ -368,14 +469,32 @@ export default function Navbar() {
               </div>
             </div>
 
-            <div className="p-6 border-t border-slate-100 bg-slate-50 mt-auto">
+            {/* Mobile Drawer Actions (Pilihan Bahasa & CTA WhatsApp) */}
+            <div className="p-6 border-t border-slate-100 bg-slate-50 mt-auto flex flex-col gap-4">
+              <div className="flex items-center justify-between bg-white p-1 rounded-xl border border-slate-200 shadow-sm">
+                {LANGUAGES.map((lang) => (
+                  <button
+                    key={lang.code}
+                    type="button"
+                    onClick={() => handleLanguageChange(lang.code)}
+                    className={`flex-1 py-2 text-xs font-heading font-bold rounded-lg transition-all ${
+                      currentLang === lang.code
+                        ? "bg-eco-cyan text-white shadow-sm"
+                        : "text-slate-600 hover:text-slate-900"
+                    }`}
+                  >
+                    {lang.label}
+                  </button>
+                ))}
+              </div>
+
               <a
                 href="https://wa.me/6281214161614"
                 target="_blank"
                 rel="noreferrer"
-                className="w-full bg-eco-cyan hover:bg-[#1eb5b1] text-white font-heading font-bold py-4 rounded-xl flex items-center justify-center shadow-lg shadow-eco-cyan/30 transition-all transform hover:-translate-y-0.5"
+                className="w-full bg-eco-cyan hover:bg-[#1eb5b1] text-white font-heading font-bold py-3.5 rounded-xl flex items-center justify-center shadow-lg shadow-eco-cyan/30 transition-all transform hover:-translate-y-0.5 text-sm"
               >
-                Hubungi via WhatsApp
+                {t("nav.whatsappMobile", "Hubungi via WhatsApp")}
               </a>
             </div>
           </div>
