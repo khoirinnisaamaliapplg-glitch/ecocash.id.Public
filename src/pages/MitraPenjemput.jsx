@@ -85,7 +85,7 @@ export default function MitraPenjemput() {
             {/* Bagian Kanan: Mockup Aplikasi */}
             <div className="relative w-full flex justify-center lg:justify-end">
               <img
-                src="img/cth.png"
+                src="img/partner-new.jpeg"
                 alt="EcoCash Partner App"
                 className="w-full max-w-md h-auto rounded-3xl shadow-2xl object-cover"
                 onError={(e) => {

@@ -10,6 +10,7 @@ export default function Hero() {
         const apiUrl =
           import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
         const response = await fetch(`${apiUrl}/bot/tree`);
+        console.log("API Response:", response); // Debugging: Periksa respons API
 
         if (!response.ok) throw new Error("Gagal mengambil data");
 
