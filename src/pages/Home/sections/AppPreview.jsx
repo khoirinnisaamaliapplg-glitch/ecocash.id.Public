@@ -32,6 +32,7 @@ export default function AppPreview() {
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading">
                 {t("appPreview.title", "Kelola Sampah Lebih Mudah")} <br />{" "}
                 {t("appPreview.titleSuffix", "dengan EcoCash App")}
+
               </h2>
 
               <p className="text-lg text-slate-600 leading-relaxed font-body">

@@ -15,6 +15,7 @@ export default function CaraKerjaTeknologiRVM() {
           import.meta.env.VITE_API_BASE_URL ||
           import.meta.env.VITE_API_URL ||
           "http://localhost:3000/api/v1";
+
         const response = await fetch(`${apiUrl}/bot/tree`);
 
         if (!response.ok) throw new Error("Gagal mengambil data");

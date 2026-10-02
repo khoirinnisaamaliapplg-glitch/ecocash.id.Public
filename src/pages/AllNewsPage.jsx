@@ -31,6 +31,9 @@ export default function AllNewsPage() {
 
     const fetchBotTree = async () => {
       try {
+        const apiUrl =
+          import.meta.env.VITE_API_URL_LOCAL || "http://localhost:3000/api/v1";
+
         const response = await fetch(`${apiUrl}/bot/tree`);
         if (!response.ok) throw new Error("Gagal mengambil data bot");
         const result = await response.json();
