@@ -1,6 +1,9 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function SmartTruck() {
+  const { t } = useTranslation();
+
   return (
     <section
       id="smart-truck"
@@ -11,33 +14,31 @@ export default function SmartTruck() {
           {/* Bagian Kiri: Teks */}
           <div className="space-y-6">
             <div className="inline-flex items-center gap-2 bg-eco-accent/10 text-eco-accent px-5 py-2.5 rounded-full font-heading text-sm font-semibold border border-eco-accent/20">
-              <span className="text-eco-accent text-lg">🚚</span> Layanan Bisnis
-              & B2B
+              <span className="text-eco-accent text-lg">🚚</span>{" "}
+              {t("smartTruck.badge", "Layanan Bisnis & B2B")}
             </div>
 
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight font-heading">
-              Armada Smart Vehicle <br />
+              {t("smartTruck.title", "Armada Smart Vehicle")} <br />
               <span className="text-eco-primary">EcoCash</span>
             </h2>
 
             <h4 className="text-xl font-bold text-slate-900">
-              Smart Circular Logistics System
+              {t("smartTruck.subtitle", "Smart Circular Logistics System")}
             </h4>
 
             <p className="text-lg text-slate-600 leading-relaxed font-body text-pretty">
-              <strong>Armada Smart Vehicle EcoCash</strong> merupakan sistem
-              kendaraan pintar yang mendukung proses pengangkutan material daur
-              ulang dari jaringan EcoCash Partnership menuju fasilitas
-              pengolahan atau mitra daur ulang. Armada ini dirancang untuk
-              meningkatkan efisiensi reverse logistics dalam ekosistem ekonomi
-              sirkular.
+              {t(
+                "smartTruck.desc1",
+                "Armada Smart Vehicle EcoCash merupakan sistem kendaraan pintar yang mendukung proses pengangkutan material daur ulang dari jaringan EcoCash Partnership menuju fasilitas pengolahan atau mitra daur ulang. Armada ini dirancang untuk meningkatkan efisiensi reverse logistics dalam ekosistem ekonomi sirkular."
+              )}
             </p>
 
             <p className="text-lg text-slate-600 leading-relaxed font-body text-pretty">
-              Fitur Utama: Smart Scheduling Sistem penjadwalan pengangkutan
-              berdasarkan permintaan, lokasi, dan kapasitas material. Route
-              Optimization Optimasi rute pengambilan material untuk mengurangi
-              waktu perjalanan dan konsumsi energi.
+              {t(
+                "smartTruck.desc2",
+                "Fitur Utama: Smart Scheduling Sistem penjadwalan pengangkutan berdasarkan permintaan, lokasi, dan kapasitas material. Route Optimization Optimasi rute pengambilan material untuk mengurangi waktu perjalanan dan konsumsi energi."
+              )}
             </p>
           </div>
 

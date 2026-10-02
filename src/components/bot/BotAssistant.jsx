@@ -1,23 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
-
-const DEFAULT_CHAT_MESSAGE =
-  "Halo! Saya asisten virtual EcoCash. Ada yang bisa saya bantu terkait penukaran sampah, kemitraan, atau solusi ESG hari ini?";
-
-const buildInitialBotState = (data) => {
-  if (!data || Object.keys(data).length === 0) return [];
-
-  const firstNodeKey = Object.keys(data)[0];
-  const firstNode = data[firstNodeKey];
-
-  return [
-    {
-      id: Date.now(),
-      sender: "bot",
-      text: firstNode?.message || DEFAULT_CHAT_MESSAGE,
-      options: firstNode?.options || [],
-    },
-  ];
-};
+import { useTranslation } from "react-i18next";
+import { STATIC_BOT_TREE } from "../../constants/chatbotData";
 
 const handleNavigation = (url) => {
   if (!url) return;
@@ -35,10 +18,41 @@ const handleNavigation = (url) => {
   window.location.href = url;
 };
 
-export default function BotAssistant({ botFlowData }) {
+export default function BotAssistant({ botFlowData: initialBotFlowData }) {
+  const { t, i18n } = useTranslation();
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatHistory, setChatHistory] = useState([]);
   const messagesEndRef = useRef(null);
+
+  const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
+    .split("-")[0]
+    .toLowerCase();
+
+  // 1. Fallback instan: Ambil data statis lokal sesuai bahasa aktif
+  const localTree = STATIC_BOT_TREE[currentLang] || STATIC_BOT_TREE.id;
+
+  // 2. Inisialisasi state LANGSUNG dengan data lokal / props agar tidak pernah kosong sedetik pun
+  const [activeFlowData, setActiveFlowData] = useState(
+    initialBotFlowData || localTree
+  );
+
+  const buildInitialBotState = (data) => {
+    const activeTree = data && Object.keys(data).length > 0 ? data : localTree;
+    const firstNodeKey = Object.keys(activeTree)[0];
+    const firstNode = activeTree[firstNodeKey];
+
+    return [
+      {
+        id: Date.now(),
+        sender: "bot",
+        text: firstNode?.message || t("bot.defaultMessage", "Halo! Ada yang bisa kami bantu?"),
+        options: firstNode?.options || [],
+      },
+    ];
+  };
+
+  const [chatHistory, setChatHistory] = useState(() =>
+    buildInitialBotState(initialBotFlowData || localTree)
+  );
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -48,30 +62,64 @@ export default function BotAssistant({ botFlowData }) {
     scrollToBottom();
   }, [chatHistory, isChatOpen]);
 
+  // 3. Stale-While-Revalidate: Re-fetch ke Backend tanpa membuat UI blank jika BE down
   useEffect(() => {
-    if (!botFlowData) return;
+    let isMounted = true;
+    const treeForLang = STATIC_BOT_TREE[currentLang] || STATIC_BOT_TREE.id;
 
-    setChatHistory(buildInitialBotState(botFlowData));
-  }, [botFlowData]);
+    // Pasang data lokal terlebih dahulu saat bahasa berganti
+    setActiveFlowData(treeForLang);
+    setChatHistory(buildInitialBotState(treeForLang));
+
+    const fetchLocalizedBotTree = async () => {
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_BASE_URL ||
+          import.meta.env.VITE_API_URL ||
+          "http://localhost:3000/api/v1";
+
+        const response = await fetch(`${apiUrl}/bot/tree?lang=${currentLang}`);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+        const result = await response.json();
+
+        if (isMounted && result.success && result.data && Object.keys(result.data).length > 0) {
+          setActiveFlowData(result.data);
+          setChatHistory(buildInitialBotState(result.data));
+        }
+      } catch (err) {
+        // Backend down / offline: tetap tenang, data lokal sudah aktif dan membungkus UI
+        console.warn(
+          "[BotAssistant] Backend offline/error, menggunakan static tree lokal:",
+          err.message
+        );
+      }
+    };
+
+    fetchLocalizedBotTree();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentLang]);
 
   const resetChat = () => {
-    if (!botFlowData) return;
-
-    const firstNodeKey = Object.keys(botFlowData)[0];
-    const firstNode = botFlowData[firstNodeKey];
+    const currentTree = activeFlowData || localTree;
+    const firstNodeKey = Object.keys(currentTree)[0];
+    const firstNode = currentTree[firstNodeKey];
 
     setChatHistory([
       {
         id: Date.now(),
         sender: "bot",
-        text: "Sesi obrolan diulang. Apa yang ingin Anda eksplorasi?",
+        text: t("bot.resetNotice", "Sesi obrolan diulang. Apa yang ingin Anda eksplorasi?"),
         options: firstNode?.options || [],
       },
     ]);
   };
 
   const handleOptionClick = (option) => {
-    if (!option || !botFlowData) return;
+    const currentTree = activeFlowData || localTree;
+    if (!option || !currentTree) return;
 
     const userMessage = {
       id: Date.now(),
@@ -88,22 +136,22 @@ export default function BotAssistant({ botFlowData }) {
           {
             id: Date.now() + 1,
             sender: "bot",
-            text: "Mengarahkan Anda ke bagian terkait...",
+            text: t("bot.redirecting", "Mengarahkan Anda ke bagian terkait..."),
           },
         ]);
 
         setTimeout(() => handleNavigation(option.url), 800);
 
         setTimeout(() => {
-          const rootKey = Object.keys(botFlowData)[0];
+          const rootKey = Object.keys(currentTree)[0];
 
           setChatHistory((prev) => [
             ...prev,
             {
               id: Date.now() + 2,
               sender: "bot",
-              text: "Ada hal lain yang bisa saya bantu?",
-              options: botFlowData[rootKey]?.options || [],
+              text: t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
+              options: currentTree[rootKey]?.options || [],
             },
           ]);
         }, 2200);
@@ -117,7 +165,7 @@ export default function BotAssistant({ botFlowData }) {
           {
             id: Date.now() + 1,
             sender: "bot",
-            text: "Membuka jendela WhatsApp...",
+            text: t("bot.openingWa", "Membuka jendela WhatsApp..."),
           },
         ]);
 
@@ -126,15 +174,15 @@ export default function BotAssistant({ botFlowData }) {
         }, 800);
 
         setTimeout(() => {
-          const rootKey = Object.keys(botFlowData)[0];
+          const rootKey = Object.keys(currentTree)[0];
 
           setChatHistory((prev) => [
             ...prev,
             {
               id: Date.now() + 2,
               sender: "bot",
-              text: "Ada hal lain yang bisa saya bantu?",
-              options: botFlowData[rootKey]?.options || [],
+              text: t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
+              options: currentTree[rootKey]?.options || [],
             },
           ]);
         }, 2200);
@@ -142,8 +190,8 @@ export default function BotAssistant({ botFlowData }) {
         return;
       }
 
-      if (option.next && botFlowData[option.next]) {
-        const nextStep = botFlowData[option.next];
+      if (option.next && currentTree[option.next]) {
+        const nextStep = currentTree[option.next];
 
         setChatHistory((prev) => [
           ...prev,
@@ -162,23 +210,20 @@ export default function BotAssistant({ botFlowData }) {
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end">
       {isChatOpen && (
         <div className="mb-4 w-[320px] sm:w-[350px] bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col overflow-hidden animate-fadeIn origin-bottom-right">
+          {/* Header Widget */}
           <div className="bg-white border-b border-slate-100 p-4 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-eco-cyan/10 rounded-full flex items-center justify-center text-eco-cyan shrink-0">
-                <svg
-                  className="w-4 h-4"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
+                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M12 2C6.48 2 2 6.48 2 12c0 1.72.44 3.34 1.2 4.78L2 22l5.36-1.12C8.78 21.6 10.34 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.46 0-2.86-.34-4.12-.96l-.3-.14-3.08.64.66-2.96-.16-.3C4.34 14.92 4 13.5 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z" />
                 </svg>
               </div>
               <div>
                 <h4 className="text-sm font-bold text-slate-800 font-heading leading-tight">
-                  EcoCash Assistant
+                  {t("bot.title", "EcoCash Assistant")}
                 </h4>
                 <p className="text-[10px] text-emerald-500 font-medium">
-                  Online
+                  {t("bot.online", "Online")}
                 </p>
               </div>
             </div>
@@ -186,21 +231,11 @@ export default function BotAssistant({ botFlowData }) {
             <div className="flex items-center gap-1 shrink-0">
               <button
                 onClick={resetChat}
-                title="Mulai Ulang Obrolan"
+                title={t("bot.restartChat", "Mulai Ulang Obrolan")}
                 className="text-slate-400 hover:text-eco-cyan transition-colors p-1.5 cursor-pointer rounded-lg hover:bg-slate-50"
               >
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
-                  />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                 </svg>
               </button>
 
@@ -208,23 +243,14 @@ export default function BotAssistant({ botFlowData }) {
                 onClick={() => setIsChatOpen(false)}
                 className="text-slate-400 hover:text-slate-600 transition-colors p-1.5 cursor-pointer rounded-lg hover:bg-slate-50"
               >
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
           </div>
 
+          {/* Area Percakapan */}
           <div className="p-4 h-72 bg-slate-50 overflow-y-auto flex flex-col gap-4 custom-scrollbar">
             {chatHistory.map((chat, index) => (
               <div key={chat.id} className="flex flex-col gap-2">
@@ -238,7 +264,7 @@ export default function BotAssistant({ botFlowData }) {
                         {chat.text}
                       </div>
 
-                      {chat.options && (
+                      {chat.options && chat.options.length > 0 && (
                         <div className="flex flex-col gap-1.5 mt-1">
                           {chat.options.map((opt, i) => (
                             <button
@@ -271,66 +297,29 @@ export default function BotAssistant({ botFlowData }) {
             <div ref={messagesEndRef} />
           </div>
 
-          <div className="p-3 bg-white border-t border-slate-100">
-            <div className="hidden items-center gap-2 bg-slate-50 border border-slate-200 rounded-full px-4 py-2.5 focus-within:border-eco-cyan focus-within:ring-1 focus-within:ring-eco-cyan transition-all">
-              <input
-                type="text"
-                placeholder="Ketik pesan Anda..."
-                className="w-full bg-transparent text-[13px] outline-none text-slate-700 placeholder-slate-400 font-body"
-              />
-              <button className="text-slate-400 hover:text-eco-cyan transition-colors shrink-0 cursor-pointer">
-                <svg
-                  className="w-5 h-5"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
-                  />
-                </svg>
-              </button>
-            </div>
-
-            <div className="text-center mt-2">
-              <span className="text-[10px] text-slate-400 font-body">
-                Powered by EcoCash AI
-              </span>
-            </div>
+          {/* Footer Branding */}
+          <div className="p-3 bg-white border-t border-slate-100 text-center">
+            <span className="text-[10px] text-slate-400 font-body">
+              {t("bot.poweredBy", "Powered by EcoCash AI")}
+            </span>
           </div>
         </div>
       )}
 
+      {/* Floating Action Button */}
       <button
         onClick={() => setIsChatOpen(!isChatOpen)}
-        className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all transform hover:scale-105 ${
-          isChatOpen
-            ? "bg-eco-cyan text-white"
-            : "bg-eco-cyan text-white hover:bg-eco-cyan/90"
-        }`}
+        className="w-14 h-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all transform hover:scale-105 bg-eco-cyan text-white hover:bg-eco-cyan/90"
       >
         {isChatOpen ? (
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              d="M6 18L18 6M6 6l12 12"
-            />
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
           </svg>
         ) : (
           <img
-            src={"img/cs.png"}
+            src="img/cs.png"
             alt="CS EcoCash"
-            className="w-19 h-21 cursor-pointer"
+            className="w-10 h-auto cursor-pointer"
             onError={(e) => {
               e.target.style.display = "none";
               e.target.parentElement.innerHTML =

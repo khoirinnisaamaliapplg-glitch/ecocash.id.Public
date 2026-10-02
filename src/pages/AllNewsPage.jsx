@@ -1,65 +1,155 @@
 import React, { useEffect, useState } from "react";
-import { newsList } from "../constants/dummyData";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
+import { newsList } from "../constants/dummyData";
 import BotAssistant from "../components/bot/BotAssistant";
 
 export default function AllNewsPage() {
+  const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 4; // Menampilkan 4 berita per halaman
+  const itemsPerPage = 4;
+
+  const [articles, setArticles] = useState([]);
+  const [latestNews, setLatestNews] = useState([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [botFlowData, setBotFlowData] = useState(null);
 
+  const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
+    .split("-")[0]
+    .toLowerCase();
+
+  const apiUrl =
+    import.meta.env.VITE_API_BASE_URL ||
+    import.meta.env.VITE_API_URL ||
+    "http://localhost:3000/api/v1";
+
+  // 1. Fetch Bot Assistant Flow Tree
   useEffect(() => {
     window.scrollTo(0, 0);
 
-    // Fetch data bot flow dari API
     const fetchBotTree = async () => {
       try {
         const apiUrl =
           import.meta.env.VITE_API_URL_LOCAL || "http://localhost:3000/api/v1";
+
         const response = await fetch(`${apiUrl}/bot/tree`);
-
-        if (!response.ok) throw new Error("Gagal mengambil data");
-
+        if (!response.ok) throw new Error("Gagal mengambil data bot");
         const result = await response.json();
-
         if (result.success && result.data) {
           setBotFlowData(result.data);
         }
       } catch (err) {
-        console.error("Kesalahan API Bot:", err);
+        console.error("Kesalahan API Bot:", err.message);
       }
     };
 
     fetchBotTree();
-  }, []);
+  }, [apiUrl]);
 
-  // LOGIKA 1: Filter berita berdasarkan input pencarian
-  const filteredNews = newsList.filter((news) => {
-    const searchLower = searchQuery.toLowerCase();
-    return (
-      news.title.toLowerCase().includes(searchLower) ||
-      news.desc.toLowerCase().includes(searchLower) ||
-      news.category.toLowerCase().includes(searchLower)
-    );
-  });
-
-  // Efek Samping: Kembalikan ke Halaman 1 setiap kali user mengetik pencarian baru
+  // 2. Fetch Artikel dari Backend dengan Dukungan Multibahasa & Search
   useEffect(() => {
+    let isMounted = true;
+
+    const fetchAllNews = async () => {
+      setLoading(true);
+      try {
+        const queryParams = new URLSearchParams({
+          lang: currentLang,
+          page: currentPage.toString(),
+          limit: itemsPerPage.toString(),
+          contentType: "NEWS",
+        });
+
+        if (searchQuery.trim() !== "") {
+          queryParams.append("search", searchQuery.trim());
+        }
+
+        const response = await fetch(`${apiUrl}/news?${queryParams.toString()}`);
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        const result = await response.json();
+
+        if (isMounted) {
+          const rawItems = Array.isArray(result.data)
+            ? result.data
+            : result.data?.items || [];
+          const meta = result.data?.meta || {};
+
+          if (rawItems.length > 0) {
+            const formatted = rawItems.map((item) => ({
+              id: item.id,
+              slug: item.slug,
+              title: item.title,
+              desc: item.excerpt || item.content?.substring(0, 140) + "...",
+              img: item.imageUrl || "/img/hero-news.jpg",
+              category: item.category || "Berita",
+              date: item.createdAt
+                ? new Date(item.createdAt).toLocaleDateString(
+                    currentLang === "en" ? "en-US" : currentLang === "zh" ? "zh-CN" : "id-ID",
+                    { year: "numeric", month: "short", day: "numeric" }
+                  )
+                : "",
+            }));
+
+            setArticles(formatted);
+            setTotalPages(meta.totalPages || Math.ceil(formatted.length / itemsPerPage) || 1);
+            if (currentPage === 1 && latestNews.length === 0) {
+              setLatestNews(formatted.slice(0, 3));
+            }
+          } else if (searchQuery.trim() === "") {
+            // Fallback ke dummy data jika database kosong
+            applyDummyFallback();
+          } else {
+            setArticles([]);
+            setTotalPages(1);
+          }
+        }
+      } catch (err) {
+        console.warn("[AllNewsPage] Backend error, fallback ke data lokal:", err.message);
+        if (isMounted) {
+          applyDummyFallback();
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    const applyDummyFallback = () => {
+      const searchLower = searchQuery.toLowerCase();
+      const filtered = newsList.filter(
+        (news) =>
+          news.title.toLowerCase().includes(searchLower) ||
+          news.desc.toLowerCase().includes(searchLower) ||
+          news.category.toLowerCase().includes(searchLower)
+      );
+
+      const calculatedTotalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+      const indexOfLast = currentPage * itemsPerPage;
+      const indexOfFirst = indexOfLast - itemsPerPage;
+
+      setArticles(filtered.slice(indexOfFirst, indexOfLast));
+      setTotalPages(calculatedTotalPages);
+      setLatestNews(newsList.slice(0, 3));
+    };
+
+    fetchAllNews();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [apiUrl, currentLang, currentPage, searchQuery]);
+
+  // Reset ke halaman 1 setiap kali query pencarian berubah
+  const handleSearchChange = (e) => {
+    setSearchQuery(e.target.value);
     setCurrentPage(1);
-  }, [searchQuery]);
+  };
 
-  // LOGIKA 2: Pagination (Pemotongan Data)
-  const totalPages = Math.ceil(filteredNews.length / itemsPerPage);
-  const indexOfLastNews = currentPage * itemsPerPage;
-  const indexOfFirstNews = indexOfLastNews - itemsPerPage;
-  const currentNews = filteredNews.slice(indexOfFirstNews, indexOfLastNews);
-
-  // Fungsi navigasi halaman
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
   const prevPage = () => setCurrentPage((prev) => Math.max(prev - 1, 1));
-  const nextPage = () =>
-    setCurrentPage((prev) => Math.min(prev + 1, totalPages));
+  const nextPage = () => setCurrentPage((prev) => Math.min(prev + 1, totalPages));
 
   return (
     <main className="w-full min-h-screen bg-[#fafafc] font-body text-slate-700 pb-20">
@@ -79,14 +169,16 @@ export default function AllNewsPage() {
 
         <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-white">
           <div className="text-eco-cyan font-bold tracking-widest text-sm uppercase mb-3 font-heading">
-            Pusat Informasi
+            {t("allNews.badge", "Pusat Informasi")}
           </div>
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold font-heading mb-4">
-            Berita & Artikel
+            {t("allNews.heroTitle", "Berita & Artikel")}
           </h1>
           <p className="text-slate-300 text-lg max-w-xl">
-            Ikuti perkembangan terbaru seputar inovasi pengelolaan sampah,
-            inisiatif keberlanjutan, dan pencapaian ekosistem EcoCash.
+            {t(
+              "allNews.heroDesc",
+              "Ikuti perkembangan terbaru seputar inovasi pengelolaan sampah, inisiatif keberlanjutan, dan pencapaian ekosistem EcoCash."
+            )}
           </p>
         </div>
       </section>
@@ -94,10 +186,24 @@ export default function AllNewsPage() {
       {/* 2. MAIN CONTENT & SIDEBAR */}
       <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
-          {/* LEFT COLUMN: BLOG GRID (2/3 Width) */}
+          {/* LEFT COLUMN: BLOG GRID */}
           <div className="lg:col-span-2">
-            {/* Validasi jika berita tidak ditemukan */}
-            {currentNews.length === 0 ? (
+            {loading ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                {[1, 2, 3, 4].map((i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-[2rem] border border-slate-100 p-6 animate-pulse h-96 flex flex-col justify-between"
+                  >
+                    <div className="h-44 bg-slate-200 rounded-2xl mb-4"></div>
+                    <div className="h-4 bg-slate-200 rounded w-1/3 mb-2"></div>
+                    <div className="h-6 bg-slate-200 rounded w-4/5 mb-3"></div>
+                    <div className="h-4 bg-slate-200 rounded w-full mb-1"></div>
+                    <div className="h-4 bg-slate-200 rounded w-2/3"></div>
+                  </div>
+                ))}
+              </div>
+            ) : articles.length === 0 ? (
               <div className="bg-white rounded-2xl border border-slate-100 p-10 text-center">
                 <svg
                   className="w-16 h-16 mx-auto text-slate-300 mb-4"
@@ -113,18 +219,21 @@ export default function AllNewsPage() {
                   />
                 </svg>
                 <h3 className="text-xl font-bold font-heading text-slate-800 mb-2">
-                  Berita Tidak Ditemukan
+                  {t("allNews.notFoundTitle", "Berita Tidak Ditemukan")}
                 </h3>
                 <p className="text-slate-500 font-body">
-                  Coba gunakan kata kunci pencarian yang berbeda.
+                  {t(
+                    "allNews.notFoundDesc",
+                    "Coba gunakan kata kunci pencarian yang berbeda."
+                  )}
                 </p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                {currentNews.map((news) => (
+                {articles.map((news) => (
                   <Link
-                    to={`/news/${news.id}`}
-                    key={news.id}
+                    to={`/news/${news.slug || news.id}`}
+                    key={news.id || news.slug}
                     className="bg-white rounded-[2rem] border border-slate-100 shadow-sm hover:shadow-xl transition-all duration-300 group flex flex-col h-full overflow-hidden"
                   >
                     {/* Thumbnail & Badge */}
@@ -134,8 +243,7 @@ export default function AllNewsPage() {
                         alt={news.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
-                          e.target.style.display = "none";
-                          e.target.parentElement.innerHTML = `<div class="w-full h-full flex items-center justify-center text-slate-400 text-sm bg-slate-100">Gambar Artikel</div>`;
+                          e.target.src = "img/hero-news.jpg";
                         }}
                       />
                       <div className="absolute top-4 right-4 bg-eco-cyan text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
@@ -171,7 +279,7 @@ export default function AllNewsPage() {
                           {news.date}
                         </div>
                         <span className="text-eco-cyan font-bold group-hover:underline cursor-pointer">
-                          Baca Selengkapnya
+                          {t("allNews.readMore", "Baca Selengkapnya")}
                         </span>
                       </div>
                     </div>
@@ -180,10 +288,9 @@ export default function AllNewsPage() {
               </div>
             )}
 
-            {/* Pagination Controls Terintegrasi */}
+            {/* Pagination Controls */}
             {totalPages > 1 && (
               <div className="flex justify-center items-center gap-2 mt-12">
-                {/* Tombol Previous */}
                 <button
                   onClick={prevPage}
                   disabled={currentPage === 1}
@@ -193,22 +300,11 @@ export default function AllNewsPage() {
                       : "border-slate-200 text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan"
                   }`}
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M15 19l-7-7 7-7"
-                    />
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M15 19l-7-7 7-7" />
                   </svg>
                 </button>
 
-                {/* Angka Halaman Dinamis */}
                 {[...Array(totalPages)].map((_, index) => (
                   <button
                     key={index}
@@ -223,7 +319,6 @@ export default function AllNewsPage() {
                   </button>
                 ))}
 
-                {/* Tombol Next */}
                 <button
                   onClick={nextPage}
                   disabled={currentPage === totalPages}
@@ -233,60 +328,40 @@ export default function AllNewsPage() {
                       : "border-slate-200 text-slate-500 hover:bg-eco-cyan hover:text-white hover:border-eco-cyan"
                   }`}
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M9 5l7 7-7 7"
-                    />
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
               </div>
             )}
           </div>
 
-          {/* RIGHT COLUMN: SIDEBAR (1/3 Width) */}
+          {/* RIGHT COLUMN: SIDEBAR */}
           <aside className="lg:col-span-1 space-y-10">
             {/* Widget 1: Search */}
             <div className="bg-white p-2 rounded-2xl border border-slate-200 shadow-sm flex items-center focus-within:border-eco-cyan focus-within:ring-1 focus-within:ring-eco-cyan transition-all">
               <input
                 type="text"
-                placeholder="Cari berita..."
+                placeholder={t("allNews.searchPlaceholder", "Cari berita...")}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearchChange}
                 className="w-full bg-transparent px-4 py-2 text-sm outline-none text-slate-700 font-body placeholder-slate-400"
               />
               <button className="w-10 h-10 shrink-0 bg-eco-cyan text-white rounded-xl flex items-center justify-center hover:bg-[#1eb5b1] transition-colors">
-                <svg
-                  className="w-4 h-4"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2.5"
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
               </button>
             </div>
 
             {/* Widget 2: Newsletter */}
             <div className="bg-[#06b6d4] p-8 rounded-[2rem] text-white shadow-xl shadow-eco-cyan/20">
-              <h3 className="text-xl font-bold font-heading mb-3">
-                Newsletter
-              </h3>
+              <h3 className="text-xl font-bold font-heading mb-3">Newsletter</h3>
               <p className="text-cyan-50 text-sm mb-6 leading-relaxed">
-                Daftarkan email Anda untuk mendapatkan informasi pembaruan,
-                berita, dan insight gratis dari EcoCash.
+                {t(
+                  "allNews.newsletterDesc",
+                  "Daftarkan email Anda untuk mendapatkan informasi pembaruan, berita, dan insight gratis dari EcoCash."
+                )}
               </p>
               <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
                 <input
@@ -300,37 +375,37 @@ export default function AllNewsPage() {
                   className="w-full bg-white border border-white/20 text-slate-800 placeholder-slate-400 px-4 py-3 rounded-xl text-sm outline-none"
                 />
                 <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold font-heading text-sm py-3.5 rounded-xl transition-colors mt-2">
-                  Berlangganan
+                  {t("allNews.subscribeBtn", "Berlangganan")}
                 </button>
               </form>
             </div>
 
-            {/* Widget 3: Latest Post (Statis, hanya menampilkan 3 terbaru dari raw data) */}
+            {/* Widget 3: Latest Post */}
             <div className="bg-white p-8 rounded-[2rem] border border-slate-100 shadow-sm">
               <h3 className="text-lg font-bold font-heading text-slate-900 mb-6 pb-4 border-b border-slate-100">
-                Postingan Terbaru
+                {t("allNews.latestPosts", "Postingan Terbaru")}
               </h3>
               <div className="space-y-5">
-                {newsList.slice(0, 3).map((news) => (
+                {(latestNews.length > 0 ? latestNews : newsList.slice(0, 3)).map((item) => (
                   <Link
-                    to={`/news/${news.id}`}
-                    key={news.id}
+                    to={`/news/${item.slug || item.id}`}
+                    key={item.id || item.slug}
                     className="flex gap-4 items-center group cursor-pointer"
                   >
                     <img
-                      src={news.img}
-                      alt={news.title}
+                      src={item.img || item.imageUrl || "/img/hero-news.jpg"}
+                      alt={item.title}
                       className="w-20 h-20 rounded-xl object-cover bg-slate-100 shrink-0"
                       onError={(e) => {
-                        e.target.style.display = "none";
+                        e.target.src = "/img/hero-news.jpg";
                       }}
                     />
                     <div>
                       <h4 className="text-sm font-bold font-heading text-slate-800 leading-tight mb-1 group-hover:text-eco-cyan transition-colors line-clamp-2">
-                        {news.title}
+                        {item.title}
                       </h4>
                       <p className="text-[11px] text-slate-400 font-medium">
-                        {news.date}
+                        {item.date}
                       </p>
                     </div>
                   </Link>

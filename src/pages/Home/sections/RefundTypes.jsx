@@ -1,29 +1,44 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function RefundTypes() {
+  const { t } = useTranslation();
+
   const refundOptions = [
     {
-      icon: "💳",
-      title: "Dompet Digital",
-      desc: "Transfer eco-refund secara instan ke e-wallet pilihanmu (Dana, OVO, GoPay, LinkAja) atau simpan sebagai saldo aplikasi.",
+      icon: "📱",
+      title: t("refundTypes.opt1Title", "Dompet Digital"),
+      desc: t(
+        "refundTypes.opt1Desc",
+        "Transfer eco-refund secara instan ke e-wallet pilihanmu (Dana, OVO, GoPay, LinkAja) atau simpan sebagai saldo aplikasi."
+      ),
       accent: "teal",
     },
     {
-      icon: "🏪",
-      title: "Kredit Toko",
-      desc: "Dapatkan voucher fisik dari mesin atau depo untuk belanja di ritel lokal atau ditukar tunai. Tanpa perlu daftar akun.",
+      icon: "🎟️",
+      title: t("refundTypes.opt2Title", "Kredit Toko"),
+      desc: t(
+        "refundTypes.opt2Desc",
+        "Dapatkan voucher fisik dari mesin atau depo untuk belanja di ritel lokal atau ditukar tunai. Tanpa perlu daftar akun."
+      ),
       accent: "orange",
     },
     {
-      icon: "🏦",
-      title: "Tunai & Transfer",
-      desc: "Cairkan uang tunai lewat petugas depo, atau pilih transfer bank (EFT) dengan memasukkan kartu ATM ke terminal.",
+      icon: "💵",
+      title: t("refundTypes.opt3Title", "Tunai & Transfer"),
+      desc: t(
+        "refundTypes.opt3Desc",
+        "Cairkan uang tunai lewat petugas depo, atau pilih transfer bank (EFT) dengan memasukkan kartu ATM ke terminal."
+      ),
       accent: "teal",
     },
     {
-      icon: "👥",
-      title: "Donasi Komunitas",
-      desc: "Salurkan saldo EcoCash untuk mendukung sekolah, klub olahraga, dan lembaga sosial terdekat dengan metode donasi yang mudah.",
+      icon: "🤝",
+      title: t("refundTypes.opt4Title", "Donasi Komunitas"),
+      desc: t(
+        "refundTypes.opt4Desc",
+        "Salurkan saldo EcoCash untuk mendukung sekolah, klub olahraga, dan lembaga sosial terdekat dengan metode donasi yang mudah."
+      ),
       accent: "orange",
     },
   ];
@@ -35,12 +50,18 @@ export default function RefundTypes() {
     >
       <div className="mb-12 max-w-3xl">
         <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 font-heading">
-          Jenis Pengembalian EcoCash
+          {t("refundTypes.title", "Jenis Pengembalian EcoCash")}
         </h2>
         <p className="text-lg text-slate-600 font-body">
-          Setiap botol atau kaleng yang kamu kembalikan bernilai eco-refund.{" "}
+          {t(
+            "refundTypes.subtitlePrefix",
+            "Setiap botol atau kaleng yang kamu kembalikan bernilai eco-refund."
+          )}{" "}
           <span className="text-eco-cyan font-bold">
-            Yuk, pilih metode pencairan EcoCash sesukamu!
+            {t(
+              "refundTypes.subtitleHighlight",
+              "Yuk, pilih metode pencairan EcoCash sesukamu!"
+            )}
           </span>
         </p>
       </div>
