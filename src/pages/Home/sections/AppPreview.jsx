@@ -25,7 +25,7 @@ export default function AppPreview() {
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading">
-                Kelola Sampah Lebih Mudah <br /> dengan EcoCash App
+                Kelola Sampah Lebih Mudah dengan EcoCash App
               </h2>
 
               <p className="text-lg text-slate-600 leading-relaxed font-body">

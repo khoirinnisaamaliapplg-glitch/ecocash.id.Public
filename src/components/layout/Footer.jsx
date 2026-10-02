@@ -235,9 +235,11 @@ export default function Footer() {
             </a>
           </div>
         </div>
-        <div className="text-slate-400 flex justify-center text-left lg:text-right pt-4 mt-4 border-t border-slate-300">
-          <p>© 2026 PT Ideas Edvolution Technology.</p>
-          <p>Hak Cipta Dilindungi Undang-Undang.</p>
+        <div className="text-slate-400 flex  justify-center text-left lg:text-right pt-4 mt-4 border-t border-slate-300">
+          <div className="flex-col space-y-1 text-center">
+            <p>© 2026 PT Ideas Edvolution Technology.</p>
+            <p>Hak Cipta Dilindungi Undang-Undang.</p>
+          </div>
         </div>
       </div>
     </footer>
