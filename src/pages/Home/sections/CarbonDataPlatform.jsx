@@ -1,31 +1,38 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function CarbonDataPlatform() {
+  const { t } = useTranslation();
+
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24 relative overflow-hidden">
       <div className="container gap-2">
-        {/* Ambient Glow Background (Diubah ke posisi tengah atas) */}
+        {/* Ambient Glow Background */}
         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-emerald-500/10 rounded-full blur-[120px] -z-10 pointer-events-none"></div>
 
-        {/* 1. Header Section (Rata Tengah untuk Variasi Layout) */}
+        {/* 1. Header Section */}
         <div className="text-center max-w-3xl mx-auto space-y-6 mb-16 relative z-10">
           <div className="inline-flex items-center gap-2 bg-white border border-slate-100 shadow-sm text-slate-600 px-5 py-2.5 rounded-full font-heading text-sm font-semibold">
-            <span className="text-emerald-500">✦</span> CO₂ Avoided Dashboard
+            <span className="text-emerald-500">✦</span>{" "}
+            {t("carbonPlatform.badge", "CO₂ Avoided Dashboard")}
           </div>
 
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading tracking-tight">
-            Carbon & Sustainability <br />
-            <span className="text-eco-cyan">Data Platform.</span>
+            {t("carbonPlatform.title", "Carbon & Sustainability")} <br />
+            <span className="text-eco-cyan">
+              {t("carbonPlatform.titleSuffix", "Data Platform.")}
+            </span>
           </h2>
 
           <p className="text-lg text-slate-600 leading-relaxed font-body">
-            Pantau, ukur, dan laporkan dampak lingkungan dari operasional bisnis
-            Anda secara real-time. Kelola wawasan ESG yang dapat ditindaklanjuti
-            untuk mencapai target emisi nol bersih.
+            {t(
+              "carbonPlatform.desc",
+              "Pantau, ukur, dan laporkan dampak lingkungan dari operasional bisnis Anda secara real-time. Kelola wawasan ESG yang dapat ditindaklanjuti untuk mencapai target emisi nol bersih."
+            )}
           </p>
         </div>
 
-        {/* 2. Gambar Mockup Platform (Full Width / Hero Image) */}
+        {/* 2. Gambar Mockup Platform */}
         <div className="relative flex justify-center group mb-16">
           <div className="absolute inset-0 bg-gradient-to-t from-slate-50 to-transparent z-10 h-24 bottom-0 top-auto"></div>
 
@@ -44,7 +51,7 @@ export default function CarbonDataPlatform() {
           />
         </div>
 
-        {/* 3. Grid Fitur Keterangan (4 Kolom Card di Bawah Gambar) */}
+        {/* 3. Grid Fitur Keterangan (4 Kolom Card) */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-20">
           {/* Card 1 */}
           <div className="bg-white border border-slate-100 p-6 rounded-3xl shadow-sm hover:shadow-xl hover:border-eco-cyan/30 transition-all duration-300 group cursor-default">
@@ -64,14 +71,16 @@ export default function CarbonDataPlatform() {
               </svg>
             </div>
             <h4 className="text-base font-bold text-slate-900 mb-2 capitalize">
-              Waste Diverted from Landfill
+              {t("carbonPlatform.card1Title", "Waste Diverted from Landfill")}
             </h4>
             <p className="text-sm font-medium text-slate-500 leading-relaxed mb-4">
-              Lacak total tonase limbah yang berhasil diselamatkan dari Tempat
-              Pembuangan Akhir.
+              {t(
+                "carbonPlatform.card1Desc",
+                "Lacak total tonase limbah yang berhasil diselamatkan dari Tempat Pembuangan Akhir."
+              )}
             </p>
             <div className="text-xs font-black text-emerald-500 bg-emerald-50 px-3 py-1 rounded-full w-fit">
-              Hingga 245,670 kg
+              {t("carbonPlatform.card1Tag", "Hingga 245,670 kg")}
             </div>
           </div>
 
@@ -93,14 +102,16 @@ export default function CarbonDataPlatform() {
               </svg>
             </div>
             <h4 className="text-base font-bold text-slate-900 mb-2 capitalize">
-              Recycling Rate
+              {t("carbonPlatform.card2Title", "Recycling Rate")}
             </h4>
             <p className="text-sm font-medium text-slate-500 leading-relaxed mb-4">
-              Analisis persentase dan komposisi material organik, logam, kaca,
-              hingga plastik.
+              {t(
+                "carbonPlatform.card2Desc",
+                "Analisis persentase dan komposisi material organik, logam, kaca, hingga plastik."
+              )}
             </p>
             <div className="text-xs font-black text-eco-cyan bg-eco-cyan/10 px-3 py-1 rounded-full w-fit">
-              78% Pencapaian
+              {t("carbonPlatform.card2Tag", "78% Pencapaian")}
             </div>
           </div>
 
@@ -122,14 +133,16 @@ export default function CarbonDataPlatform() {
               </svg>
             </div>
             <h4 className="text-base font-bold text-slate-900 mb-2 capitalize">
-              Carbon Reduction
+              {t("carbonPlatform.card3Title", "Carbon Reduction")}
             </h4>
             <p className="text-sm font-medium text-slate-500 leading-relaxed mb-4">
-              Kalkulasi otomatis penurunan emisi karbon yang dihasilkan dari
-              rantai pasok Anda.
+              {t(
+                "carbonPlatform.card3Desc",
+                "Kalkulasi otomatis penurunan emisi karbon yang dihasilkan dari rantai pasok Anda."
+              )}
             </p>
             <div className="text-xs font-black text-teal-600 bg-teal-50 px-3 py-1 rounded-full w-fit">
-              31.5% Direduksi
+              {t("carbonPlatform.card3Tag", "31.5% Direduksi")}
             </div>
           </div>
 
@@ -151,14 +164,16 @@ export default function CarbonDataPlatform() {
               </svg>
             </div>
             <h4 className="text-base font-bold text-slate-900 mb-2 capitalize">
-              Sustainability Performance
+              {t("carbonPlatform.card4Title", "Sustainability Performance")}
             </h4>
             <p className="text-sm font-medium text-slate-500 leading-relaxed mb-4">
-              Evaluasi keseluruhan indeks ESG dan metrik keberlanjutan dalam
-              satu pandangan.
+              {t(
+                "carbonPlatform.card4Desc",
+                "Evaluasi keseluruhan indeks ESG dan metrik keberlanjutan dalam satu pandangan."
+              )}
             </p>
             <div className="text-xs font-black text-blue-600 bg-blue-50 px-3 py-1 rounded-full w-fit">
-              Indeks: 89/100
+              {t("carbonPlatform.card4Tag", "Indeks: 89/100")}
             </div>
           </div>
         </div>

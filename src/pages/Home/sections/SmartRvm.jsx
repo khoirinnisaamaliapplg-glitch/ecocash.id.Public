@@ -1,11 +1,9 @@
 import React from "react";
-// import rvmImg from "img/rvm.png";
-// import jabarImg from "img/jabar.jpeg";
-// import acehImg from "img/aceh.jpeg";
-// import surabayaImg from "img/surabaya.jpeg";
-// import medanImg from "img/medan.jpeg";
+import { useTranslation } from "react-i18next";
 
 export default function SmartRvm() {
+  const { t } = useTranslation();
+
   const lokasiList = [
     { img: "img/jabar.jpeg", name: "Jawa Barat" },
     { img: "img/aceh.jpeg", name: "Aceh" },
@@ -34,23 +32,22 @@ export default function SmartRvm() {
           {/* Teks */}
           <div className="space-y-6">
             <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 leading-tight font-heading">
-              Smart Reverse Vending Machine
+              {t("smartRvm.title", "Smart Reverse Vending Machine")}
             </h2>
             <h3 className="text-xl font-semibold text-eco-primary font-heading">
-              Apa itu Smart RVM?
+              {t("smartRvm.subtitle", "Apa itu Smart RVM?")}
             </h3>
             <p className="text-lg text-slate-600 leading-relaxed font-body">
-              Smart Reverse Vending Machine (RVM) adalah mesin pintar yang
-              memungkinkan pengguna menukarkan sampah botol atau kemasan daur
-              ulang menjadi reward digital secara otomatis.
+              {t(
+                "smartRvm.desc1",
+                "Smart Reverse Vending Machine (RVM) adalah mesin pintar yang memungkinkan pengguna menukarkan sampah botol atau kemasan daur ulang menjadi reward digital secara otomatis."
+              )}
             </p>
             <p className="text-lg text-slate-600 leading-relaxed font-body">
-              Pengguna hanya perlu memasukkan sampah yang sesuai, kemudian{" "}
-              <strong className="text-eco-primary font-semibold">
-                sistem AI EcoCash
-              </strong>{" "}
-              akan melakukan verifikasi jenis material sebelum reward diberikan
-              ke akun pengguna.
+              {t(
+                "smartRvm.desc2",
+                "Pengguna hanya perlu memasukkan sampah yang sesuai, kemudian sistem AI EcoCash akan melakukan verifikasi jenis material sebelum reward diberikan ke akun pengguna."
+              )}
             </p>
           </div>
         </div>
@@ -71,7 +68,7 @@ export default function SmartRvm() {
                 />
               </div>
               <p className="text-sm font-heading font-semibold text-slate-700 text-center group-hover:text-eco-primary transition-colors">
-                Smart Container {lokasi.name}
+                {t("smartRvm.containerPrefix", "Smart Container")} {lokasi.name}
               </p>
             </div>
           ))}

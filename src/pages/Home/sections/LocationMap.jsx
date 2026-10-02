@@ -3,8 +3,8 @@ import { MapContainer, TileLayer, Marker, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { useTranslation } from "react-i18next";
 
-// Custom Icon Leaflet berbasis Tailwind SVG (Dipertahankan)
 const customMarkerIcon = new L.divIcon({
   html: `<div class="w-10 h-10 bg-eco-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white transition-transform hover:scale-110">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" /></svg>
@@ -14,7 +14,6 @@ const customMarkerIcon = new L.divIcon({
   iconAnchor: [20, 40],
 });
 
-// Komponen Pembantu untuk menggerakkan peta ke lokasi yang dipilih
 function MapController({ selectedLoc }) {
   const map = useMap();
   useEffect(() => {
@@ -28,28 +27,32 @@ function MapController({ selectedLoc }) {
 }
 
 export default function LocationMap() {
+  const { t, i18n } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLoc, setSelectedLoc] = useState(null);
 
-  // State Management Integrasi API
   const [locations, setLocations] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const defaultCenter = [-6.9175, 107.609]; // Pusat Peta Awal (Kota Bandung)
+  const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
+    .split("-")[0]
+    .toLowerCase();
 
-  // Integrasi Backend: Pengambilan Data Mesin RVM
+  const defaultCenter = [-6.9175, 107.609]; // Kota Bandung
+
   useEffect(() => {
     const abortController = new AbortController();
 
     const fetchMachines = async () => {
       try {
         setIsLoading(true);
-        // URL API MAPS
         const apiUrl =
-          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+          import.meta.env.VITE_API_BASE_URL ||
+          import.meta.env.VITE_API_URL ||
+          "http://localhost:3000/api/v1";
 
-        const response = await fetch(`${apiUrl}/machines/public`, {
+        const response = await fetch(`${apiUrl}/machines/public?lang=${currentLang}`, {
           signal: abortController.signal,
           headers: {
             "Content-Type": "application/json",
@@ -58,10 +61,9 @@ export default function LocationMap() {
         });
 
         if (!response.ok)
-          throw new Error("Gagal memuat data lokasi mesin RVM.");
+          throw new Error(t("locationMap.fetchError", "Gagal memuat data lokasi mesin RVM."));
 
         const result = await response.json();
-        // Memetakan array data dari response API
         setLocations(result.data || []);
       } catch (err) {
         if (err.name !== "AbortError") {
@@ -75,38 +77,35 @@ export default function LocationMap() {
 
     fetchMachines();
 
-    // Clean Code: Cleanup function untuk membatalkan fetch jika komponen di-unmount
     return () => abortController.abort();
-  }, []);
+  }, [currentLang, t]);
 
-  // Filter dinamis berdasarkan state lokasi dari API
   const filteredLocations = locations.filter(
     (loc) =>
-      loc.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      loc.address.toLowerCase().includes(searchQuery.toLowerCase()),
+      loc.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      loc.address?.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   const handleSelectLocation = (loc) => {
     setSelectedLoc(loc);
   };
 
-  // Fungsi Penerjemah Data Backend ke UI (Dipertahankan)
   const getAvailabilityUI = (fillLevel) => {
     if (fillLevel === "EMPTY" || fillLevel === "LOW") {
       return {
-        status: "Good Service",
+        status: t("locationMap.goodService", "Good Service"),
         color: "text-emerald-600",
         bars: ["bg-emerald-500", "bg-slate-200", "bg-slate-200"],
       };
     } else if (fillLevel === "HALF_FULL") {
       return {
-        status: "Almost Full",
+        status: t("locationMap.almostFull", "Almost Full"),
         color: "text-eco-accent",
         bars: ["bg-eco-accent", "bg-eco-accent", "bg-slate-200"],
       };
     } else {
       return {
-        status: "Full / Closed",
+        status: t("locationMap.fullClosed", "Full / Closed"),
         color: "text-rose-600",
         bars: ["bg-rose-500", "bg-rose-500", "bg-rose-500"],
       };
@@ -120,7 +119,7 @@ export default function LocationMap() {
     >
       <div className="mb-6">
         <h2 className="text-3xl font-extrabold text-slate-900 font-heading">
-          Lokasi RVM EcoCash
+          {t("locationMap.title", "Lokasi RVM EcoCash")}
         </h2>
       </div>
 
@@ -133,7 +132,7 @@ export default function LocationMap() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Cari Lokasi..."
+                placeholder={t("locationMap.searchPlaceholder", "Cari Lokasi...")}
                 className="w-full bg-transparent outline-none font-body text-sm text-slate-700 placeholder-slate-400"
                 disabled={isLoading}
               />
@@ -154,17 +153,15 @@ export default function LocationMap() {
           </div>
 
           <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-            {/* UI Handling: Status Memuat Data */}
             {isLoading && (
               <div className="flex flex-col items-center justify-center h-40 space-y-3">
                 <div className="w-8 h-8 border-4 border-eco-cyan border-t-transparent rounded-full animate-spin"></div>
                 <span className="text-sm text-slate-500">
-                  Menyinkronkan data lokasi...
+                  {t("locationMap.syncing", "Menyinkronkan data lokasi...")}
                 </span>
               </div>
             )}
 
-            {/* UI Handling: Status Error */}
             {!isLoading && error && (
               <div className="text-center p-4 bg-rose-50 rounded-xl border border-rose-100">
                 <span className="text-sm text-rose-600 font-medium">
@@ -172,14 +169,13 @@ export default function LocationMap() {
                 </span>
                 <button
                   onClick={() => window.location.reload()}
-                  className="block mt-2 text-xs text-slate-500 underline mx-auto"
+                  className="block mt-2 text-xs text-slate-500 underline mx-auto cursor-pointer"
                 >
-                  Coba Lagi
+                  {t("locationMap.retry", "Coba Lagi")}
                 </button>
               </div>
             )}
 
-            {/* Render Daftar Lokasi dari API */}
             {!isLoading &&
               !error &&
               filteredLocations.map((loc) => {
@@ -191,18 +187,26 @@ export default function LocationMap() {
                     className="p-4 rounded-xl cursor-pointer group shadow-xs hover:inset-ring-2 hover:inset-ring-eco-cyan "
                   >
                     <div
-                      className={`flex items-center gap-1.5 text-xs font-bold mb-1.5 ${isOpen ? "text-green-600" : "text-red-500"}`}
+                      className={`flex items-center gap-1.5 text-xs font-bold mb-1.5 ${
+                        isOpen ? "text-green-600" : "text-red-500"
+                      }`}
                     >
-                      {isOpen ? "Open now" : "Closed"}
+                      {isOpen
+                        ? t("locationMap.openNow", "Open now")
+                        : t("locationMap.closed", "Closed")}
                       <span
-                        className={`w-2 h-2 rounded-full ${isOpen ? "bg-green-500/30 ring-2 ring-green-500" : "bg-red-500/30 ring-2 ring-red-500"}`}
+                        className={`w-2 h-2 rounded-full ${
+                          isOpen
+                            ? "bg-green-500/30 ring-2 ring-green-500"
+                            : "bg-red-500/30 ring-2 ring-red-500"
+                        }`}
                       ></span>
                     </div>
                     <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-1 group-hover:text-eco-primary transition-colors">
                       {loc.name}
                     </h3>
                     <p className="text-xs text-slate-500 mb-3">
-                      Reverse vending machine
+                      {t("locationMap.rvmSub", "Reverse vending machine")}
                     </p>
                     <div className="space-y-2 text-xs text-slate-600">
                       <div className="flex items-start gap-2">
@@ -243,8 +247,8 @@ export default function LocationMap() {
                         </svg>
                         <span>
                           {isOpen
-                            ? "Buka pukul 07.00-20.00"
-                            : "Buka besok pukul 07.00-20.00"}
+                            ? t("locationMap.hoursOpen", "Buka pukul 07.00-20.00")
+                            : t("locationMap.hoursClosed", "Buka besok pukul 07.00-20.00")}
                         </span>
                       </div>
                     </div>
@@ -254,7 +258,7 @@ export default function LocationMap() {
 
             {!isLoading && !error && filteredLocations.length === 0 && (
               <div className="text-center text-slate-400 text-sm mt-10">
-                Lokasi tidak ditemukan.
+                {t("locationMap.notFound", "Lokasi tidak ditemukan.")}
               </div>
             )}
           </div>
@@ -262,19 +266,18 @@ export default function LocationMap() {
 
         {/* MAP KANAN */}
         <div className="flex-1 relative z-0 h-full bg-slate-100">
-          {/* Floating Detail Card */}
           {selectedLoc && (
             <div className="absolute top-6 left-6 z-[1000] w-[90%] max-w-sm bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col max-h-[90%] overflow-hidden animate-fadeIn">
               <div className="p-6 overflow-y-auto custom-scrollbar flex-1 pb-4">
                 <div className="flex justify-between items-start mb-4">
                   <span className="bg-slate-100 text-slate-700 px-3 py-1 rounded-full text-xs font-heading font-bold">
                     {selectedLoc.machineType === "CONTAINER"
-                      ? "Machine Box"
-                      : "Machine Standalone"}
+                      ? t("locationMap.machineBox", "Machine Box")
+                      : t("locationMap.machineStandalone", "Machine Standalone")}
                   </span>
                   <button
                     onClick={() => setSelectedLoc(null)}
-                    className="text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 p-1.5 rounded-full transition-colors"
+                    className="text-slate-400 hover:text-slate-700 bg-slate-50 hover:bg-slate-200 p-1.5 rounded-full transition-colors cursor-pointer"
                   >
                     <svg
                       className="w-5 h-5"
@@ -301,12 +304,12 @@ export default function LocationMap() {
 
                 <div className="mb-6">
                   <h4 className="text-lg font-bold font-heading text-slate-900 mb-4">
-                    Availability
+                    {t("locationMap.availability", "Availability")}
                   </h4>
                   <div className="mb-4">
                     <div className="flex items-center gap-2 mb-2 text-sm font-body">
                       <span className="text-slate-700 font-medium">
-                        Kapasitas Mesin ({selectedLoc.fillPercentage}%)
+                        {t("locationMap.machineCapacity", "Kapasitas Mesin")} ({selectedLoc.fillPercentage || 0}%)
                       </span>
                       <span className="text-slate-300">•</span>
                       <span
@@ -322,7 +325,7 @@ export default function LocationMap() {
                             key={idx}
                             className={`w-1/3 rounded-full ${bg}`}
                           ></div>
-                        ),
+                        )
                       )}
                     </div>
                   </div>
@@ -330,24 +333,27 @@ export default function LocationMap() {
 
                 <div className="mb-6 pt-6 border-t border-slate-100">
                   <h4 className="text-lg font-bold font-heading text-slate-900 mb-3">
-                    System Status
+                    {t("locationMap.systemStatus", "System Status")}
                   </h4>
                   <div className="flex items-center justify-between text-sm font-body">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`font-bold ${selectedLoc.isActive ? "text-emerald-600" : "text-rose-600"}`}
+                        className={`font-bold ${
+                          selectedLoc.isActive ? "text-emerald-600" : "text-rose-600"
+                        }`}
                       >
-                        {selectedLoc.status}
+                        {selectedLoc.status || (selectedLoc.isActive ? "ACTIVE" : "INACTIVE")}
                       </span>
                       <span className="text-slate-300">•</span>
                       <span className="text-slate-600">
-                        {/* Dukungan penamaan key updatedAt (umum) atau updateAt (dummy) */}
-                        Update:{" "}
+                        {t("locationMap.updateLabel", "Update:")}{" "}
                         {new Date(
                           selectedLoc.updatedAt ||
                             selectedLoc.updateAt ||
-                            Date.now(),
-                        ).toLocaleDateString("id-ID")}
+                            Date.now()
+                        ).toLocaleDateString(
+                          currentLang === "en" ? "en-US" : currentLang === "zh" ? "zh-CN" : "id-ID"
+                        )}
                       </span>
                     </div>
                   </div>
@@ -355,10 +361,10 @@ export default function LocationMap() {
 
                 <div className="pt-2 border-t border-slate-100 mt-6">
                   <h4 className="text-lg font-bold font-heading text-slate-900 mb-3 mt-4">
-                    Informasi Tambahan
+                    {t("locationMap.additionalInfo", "Informasi Tambahan")}
                   </h4>
                   <p className="text-sm text-slate-600 font-body leading-relaxed bg-slate-50 p-4 rounded-xl border border-slate-100">
-                    {selectedLoc.description || "Tidak ada deskripsi spesifik."}
+                    {selectedLoc.description || t("locationMap.noDescription", "Tidak ada deskripsi spesifik.")}
                   </p>
                 </div>
               </div>
@@ -370,13 +376,12 @@ export default function LocationMap() {
                   rel="noreferrer"
                   className="w-full bg-[#3b82f6] hover:bg-blue-600 text-white py-3.5 rounded-xl font-heading font-bold text-sm flex items-center justify-center transition-colors"
                 >
-                  Get Directions
+                  {t("locationMap.getDirections", "Get Directions")}
                 </a>
               </div>
             </div>
           )}
 
-          {/* Leaflet Map */}
           <MapContainer
             center={defaultCenter}
             zoom={13}

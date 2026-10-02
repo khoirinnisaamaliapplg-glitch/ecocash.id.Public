@@ -1,32 +1,37 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function Partner() {
+  const { t } = useTranslation();
+
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24 relative overflow-hidden">
       <div className="container gap-2">
         <div className="row">
-          {/* Ambient Glow Background (Konsisten dengan AppPreview) */}
+          {/* Ambient Glow Background */}
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] -z-10 pointer-events-none"></div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Teks & Penjelasan (Kolom Kiri) */}
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 bg-white border border-slate-100 shadow-sm text-slate-600 px-5 py-2.5 rounded-full font-heading text-sm font-semibold">
-                <span className="text-emerald-500">✦</span> Peluang Penghasilan
-                Baru
+                <span className="text-emerald-500">✦</span>{" "}
+                {t("partner.badge", "Peluang Penghasilan Baru")}
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading">
-                EcoCash Partner App. <br />
-                <span className="text-eco-cyan">Berdayakan Langkah Anda.</span>
+                {t("partner.title", "EcoCash Partner App.")} <br />
+                <span className="text-eco-cyan">
+                  {t("partner.titleHighlight", "Berdayakan Langkah Anda.")}
+                </span>
               </h2>
 
               <p className="text-lg text-slate-600 leading-relaxed font-body">
-                Aplikasi khusus yang dirancang untuk mitra pengepul independen
-                dan armada logistik. Ambil pesanan penjemputan sampah terpilah
-                di sekitar Anda, pantau rute tempuh, dan cairkan pendapatan
-                secara instan.
+                {t(
+                  "partner.desc",
+                  "Aplikasi khusus yang dirancang untuk mitra pengepul independen dan armada logistik. Ambil pesanan penjemputan sampah terpilah di sekitar Anda, pantau rute tempuh, dan cairkan pendapatan secara instan."
+                )}
               </p>
 
               {/* Daftar Fitur Partner */}
@@ -55,12 +60,13 @@ export default function Partner() {
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-slate-900 mb-1">
-                      Sistem Penjemputan Pintar
+                      {t("partner.feat1Title", "Sistem Penjemputan Pintar")}
                     </h4>
                     <p className="text-base text-slate-600 leading-relaxed font-body">
-                      Terima pesanan penjemputan dari rumah warga atau mesin RVM
-                      terdekat lengkap dengan detail jenis material dan estimasi
-                      bayaran.
+                      {t(
+                        "partner.feat1Desc",
+                        "Terima pesanan penjemputan dari rumah warga atau mesin RVM terdekat lengkap dengan detail jenis material dan estimasi bayaran."
+                      )}
                     </p>
                   </div>
                 </div>
@@ -83,12 +89,13 @@ export default function Partner() {
                   </div>
                   <div>
                     <h4 className="text-xl font-bold text-slate-900 mb-1">
-                      Transparansi Penghasilan
+                      {t("partner.feat2Title", "Transparansi Penghasilan")}
                     </h4>
                     <p className="text-base text-slate-600 leading-relaxed font-body">
-                      Pantau total pendapatan harian, kelola penarikan dana
-                      langsung ke rekening bank, dan cek total tonase yang Anda
-                      selamatkan.
+                      {t(
+                        "partner.feat2Desc",
+                        "Pantau total pendapatan harian, kelola penarikan dana langsung ke rekening bank, dan cek total tonase yang Anda selamatkan."
+                      )}
                     </p>
                   </div>
                 </div>
@@ -97,7 +104,7 @@ export default function Partner() {
               {/* Tombol CTA */}
               <div className="pt-6 flex flex-wrap items-center gap-4">
                 <button className="px-8 py-3.5 rounded-full bg-slate-900 text-white font-bold text-sm flex items-center justify-center gap-3 shadow-lg hover:bg-eco-cyan hover:-translate-y-1 transition-all cursor-pointer">
-                  Daftar Sebagai Mitra
+                  {t("partner.ctaRegister", "Daftar Sebagai Mitra")}
                   <svg
                     className="w-4 h-4"
                     fill="none"
@@ -116,14 +123,13 @@ export default function Partner() {
                   to="/partner-scheme"
                   className="px-8 py-3.5 rounded-full bg-white border border-slate-200 text-slate-700 font-bold text-sm hover:border-eco-cyan hover:text-eco-cyan transition-colors cursor-pointer"
                 >
-                  Pelajari Skema
+                  {t("partner.ctaLearnScheme", "Pelajari Skema")}
                 </Link>
               </div>
             </div>
 
             {/* Mockup Gambar Aplikasi (Kolom Kanan) */}
             <div className="relative flex justify-center lg:justify-end group mt-10 lg:mt-0">
-              {/* Latar Belakang Dekoratif Konsisten dengan AppPreview */}
               <div className="absolute inset-0 bg-gradient-to-tr from-eco-cyan/20 to-emerald-500/10 rounded-3xl transform rotate-3 blur-xl -z-10 transition-transform duration-500 group-hover:rotate-6"></div>
 
               <img

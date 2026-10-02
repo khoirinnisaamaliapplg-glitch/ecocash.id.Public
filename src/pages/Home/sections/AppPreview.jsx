@@ -1,7 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function AppPreview() {
+  const { t } = useTranslation();
+
   return (
     <section className="max-w-7xl mx-auto px-6 lg:px-10 py-16 lg:py-24 relative overflow-hidden">
       <div className="container gap-2">
@@ -9,7 +12,9 @@ export default function AppPreview() {
           to={"/customer-stories"}
           className="text-eco-cyan font-bold text-sm flex items-center gap-2 justify-self-end cursor-pointer hover:text-eco-cyan/70 transition-colors"
         >
-          <p className="text-eco-cyan font-bold text-sm">Customer stories</p>
+          <p className="text-eco-cyan font-bold text-sm">
+            {t("appPreview.customerStories", "Customer stories")}
+          </p>
           <i className="fa-solid fa-arrow-right-long"></i>
         </Link>
         <div className="row">
@@ -20,29 +25,31 @@ export default function AppPreview() {
             {/* Teks & Penjelasan */}
             <div className="space-y-6">
               <div className="inline-flex items-center gap-2 bg-white border border-slate-100 shadow-sm text-slate-600 px-5 py-2.5 rounded-full font-heading text-sm font-semibold">
-                <span className="text-eco-accent">✦</span> Solusi Cerdas untuk
-                Indonesia
+                <span className="text-eco-accent">✦</span>{" "}
+                {t("appPreview.badge", "Solusi Cerdas untuk Indonesia")}
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading">
-                Kelola Sampah Lebih Mudah <br /> dengan EcoCash App
+                {t("appPreview.title", "Kelola Sampah Lebih Mudah")} <br />{" "}
+                {t("appPreview.titleSuffix", "dengan EcoCash App")}
               </h2>
 
               <p className="text-lg text-slate-600 leading-relaxed font-body">
-                Aplikasi EcoCash membantu pengguna mengelola sampah secara lebih
-                praktis, modern, dan terintegrasi langsung dari smartphone.
-                Mulai dari verifikasi penjemputan, hingga pengumpulan reward
-                digital.
+                {t(
+                  "appPreview.desc1",
+                  "Aplikasi EcoCash membantu pengguna mengelola sampah secara lebih praktis, modern, dan terintegrasi langsung dari smartphone. Mulai dari verifikasi penjemputan, hingga pengumpulan reward digital."
+                )}
               </p>
               <p className="text-lg text-slate-600 leading-relaxed font-body">
-                Dengan teknologi AI dan IoT , EcoCash memberikan pengalaman
-                pengelolaan sampah yang lebih cepat, transparan, dan efisien
-                untuk mendukung ekonomi sirkular di Indonesia.
+                {t(
+                  "appPreview.desc2",
+                  "Dengan teknologi AI dan IoT, EcoCash memberikan pengalaman pengelolaan sampah yang lebih cepat, transparan, dan efisien untuk mendukung ekonomi sirkular di Indonesia."
+                )}
               </p>
 
               <div className="pt-6">
                 <p className="text-eco-primary font-heading font-semibold mb-3">
-                  Dapatkan sekarang di
+                  {t("appPreview.getNow", "Dapatkan sekarang di")}
                 </p>
                 <div className="flex space-x-4">
                   <a

@@ -1,7 +1,9 @@
 import React from "react";
-// import panduanImg from "img/panduan.png";
+import { useTranslation } from "react-i18next";
 
 export default function Guidelines() {
+  const { t } = useTranslation();
+
   return (
     <section
       id="guidelines"
@@ -13,13 +15,19 @@ export default function Guidelines() {
           <div className="space-y-8 flex flex-col justify-center">
             <div>
               <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 mb-4 font-heading leading-tight">
-                Panduan Kelayakan Barang <br />
-                Daur Ulang EcoCash
+                {t("guidelines.title", "Panduan Kelayakan Barang")} <br />
+                {t("guidelines.titleSuffix", "Daur Ulang EcoCash")}
               </h2>
               <p className="text-slate-600 text-lg font-body">
-                Biar proses pemindaian AI lancar dan poinmu berhasil masuk,{" "}
+                {t(
+                  "guidelines.subtitlePrefix",
+                  "Biar proses pemindaian AI lancar dan poinmu berhasil masuk,"
+                )}{" "}
                 <span className="text-eco-cyan font-bold">
-                  yuk perhatikan kategori berikut:
+                  {t(
+                    "guidelines.subtitleHighlight",
+                    "yuk perhatikan kategori berikut:"
+                  )}
                 </span>
               </p>
             </div>
@@ -34,21 +42,21 @@ export default function Guidelines() {
                     ✓
                   </div>
                   <h3 className="font-bold text-lg font-heading text-emerald-800">
-                    BISA Diterima
+                    {t("guidelines.acceptedTitle", "BISA Diterima")}
                   </h3>
                 </div>
                 <ul className="space-y-3 font-body text-slate-600 text-sm">
                   <li className="flex items-start gap-2">
-                    <span>•</span> Botol Plastik PET (150ml - 3L)
+                    <span>•</span> {t("guidelines.acc1", "Botol Plastik PET (150ml - 3L)")}
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>•</span> Kaleng minuman/makanan
+                    <span>•</span> {t("guidelines.acc2", "Kaleng minuman/makanan")}
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>•</span> Karton Minuman (UHT)
+                    <span>•</span> {t("guidelines.acc3", "Karton Minuman (UHT)")}
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>•</span> Botol Kaca (sirup/kecap)
+                    <span>•</span> {t("guidelines.acc4", "Botol Kaca (sirup/kecap)")}
                   </li>
                 </ul>
               </div>
@@ -61,21 +69,21 @@ export default function Guidelines() {
                     ✕
                   </div>
                   <h3 className="font-bold text-lg font-heading text-rose-800">
-                    TIDAK Diterima
+                    {t("guidelines.rejectedTitle", "TIDAK Diterima")}
                   </h3>
                 </div>
                 <ul className="space-y-3 font-body text-slate-600 text-sm">
                   <li className="flex items-start gap-2">
-                    <span>•</span> Botol kaca minuman keras
+                    <span>•</span> {t("guidelines.rej1", "Botol kaca minuman keras")}
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>•</span> Jeriken plastik &gt; 3L
+                    <span>•</span> {t("guidelines.rej2", "Jeriken plastik > 3L")}
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>•</span> Plastik mika/kresek/saset
+                    <span>•</span> {t("guidelines.rej3", "Plastik mika/kresek/saset")}
                   </li>
                   <li className="flex items-start gap-2">
-                    <span>•</span> Wadah kotor/berminyak
+                    <span>•</span> {t("guidelines.rej4", "Wadah kotor/berminyak")}
                   </li>
                 </ul>
               </div>
@@ -85,10 +93,13 @@ export default function Guidelines() {
             <div className="bg-orange-50 border-l-4 border-eco-accent p-5 rounded-r-3xl flex items-start gap-4 shadow-sm">
               <span className="text-2xl mt-0.5">⚠️</span>
               <p className="font-body text-orange-950 text-sm leading-relaxed">
-                <strong className="font-heading text-base">Perhatian:</strong>{" "}
-                Jangan diremukkan dan jangan lepas label/tutupnya! Sistem AI
-                kami perlu membaca <em>barcode</em> utuh untuk memverifikasi
-                pencairan saldo.
+                <strong className="font-heading text-base">
+                  {t("guidelines.warningTitle", "Perhatian:")}
+                </strong>{" "}
+                {t(
+                  "guidelines.warningDesc",
+                  "Jangan diremukkan dan jangan lepas label/tutupnya! Sistem AI kami perlu membaca barcode utuh untuk memverifikasi pencairan saldo."
+                )}
               </p>
             </div>
           </div>
@@ -98,7 +109,7 @@ export default function Guidelines() {
             <div className="absolute inset-0 bg-gradient-to-tr from-teal-500/20 to-orange-500/20 rounded-[2.5rem] transform rotate-3 transition-transform duration-500 group-hover:-rotate-2 -z-10 blur-xl"></div>
             <img
               src={"img/panduan.png"}
-              alt="Panduan Barang Daur Ulang"
+              alt={t("guidelines.imgAlt", "Panduan Barang Daur Ulang")}
               className="w-full h-auto object-cover relative z-10 transition-transform duration-500 group-hover:scale-105 rounded-[2.5rem]"
             />
           </div>

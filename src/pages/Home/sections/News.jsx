@@ -1,18 +1,99 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { newsList } from "../../../constants/dummyData";
 
 export default function News() {
+  const { t, i18n } = useTranslation();
+  const [articles, setArticles] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  // Deteksi bahasa aktif ('id', 'en', atau 'zh')
+  const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
+    .split("-")[0]
+    .toLowerCase();
+
+  useEffect(() => {
+    let isMounted = true;
+
+    const fetchArticles = async () => {
+      setLoading(true);
+      try {
+        const apiUrl =
+          import.meta.env.VITE_API_BASE_URL ||
+          import.meta.env.VITE_API_URL ||
+          "http://localhost:3000/api/v1";
+
+        const response = await fetch(
+          `${apiUrl}/news?lang=${currentLang}&contentType=NEWS&limit=6`
+        );
+
+        if (!response.ok) {
+          throw new Error(`HTTP Error: ${response.status}`);
+        }
+
+        const result = await response.json();
+
+        if (isMounted) {
+          // Tangani format respons backend: result.data.items atau result.data array
+          const rawItems = Array.isArray(result.data)
+            ? result.data
+            : result.data?.items || [];
+
+          if (rawItems.length > 0) {
+            // Normalisasi field database ke kontrak tampilan UI
+            const normalized = rawItems.map((item) => ({
+              id: item.id,
+              slug: item.slug,
+              title: item.title,
+              desc: item.excerpt || item.content?.substring(0, 130) + "...",
+              img: item.imageUrl || "/img/hero-news.jpg",
+              category: item.category || t("news.badgeLatest", "Terbaru"),
+              date: item.createdAt
+                ? new Date(item.createdAt).toLocaleDateString(
+                    currentLang === "en" ? "en-US" : currentLang === "zh" ? "zh-CN" : "id-ID",
+                    { year: "numeric", month: "short", day: "numeric" }
+                  )
+                : "",
+            }));
+            setArticles(normalized);
+          } else {
+            setArticles(newsList);
+          }
+        }
+      } catch (err) {
+        console.warn(
+          "[News] Gagal menghubungi backend API, beralih ke data fallback lokal:",
+          err.message
+        );
+        if (isMounted) {
+          setArticles(newsList);
+        }
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    fetchArticles();
+
+    return () => {
+      isMounted = false;
+    };
+  }, [currentLang, t]);
+
   return (
     <section id="news" className="max-w-7xl mx-auto px-6 lg:px-10 py-24">
       {/* Header Judul Section */}
       <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
         <div>
           <h2 className="text-3xl md:text-4xl font-extrabold text-slate-900 font-heading">
-            Berita EcoCash.id
+            {t("news.title", "Berita EcoCash.id")}
           </h2>
           <p className="text-slate-600 font-body mt-2">
-            Ikuti terus pembaruan ekosistem dan aktivitas daur ulang kami.
+            {t(
+              "news.subtitle",
+              "Ikuti terus pembaruan ekosistem dan aktivitas daur ulang kami."
+            )}
           </p>
         </div>
 
@@ -21,7 +102,7 @@ export default function News() {
           to="/all-news"
           className="hidden md:flex text-eco-cyan font-heading font-bold items-center hover:text-eco-cyan transition-colors group"
         >
-          Lihat Semua Berita
+          {t("news.viewAll", "Lihat Semua Berita")}
           <svg
             className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
             fill="none"
@@ -39,36 +120,66 @@ export default function News() {
       </div>
 
       {/* Grid Berita */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {newsList.map((berita) => (
-          <Link
-            key={berita.id}
-            to={`/news/${berita.id}`}
-            className="group bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-teal-500/10 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer"
-          >
-            <div className="w-full h-48 overflow-hidden relative">
-              <div className="absolute inset-0 bg-eco-primary/0 group-hover:bg-eco-primary/20 transition-colors duration-300 z-10"></div>
-              <img
-                src={berita.img}
-                alt={berita.title}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
-              />
+      {loading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {[1, 2, 3].map((skeleton) => (
+            <div
+              key={skeleton}
+              className="bg-white rounded-3xl border border-slate-100 p-4 animate-pulse h-96 flex flex-col justify-between"
+            >
+              <div className="w-full h-48 bg-slate-200 rounded-2xl mb-4"></div>
+              <div className="h-4 bg-slate-200 rounded w-1/3 mb-2"></div>
+              <div className="h-6 bg-slate-200 rounded w-3/4 mb-2"></div>
+              <div className="h-4 bg-slate-200 rounded w-full mb-1"></div>
+              <div className="h-4 bg-slate-200 rounded w-2/3"></div>
             </div>
-            <div className="p-6 flex flex-col flex-grow">
-              {/* Badge Tanggal/Kategori */}
-              <span className="text-xs font-bold text-eco-cyan font-body mb-2 uppercase tracking-wider">
-                Terbaru
-              </span>
-              <h3 className="text-lg font-bold mb-3 text-slate-900 font-heading group-hover:text-eco-primary transition-colors line-clamp-2">
-                {berita.title}
-              </h3>
-              <p className="text-sm text-slate-600 leading-relaxed font-body line-clamp-3">
-                {berita.desc}
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {articles.map((berita) => {
+            const articleLink = `/news/${berita.slug || berita.id}`;
+            const displayImage =
+              berita.imageUrl || berita.img || "/img/hero-news.jpg";
+            const displayTitle = berita.title;
+            const displayDesc = berita.excerpt || berita.desc;
+            const displayCategory =
+              berita.category || t("news.badgeLatest", "Terbaru");
+
+            return (
+              <Link
+                key={berita.id || berita.slug}
+                to={articleLink}
+                className="group bg-white rounded-3xl border border-slate-100 shadow-sm hover:shadow-xl hover:shadow-teal-500/10 transition-all duration-300 overflow-hidden flex flex-col h-full cursor-pointer"
+              >
+                <div className="w-full h-48 overflow-hidden relative bg-slate-100">
+                  <div className="absolute inset-0 bg-eco-primary/0 group-hover:bg-eco-primary/20 transition-colors duration-300 z-10"></div>
+                  <img
+                    src={displayImage}
+                    alt={displayTitle}
+                    className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
+                    onError={(e) => {
+                      e.target.src = "/img/hero-news.jpg";
+                    }}
+                  />
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  {/* Badge Kategori */}
+                  <span className="text-xs font-bold text-eco-cyan font-body mb-2 uppercase tracking-wider">
+                    {displayCategory}
+                  </span>
+                  <h3 className="text-lg font-bold mb-3 text-slate-900 font-heading group-hover:text-eco-primary transition-colors line-clamp-2">
+                    {displayTitle}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed font-body line-clamp-3">
+                    {displayDesc}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      )}
 
       {/* Tombol Tampilkan Lebih Banyak (Mobile) */}
       <div className="mt-10 text-center md:hidden">
@@ -76,7 +187,7 @@ export default function News() {
           to="/all-news"
           className="inline-flex items-center justify-center bg-slate-50 text-eco-primary font-heading font-bold px-6 py-3 rounded-full border border-slate-200 hover:bg-slate-100 transition-colors w-full"
         >
-          Lihat Semua Berita
+          {t("news.viewAll", "Lihat Semua Berita")}
         </Link>
       </div>
     </section>
