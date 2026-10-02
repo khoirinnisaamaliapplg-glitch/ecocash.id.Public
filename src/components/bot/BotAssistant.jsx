@@ -330,7 +330,7 @@ export default function BotAssistant({ botFlowData }) {
           <img
             src={"img/cs.png"}
             alt="CS EcoCash"
-            className="w-18 h-auto cursor-pointer"
+            className="w-19 h-21 cursor-pointer"
             onError={(e) => {
               e.target.style.display = "none";
               e.target.parentElement.innerHTML =
