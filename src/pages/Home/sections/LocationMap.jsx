@@ -4,6 +4,7 @@ import MarkerClusterGroup from "react-leaflet-cluster";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import { useTranslation } from "react-i18next";
+import { LOCATION_DATA } from "../../../constants/dummyData";
 
 const customMarkerIcon = new L.divIcon({
   html: `<div class="w-10 h-10 bg-eco-primary rounded-full border-4 border-white shadow-lg flex items-center justify-center text-white transition-transform hover:scale-110">
@@ -31,15 +32,16 @@ export default function LocationMap() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedLoc, setSelectedLoc] = useState(null);
 
-  const [locations, setLocations] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  // 1. Skema Aman (SWR): Inisialisasi awal langsung dengan data dummy agar UI tidak kosong saat loading / offline
+  const [locations, setLocations] = useState(LOCATION_DATA);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isFallback, setIsFallback] = useState(false);
 
   const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
     .split("-")[0]
     .toLowerCase();
 
-  const defaultCenter = [-6.9175, 107.609]; // Kota Bandung
+  const defaultCenter = [-6.9175, 107.609]; // Titik Pusat Kota Bandung
 
   useEffect(() => {
     const abortController = new AbortController();
@@ -47,7 +49,10 @@ export default function LocationMap() {
     const fetchMachines = async () => {
       try {
         setIsLoading(true);
+
+        // Selaras dengan develop: Dukung VITE_API_URL_LOCAL
         const apiUrl =
+          import.meta.env.VITE_API_URL_LOCAL ||
           import.meta.env.VITE_API_BASE_URL ||
           import.meta.env.VITE_API_URL ||
           "http://localhost:3000/api/v1";
@@ -60,15 +65,30 @@ export default function LocationMap() {
           },
         });
 
-        if (!response.ok)
+        if (!response.ok) {
           throw new Error(t("locationMap.fetchError", "Gagal memuat data lokasi mesin RVM."));
+        }
 
         const result = await response.json();
-        setLocations(result.data || []);
+
+        // Validasi respon API
+        if (result.success && Array.isArray(result.data) && result.data.length > 0) {
+          setLocations(result.data);
+          setIsFallback(false);
+        } else if (Array.isArray(result) && result.length > 0) {
+          setLocations(result);
+          setIsFallback(false);
+        } else {
+          // Jika data dari server kosong, pertahankan data dummy
+          setLocations(LOCATION_DATA);
+          setIsFallback(true);
+        }
       } catch (err) {
         if (err.name !== "AbortError") {
-          console.error("Kesalahan API:", err);
-          setError(err.message);
+          console.warn("Server API offline/down, beralih ke data fallback lokal:", err.message);
+          // Fallback otomatis ke data dummy lokal tanpa memblokir antarmuka pengguna
+          setLocations(LOCATION_DATA);
+          setIsFallback(true);
         }
       } finally {
         setIsLoading(false);
@@ -117,10 +137,18 @@ export default function LocationMap() {
       id="location-map"
       className="max-w-7xl mx-auto px-6 lg:px-10 py-24"
     >
-      <div className="mb-6">
-        <h2 className="text-3xl font-extrabold text-slate-900 font-heading">
-          {t("locationMap.title", "Lokasi RVM EcoCash")}
-        </h2>
+      <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 className="text-3xl font-extrabold text-slate-900 font-heading">
+            {t("locationMap.title", "Lokasi RVM EcoCash")}
+          </h2>
+          {isFallback && (
+            <span className="inline-flex items-center gap-1.5 mt-2 px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-50 text-amber-700 border border-amber-200">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              {t("locationMap.offlineMode", "Mode Preview Offline")}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-col lg:flex-row w-full h-[750px] rounded-2xl border border-slate-200 overflow-hidden shadow-sm bg-white">
@@ -134,7 +162,6 @@ export default function LocationMap() {
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder={t("locationMap.searchPlaceholder", "Cari Lokasi...")}
                 className="w-full bg-transparent outline-none font-body text-sm text-slate-700 placeholder-slate-400"
-                disabled={isLoading}
               />
               <svg
                 className="w-5 h-5 text-slate-400 shrink-0"
@@ -153,7 +180,7 @@ export default function LocationMap() {
           </div>
 
           <div className="flex-1 overflow-y-auto custom-scrollbar p-6 space-y-8">
-            {isLoading && (
+            {isLoading && locations.length === 0 && (
               <div className="flex flex-col items-center justify-center h-40 space-y-3">
                 <div className="w-8 h-8 border-4 border-eco-cyan border-t-transparent rounded-full animate-spin"></div>
                 <span className="text-sm text-slate-500">
@@ -162,101 +189,85 @@ export default function LocationMap() {
               </div>
             )}
 
-            {!isLoading && error && (
-              <div className="text-center p-4 bg-rose-50 rounded-xl border border-rose-100">
-                <span className="text-sm text-rose-600 font-medium">
-                  {error}
-                </span>
-                <button
-                  onClick={() => window.location.reload()}
-                  className="block mt-2 text-xs text-slate-500 underline mx-auto cursor-pointer"
+            {filteredLocations.map((loc) => {
+              const isOpen = loc.isActive;
+              return (
+                <div
+                  key={loc.id}
+                  onClick={() => handleSelectLocation(loc)}
+                  className="p-4 rounded-xl cursor-pointer group shadow-xs hover:inset-ring-2 hover:inset-ring-eco-cyan transition-all"
                 >
-                  {t("locationMap.retry", "Coba Lagi")}
-                </button>
-              </div>
-            )}
-
-            {!isLoading &&
-              !error &&
-              filteredLocations.map((loc) => {
-                const isOpen = loc.isActive;
-                return (
                   <div
-                    key={loc.id}
-                    onClick={() => handleSelectLocation(loc)}
-                    className="p-4 rounded-xl cursor-pointer group shadow-xs hover:inset-ring-2 hover:inset-ring-eco-cyan "
+                    className={`flex items-center gap-1.5 text-xs font-bold mb-1.5 ${
+                      isOpen ? "text-green-600" : "text-red-500"
+                    }`}
                   >
-                    <div
-                      className={`flex items-center gap-1.5 text-xs font-bold mb-1.5 ${
-                        isOpen ? "text-green-600" : "text-red-500"
+                    {isOpen
+                      ? t("locationMap.openNow", "Open now")
+                      : t("locationMap.closed", "Closed")}
+                    <span
+                      className={`w-2 h-2 rounded-full ${
+                        isOpen
+                          ? "bg-green-500/30 ring-2 ring-green-500"
+                          : "bg-red-500/30 ring-2 ring-red-500"
                       }`}
-                    >
-                      {isOpen
-                        ? t("locationMap.openNow", "Open now")
-                        : t("locationMap.closed", "Closed")}
-                      <span
-                        className={`w-2 h-2 rounded-full ${
-                          isOpen
-                            ? "bg-green-500/30 ring-2 ring-green-500"
-                            : "bg-red-500/30 ring-2 ring-red-500"
-                        }`}
-                      ></span>
+                    ></span>
+                  </div>
+                  <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-1 group-hover:text-eco-primary transition-colors">
+                    {loc.name}
+                  </h3>
+                  <p className="text-xs text-slate-500 mb-3">
+                    {t("locationMap.rvmSub", "Reverse vending machine")}
+                  </p>
+                  <div className="space-y-2 text-xs text-slate-600">
+                    <div className="flex items-start gap-2">
+                      <svg
+                        className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                        />
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                        />
+                      </svg>
+                      <span className="line-clamp-2">{loc.address}</span>
                     </div>
-                    <h3 className="font-bold text-slate-800 text-[15px] leading-tight mb-1 group-hover:text-eco-primary transition-colors">
-                      {loc.name}
-                    </h3>
-                    <p className="text-xs text-slate-500 mb-3">
-                      {t("locationMap.rvmSub", "Reverse vending machine")}
-                    </p>
-                    <div className="space-y-2 text-xs text-slate-600">
-                      <div className="flex items-start gap-2">
-                        <svg
-                          className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
-                          />
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
-                          />
-                        </svg>
-                        <span className="line-clamp-2">{loc.address}</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <svg
-                          className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth="2"
-                            d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-                          />
-                        </svg>
-                        <span>
-                          {isOpen
-                            ? t("locationMap.hoursOpen", "Buka pukul 07.00-20.00")
-                            : t("locationMap.hoursClosed", "Buka besok pukul 07.00-20.00")}
-                        </span>
-                      </div>
+                    <div className="flex items-start gap-2">
+                      <svg
+                        className="w-4 h-4 shrink-0 text-slate-400 mt-0.5"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                        />
+                      </svg>
+                      <span>
+                        {isOpen
+                          ? t("locationMap.hoursOpen", "Buka pukul 07.00-20.00")
+                          : t("locationMap.hoursClosed", "Buka besok pukul 07.00-20.00")}
+                      </span>
                     </div>
                   </div>
-                );
-              })}
+                </div>
+              );
+            })}
 
-            {!isLoading && !error && filteredLocations.length === 0 && (
+            {filteredLocations.length === 0 && (
               <div className="text-center text-slate-400 text-sm mt-10">
                 {t("locationMap.notFound", "Lokasi tidak ditemukan.")}
               </div>
@@ -389,7 +400,7 @@ export default function LocationMap() {
             className="w-full h-full z-0"
           >
             <TileLayer
-              attribution='&copy; <Link href="https://www.openstreetmap.org/copyright">OpenStreetMap</Link>'
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
             <MapController selectedLoc={selectedLoc} />
