@@ -66,7 +66,7 @@ export default function Hero() {
           <p className="text-base sm:text-lg text-slate-700 font-body leading-relaxed max-w-lg">
             {t(
               "hero.description",
-              "Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi."
+              "Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi.",
             )}
           </p>
 
@@ -81,7 +81,7 @@ export default function Hero() {
 
             <a
               href="#smart-rvm"
-              className="bg-white/80 backdrop-blur-sm border border-slate-300 hover:border-2 hover:border-eco-secondary text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center lg:bg-transparent"
+              className="bg-white/80 backdrop-blur-sm border border-slate-300 hover:border-2 hover:border-eco-cyan text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center lg:bg-transparent"
             >
               {t("hero.learnMore", "Pelajari lebih lanjut")}
             </a>

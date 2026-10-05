@@ -53,7 +53,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
 
   // 2. Inisialisasi state dengan data props atau data statis lokal
   const [activeFlowData, setActiveFlowData] = useState(
-    initialBotFlowData || localTree
+    initialBotFlowData || localTree,
   );
 
   const buildInitialBotState = (data) => {
@@ -64,14 +64,16 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
       {
         id: Date.now(),
         sender: "bot",
-        text: rootNode?.message || t("bot.defaultMessage", "Halo! Ada yang bisa kami bantu?"),
+        text:
+          rootNode?.message ||
+          t("bot.defaultMessage", "Halo! Ada yang bisa kami bantu?"),
         options: rootNode?.options || [],
       },
     ];
   };
 
   const [chatHistory, setChatHistory] = useState(() =>
-    buildInitialBotState(initialBotFlowData || localTree)
+    buildInitialBotState(initialBotFlowData || localTree),
   );
 
   const scrollToBottom = () => {
@@ -103,14 +105,19 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
         const result = await response.json();
 
-        if (isMounted && result.success && result.data && Object.keys(result.data).length > 0) {
+        if (
+          isMounted &&
+          result.success &&
+          result.data &&
+          Object.keys(result.data).length > 0
+        ) {
           setActiveFlowData(result.data);
           setChatHistory(buildInitialBotState(result.data));
         }
       } catch (err) {
         console.warn(
           "[BotAssistant] Backend offline/error, menggunakan static tree lokal:",
-          err.message
+          err.message,
         );
       }
     };
@@ -130,7 +137,10 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
       {
         id: Date.now(),
         sender: "bot",
-        text: t("bot.resetNotice", "Sesi obrolan diulang. Apa yang ingin Anda eksplorasi?"),
+        text: t(
+          "bot.resetNotice",
+          "Sesi obrolan diulang. Apa yang ingin Anda eksplorasi?",
+        ),
         options: rootNode?.options || [],
       },
     ]);
@@ -234,7 +244,9 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         {
           id: Date.now() + 1,
           sender: "bot",
-          text: rootNode?.message || t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
+          text:
+            rootNode?.message ||
+            t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
           options: rootNode?.options || [],
         },
       ]);
@@ -249,7 +261,11 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
           <div className="bg-white border-b border-slate-100 p-4 flex items-center justify-between shadow-sm z-10">
             <div className="flex items-center gap-3">
               <div className="w-8 h-8 bg-eco-cyan/10 rounded-full flex items-center justify-center text-eco-cyan shrink-0">
-                <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <svg
+                  className="w-4 h-4"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
                   <path d="M12 2C6.48 2 2 6.48 2 12c0 1.72.44 3.34 1.2 4.78L2 22l5.36-1.12C8.78 21.6 10.34 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm0 18c-1.46 0-2.86-.34-4.12-.96l-.3-.14-3.08.64.66-2.96-.16-.3C4.34 14.92 4 13.5 4 12c0-4.42 3.58-8 8-8s8 3.58 8 8-3.58 8-8 8z" />
                 </svg>
               </div>
@@ -269,8 +285,18 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
                 title={t("bot.restartChat", "Mulai Ulang Obrolan")}
                 className="text-slate-400 hover:text-eco-cyan transition-colors p-1.5 cursor-pointer rounded-lg hover:bg-slate-50"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                  />
                 </svg>
               </button>
 
@@ -278,8 +304,18 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
                 onClick={() => setIsChatOpen(false)}
                 className="text-slate-400 hover:text-slate-600 transition-colors p-1.5 cursor-pointer rounded-lg hover:bg-slate-50"
               >
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
                 </svg>
               </button>
             </div>
@@ -347,14 +383,24 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         className="w-14 h-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all transform hover:scale-105 bg-eco-cyan text-white hover:bg-eco-cyan/90"
       >
         {isChatOpen ? (
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="M6 18L18 6M6 6l12 12"
+            />
           </svg>
         ) : (
           <img
-            src="img/cs.png"
+            src="img/cs-new.png"
             alt="CS EcoCash"
-            className="w-10 h-auto cursor-pointer"
+            className="w-9 h-auto cursor-pointer"
             onError={(e) => {
               e.target.style.display = "none";
               e.target.parentElement.innerHTML =

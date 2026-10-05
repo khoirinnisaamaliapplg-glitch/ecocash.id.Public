@@ -21,7 +21,7 @@ export default function Footer() {
             <p className="text-slate-600 text-sm leading-relaxed font-body pr-4">
               {t(
                 "footer.about",
-                "EcoCash: Solusi Modern untuk Pengelolaan Sampah yang Transparan, Berkelanjutan, dan Bernilai Ekonomi."
+                "EcoCash: Solusi Modern untuk Pengelolaan Sampah yang Transparan, Berkelanjutan, dan Bernilai Ekonomi.",
               )}
             </p>
           </div>
@@ -120,10 +120,12 @@ export default function Footer() {
               </h4>
               <ul className="space-y-2 text-sm font-body text-slate-600">
                 <li>
-                  <strong className="text-slate-600">WA:</strong> +62 812-1416-1614
+                  <strong className="text-slate-600">WA:</strong> +62
+                  812-1416-1614
                 </li>
                 <li>
-                  <strong className="text-slate-600">Email:</strong> info@edvolution-technology.com
+                  <strong className="text-slate-600">Email:</strong>{" "}
+                  edvolution-tecnologi@gmail.com
                 </li>
               </ul>
             </div>
@@ -200,8 +202,15 @@ export default function Footer() {
 
         {/* Baris Hak Cipta */}
         <div className="text-slate-400 flex flex-col sm:flex-row justify-between items-center pt-4 mt-4 border-t border-slate-300 gap-2 text-xs lg:text-sm">
-          <p>{t("footer.copyright", "© 2026 PT Ideas Edvolution Technology.")}</p>
-          <p>{t("footer.allRightsReserved", "Hak Cipta Dilindungi Undang-Undang.")}</p>
+          <p>
+            {t("footer.copyright", "© 2026 PT Ideas Edvolution Technology.")}
+          </p>
+          <p>
+            {t(
+              "footer.allRightsReserved",
+              "Hak Cipta Dilindungi Undang-Undang.",
+            )}
+          </p>
         </div>
       </div>
     </footer>
