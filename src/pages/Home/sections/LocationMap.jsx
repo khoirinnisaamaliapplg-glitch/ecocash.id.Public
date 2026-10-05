@@ -55,7 +55,7 @@ export default function LocationMap() {
           import.meta.env.VITE_API_URL_LOCAL ||
           import.meta.env.VITE_API_BASE_URL ||
           import.meta.env.VITE_API_URL ||
-          "http://localhost:3000/api/v1";
+          "https://api.ecocash.id/api/v1";
 
         const response = await fetch(`${apiUrl}/machines/public?lang=${currentLang}`, {
           signal: abortController.signal,

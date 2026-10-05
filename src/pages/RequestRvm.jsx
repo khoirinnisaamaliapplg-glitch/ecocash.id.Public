@@ -26,7 +26,7 @@ export default function CustomRequestForm() {
   const apiUrl =
     import.meta.env.VITE_API_BASE_URL ||
     import.meta.env.VITE_API_URL ||
-    "http://localhost:3000/api/v1";
+    "https://api.ecocash.id/api/v1";
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -34,7 +34,7 @@ export default function CustomRequestForm() {
     const fetchBotTree = async () => {
       try {
         const apiUrl =
-          import.meta.env.VITE_API_URL_LOCAL || "http://localhost:3000/api/v1";
+          import.meta.env.VITE_API_URL_LOCAL || "https://api.ecocash.id/api/v1";
 
         const response = await fetch(`${apiUrl}/bot/tree`);
         if (!response.ok) throw new Error("Gagal mengambil data bot");

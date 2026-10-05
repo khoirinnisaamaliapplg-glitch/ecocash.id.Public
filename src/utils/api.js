@@ -1,7 +1,7 @@
 // src/utils/api.js
 import i18n from "./i18n";
 
-const BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api/v1";
+const BASE_URL = import.meta.env.VITE_API_BASE_URL || "https://api.ecocash.id/api/v1";
 
 export async function apiRequest(endpoint, options = {}) {
   // Ambil bahasa aktif dari i18next (default: 'id')

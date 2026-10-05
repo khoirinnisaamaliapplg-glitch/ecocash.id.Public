@@ -1,8 +1,28 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { newsList } from "../constants/dummyData";
+import { getLocalizedNewsList } from "../constants/dummyData";
 import BotAssistant from "../components/bot/BotAssistant";
+
+// Helper Parser URL Gambar Cloudinary
+const resolveImageUrl = (item) => {
+  if (!item) return "/img/hero-news.jpg";
+  const rawUrl =
+    item.imageUrl ||
+    item.secure_url ||
+    item.image ||
+    item.img ||
+    item.url;
+
+  if (typeof rawUrl === "string" && rawUrl.trim() !== "") {
+    if (rawUrl.startsWith("http://") || rawUrl.startsWith("https://") || rawUrl.startsWith("/")) {
+      return rawUrl;
+    }
+    return `https://res.cloudinary.com/demo/image/upload/${rawUrl}`;
+  }
+
+  return "/img/hero-news.jpg";
+};
 
 export default function AllNewsPage() {
   const { t, i18n } = useTranslation();
@@ -10,20 +30,24 @@ export default function AllNewsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 4;
 
-  const [articles, setArticles] = useState([]);
-  const [latestNews, setLatestNews] = useState([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(true);
-  const [botFlowData, setBotFlowData] = useState(null);
-
   const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
     .split("-")[0]
     .toLowerCase();
 
+  // Inisialisasi awal langsung dengan data dummy multibahasa
+  const initialData = useMemo(() => getLocalizedNewsList(currentLang), [currentLang]);
+
+  const [articles, setArticles] = useState(() => initialData.slice(0, itemsPerPage));
+  const [latestNews, setLatestNews] = useState(() => initialData.slice(0, 3));
+  const [totalPages, setTotalPages] = useState(() => Math.ceil(initialData.length / itemsPerPage) || 1);
+  const [loading, setLoading] = useState(false);
+  const [botFlowData, setBotFlowData] = useState(null);
+
   const apiUrl =
+    import.meta.env.VITE_API_URL_LOCAL ||
     import.meta.env.VITE_API_BASE_URL ||
     import.meta.env.VITE_API_URL ||
-    "http://localhost:3000/api/v1";
+    "https://api.ecocash.id/api/v1";
 
   // 1. Fetch Bot Assistant Flow Tree
   useEffect(() => {
@@ -31,10 +55,7 @@ export default function AllNewsPage() {
 
     const fetchBotTree = async () => {
       try {
-        const apiUrl =
-          import.meta.env.VITE_API_URL_LOCAL || "http://localhost:3000/api/v1";
-
-        const response = await fetch(`${apiUrl}/bot/tree`);
+        const response = await fetch(`${apiUrl}/bot/tree?lang=${currentLang}`);
         if (!response.ok) throw new Error("Gagal mengambil data bot");
         const result = await response.json();
         if (result.success && result.data) {
@@ -46,11 +67,30 @@ export default function AllNewsPage() {
     };
 
     fetchBotTree();
-  }, [apiUrl]);
+  }, [apiUrl, currentLang]);
 
   // 2. Fetch Artikel dari Backend dengan Dukungan Multibahasa & Search
   useEffect(() => {
     let isMounted = true;
+
+    const applyDummyFallback = () => {
+      const currentNewsData = getLocalizedNewsList(currentLang);
+      const searchLower = searchQuery.toLowerCase();
+      const filtered = currentNewsData.filter(
+        (news) =>
+          news.title.toLowerCase().includes(searchLower) ||
+          news.desc.toLowerCase().includes(searchLower) ||
+          (news.category && news.category.toLowerCase().includes(searchLower))
+      );
+
+      const calculatedTotalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
+      const indexOfLast = currentPage * itemsPerPage;
+      const indexOfFirst = indexOfLast - itemsPerPage;
+
+      setArticles(filtered.slice(indexOfFirst, indexOfLast));
+      setTotalPages(calculatedTotalPages);
+      setLatestNews(currentNewsData.slice(0, 3));
+    };
 
     const fetchAllNews = async () => {
       setLoading(true);
@@ -83,8 +123,8 @@ export default function AllNewsPage() {
               slug: item.slug,
               title: item.title,
               desc: item.excerpt || item.content?.substring(0, 140) + "...",
-              img: item.imageUrl || "/img/hero-news.jpg",
-              category: item.category || "Berita",
+              img: resolveImageUrl(item),
+              category: item.category || t("allNews.badgeLatest", "Berita"),
               date: item.createdAt
                 ? new Date(item.createdAt).toLocaleDateString(
                     currentLang === "en" ? "en-US" : currentLang === "zh" ? "zh-CN" : "id-ID",
@@ -95,11 +135,10 @@ export default function AllNewsPage() {
 
             setArticles(formatted);
             setTotalPages(meta.totalPages || Math.ceil(formatted.length / itemsPerPage) || 1);
-            if (currentPage === 1 && latestNews.length === 0) {
+            if (currentPage === 1) {
               setLatestNews(formatted.slice(0, 3));
             }
           } else if (searchQuery.trim() === "") {
-            // Fallback ke dummy data jika database kosong
             applyDummyFallback();
           } else {
             setArticles([]);
@@ -107,7 +146,7 @@ export default function AllNewsPage() {
           }
         }
       } catch (err) {
-        console.warn("[AllNewsPage] Backend error, fallback ke data lokal:", err.message);
+        console.warn("[AllNewsPage] Backend offline/gagal, beralih ke data fallback lokal:", err.message);
         if (isMounted) {
           applyDummyFallback();
         }
@@ -116,32 +155,13 @@ export default function AllNewsPage() {
       }
     };
 
-    const applyDummyFallback = () => {
-      const searchLower = searchQuery.toLowerCase();
-      const filtered = newsList.filter(
-        (news) =>
-          news.title.toLowerCase().includes(searchLower) ||
-          news.desc.toLowerCase().includes(searchLower) ||
-          news.category.toLowerCase().includes(searchLower)
-      );
-
-      const calculatedTotalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
-      const indexOfLast = currentPage * itemsPerPage;
-      const indexOfFirst = indexOfLast - itemsPerPage;
-
-      setArticles(filtered.slice(indexOfFirst, indexOfLast));
-      setTotalPages(calculatedTotalPages);
-      setLatestNews(newsList.slice(0, 3));
-    };
-
     fetchAllNews();
 
     return () => {
       isMounted = false;
     };
-  }, [apiUrl, currentLang, currentPage, searchQuery]);
+  }, [apiUrl, currentLang, currentPage, searchQuery, t]);
 
-  // Reset ke halaman 1 setiap kali query pencarian berubah
   const handleSearchChange = (e) => {
     setSearchQuery(e.target.value);
     setCurrentPage(1);
@@ -188,7 +208,7 @@ export default function AllNewsPage() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
           {/* LEFT COLUMN: BLOG GRID */}
           <div className="lg:col-span-2">
-            {loading ? (
+            {loading && articles.length === 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {[1, 2, 3, 4].map((i) => (
                   <div
@@ -239,11 +259,12 @@ export default function AllNewsPage() {
                     {/* Thumbnail & Badge */}
                     <div className="relative h-56 overflow-hidden bg-slate-100">
                       <img
-                        src={news.img}
+                        src={resolveImageUrl(news)}
                         alt={news.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                         onError={(e) => {
-                          e.target.src = "img/hero-news.jpg";
+                          e.target.onerror = null;
+                          e.target.src = "/img/hero-news.jpg";
                         }}
                       />
                       <div className="absolute top-4 right-4 bg-eco-cyan text-white text-[10px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full shadow-md">
@@ -366,12 +387,12 @@ export default function AllNewsPage() {
               <form className="space-y-3" onSubmit={(e) => e.preventDefault()}>
                 <input
                   type="text"
-                  placeholder="Nama Lengkap"
+                  placeholder={t("allNews.fullNamePlaceholder", "Nama Lengkap")}
                   className="w-full bg-white/10 border border-white/20 text-white placeholder-cyan-100 px-4 py-3 rounded-xl text-sm outline-none focus:bg-white/20 transition-colors"
                 />
                 <input
                   type="email"
-                  placeholder="Alamat Email"
+                  placeholder={t("allNews.emailPlaceholder", "Alamat Email")}
                   className="w-full bg-white border border-white/20 text-slate-800 placeholder-slate-400 px-4 py-3 rounded-xl text-sm outline-none"
                 />
                 <button className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold font-heading text-sm py-3.5 rounded-xl transition-colors mt-2">
@@ -386,17 +407,18 @@ export default function AllNewsPage() {
                 {t("allNews.latestPosts", "Postingan Terbaru")}
               </h3>
               <div className="space-y-5">
-                {(latestNews.length > 0 ? latestNews : newsList.slice(0, 3)).map((item) => (
+                {latestNews.map((item) => (
                   <Link
                     to={`/news/${item.slug || item.id}`}
                     key={item.id || item.slug}
                     className="flex gap-4 items-center group cursor-pointer"
                   >
                     <img
-                      src={item.img || item.imageUrl || "/img/hero-news.jpg"}
+                      src={resolveImageUrl(item)}
                       alt={item.title}
                       className="w-20 h-20 rounded-xl object-cover bg-slate-100 shrink-0"
                       onError={(e) => {
+                        e.target.onerror = null;
                         e.target.src = "/img/hero-news.jpg";
                       }}
                     />
@@ -427,13 +449,13 @@ export default function AllNewsPage() {
               />
               <div className="absolute inset-0 z-20 flex flex-col items-center justify-center text-center p-6">
                 <h3 className="text-white font-bold font-heading text-xl mb-2 leading-tight">
-                  Bergabung dengan Komunitas Hijau Kami!
+                  {t("allNews.bannerTitle", "Bergabung dengan Komunitas Hijau Kami!")}
                 </h3>
                 <p className="text-slate-200 text-xs mb-6">
-                  Mulai daur ulang dan dapatkan reward hari ini.
+                  {t("allNews.bannerDesc", "Mulai daur ulang dan dapatkan reward hari ini.")}
                 </p>
                 <button className="bg-white text-eco-cyan px-6 py-2.5 rounded-full text-sm font-bold font-heading shadow-lg hover:scale-105 transition-transform">
-                  Download App
+                  {t("allNews.bannerBtn", "Download App")}
                 </button>
               </div>
             </div>
