@@ -1,17 +1,41 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { newsList } from "../../../constants/dummyData";
+import { getLocalizedNewsList } from "../../../constants/dummyData";
+
+// Helper Parser URL Gambar Cloudinary & Eksternal
+const resolveImageUrl = (item) => {
+  if (!item) return "/img/hero-news.jpg";
+  const rawUrl =
+    item.imageUrl ||
+    item.secure_url ||
+    item.image ||
+    item.img ||
+    item.url;
+
+  if (typeof rawUrl === "string" && rawUrl.trim() !== "") {
+    // Menangani URL penuh Cloudinary (https://res.cloudinary.com/...) atau URL HTTP lainnya
+    if (rawUrl.startsWith("http://") || rawUrl.startsWith("https://") || rawUrl.startsWith("/")) {
+      return rawUrl;
+    }
+    // Jika backend hanya mengirim public_id Cloudinary
+    return `https://res.cloudinary.com/demo/image/upload/${rawUrl}`;
+  }
+
+  return "/img/hero-news.jpg";
+};
 
 export default function News() {
   const { t, i18n } = useTranslation();
-  const [articles, setArticles] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   // Deteksi bahasa aktif ('id', 'en', atau 'zh')
   const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
     .split("-")[0]
     .toLowerCase();
+
+  // Inisialisasi awal langsung dengan data dummy multibahasa
+  const [articles, setArticles] = useState(() => getLocalizedNewsList(currentLang));
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     let isMounted = true;
@@ -20,9 +44,10 @@ export default function News() {
       setLoading(true);
       try {
         const apiUrl =
+          import.meta.env.VITE_API_URL_LOCAL ||
           import.meta.env.VITE_API_BASE_URL ||
           import.meta.env.VITE_API_URL ||
-          "http://localhost:3000/api/v1";
+          "https://api.ecocash.id/api/v1";
 
         const response = await fetch(
           `${apiUrl}/news?lang=${currentLang}&contentType=NEWS&limit=6`
@@ -35,19 +60,17 @@ export default function News() {
         const result = await response.json();
 
         if (isMounted) {
-          // Tangani format respons backend: result.data.items atau result.data array
           const rawItems = Array.isArray(result.data)
             ? result.data
             : result.data?.items || [];
 
           if (rawItems.length > 0) {
-            // Normalisasi field database ke kontrak tampilan UI
             const normalized = rawItems.map((item) => ({
               id: item.id,
               slug: item.slug,
               title: item.title,
               desc: item.excerpt || item.content?.substring(0, 130) + "...",
-              img: item.imageUrl || "/img/hero-news.jpg",
+              img: resolveImageUrl(item),
               category: item.category || t("news.badgeLatest", "Terbaru"),
               date: item.createdAt
                 ? new Date(item.createdAt).toLocaleDateString(
@@ -58,7 +81,8 @@ export default function News() {
             }));
             setArticles(normalized);
           } else {
-            setArticles(newsList);
+            // Fallback jika API database kosong
+            setArticles(getLocalizedNewsList(currentLang));
           }
         }
       } catch (err) {
@@ -67,7 +91,8 @@ export default function News() {
           err.message
         );
         if (isMounted) {
-          setArticles(newsList);
+          // Fallback jika server down
+          setArticles(getLocalizedNewsList(currentLang));
         }
       } finally {
         if (isMounted) setLoading(false);
@@ -120,7 +145,7 @@ export default function News() {
       </div>
 
       {/* Grid Berita */}
-      {loading ? (
+      {loading && articles.length === 0 ? (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {[1, 2, 3].map((skeleton) => (
             <div
@@ -139,8 +164,7 @@ export default function News() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {articles.map((berita) => {
             const articleLink = `/news/${berita.slug || berita.id}`;
-            const displayImage =
-              berita.imageUrl || berita.img || "/img/hero-news.jpg";
+            const displayImage = resolveImageUrl(berita);
             const displayTitle = berita.title;
             const displayDesc = berita.excerpt || berita.desc;
             const displayCategory =
@@ -159,6 +183,8 @@ export default function News() {
                     alt={displayTitle}
                     className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700"
                     onError={(e) => {
+                      // Fallback otomatis jika link gambar Cloudinary rusak/kedaluwarsa
+                      e.target.onerror = null;
                       e.target.src = "/img/hero-news.jpg";
                     }}
                   />

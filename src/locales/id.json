@@ -750,5 +750,22 @@
     "anythingElse": "Ada hal lain yang bisa saya bantu?",
     "openingWa": "Membuka jendela WhatsApp...",
     "poweredBy": "Powered by EcoCash AI"
+  },
+  "allNews": {
+    "badge": "Pusat Informasi",
+    "heroTitle": "Berita & Artikel",
+    "heroDesc": "Ikuti perkembangan terbaru seputar inovasi pengelolaan sampah, inisiatif keberlanjutan, dan pencapaian ekosistem EcoCash.",
+    "notFoundTitle": "Berita Tidak Ditemukan",
+    "notFoundDesc": "Coba gunakan kata kunci pencarian yang berbeda.",
+    "searchPlaceholder": "Cari berita...",
+    "readMore": "Baca Selengkapnya",
+    "newsletterDesc": "Daftarkan email Anda untuk mendapatkan informasi pembaruan, berita, dan insight gratis dari EcoCash.",
+    "subscribeBtn": "Berlangganan",
+    "latestPosts": "Postingan Terbaru",
+    "fullNamePlaceholder": "Nama Lengkap",
+    "emailPlaceholder": "Alamat Email",
+    "bannerTitle": "Bergabung dengan Komunitas Hijau Kami!",
+    "bannerDesc": "Mulai daur ulang dan dapatkan reward hari ini.",
+    "bannerBtn": "Download App"
   }
 }

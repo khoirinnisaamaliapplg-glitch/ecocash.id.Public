@@ -1,17 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { FAQ_DATA } from "../../../constants/dummyData";
+import { getLocalizedFaqData } from "../../../constants/dummyData";
 
 export default function Faq() {
   const { t, i18n } = useTranslation();
-  const [faqs, setFaqs] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [activeFaq, setActiveFaq] = useState(1);
 
   // Deteksi bahasa aktif ('id', 'en', atau 'zh')
   const currentLang = (i18n.resolvedLanguage || i18n.language || "id")
     .split("-")[0]
     .toLowerCase();
+
+  // 1. Skema Aman (SWR): Inisialisasi awal langsung dengan data multi-bahasa sesuai bahasa aktif
+  const [faqs, setFaqs] = useState(() => getLocalizedFaqData(currentLang));
+  const [loading, setLoading] = useState(false);
+  const [activeFaq, setActiveFaq] = useState(1);
 
   const toggleFaq = (id) => {
     setActiveFaq(activeFaq === id ? null : id);
@@ -24,9 +26,10 @@ export default function Faq() {
       setLoading(true);
       try {
         const apiUrl =
+          import.meta.env.VITE_API_URL_LOCAL ||
           import.meta.env.VITE_API_BASE_URL ||
           import.meta.env.VITE_API_URL ||
-          "http://localhost:3000/api/v1";
+          "https://api.ecocash.id/api/v1";
 
         // Query FAQ publik dengan parameter ?lang=
         let response = await fetch(`${apiUrl}/faqs?lang=${currentLang}`);
@@ -41,7 +44,7 @@ export default function Faq() {
         const result = await response.json();
 
         if (isMounted) {
-          // Normalisasi respons backend (array langsung atau bersarang di items/data)
+          // Normalisasi respons backend
           const rawItems = Array.isArray(result.data)
             ? result.data
             : Array.isArray(result.data?.items)
@@ -58,20 +61,21 @@ export default function Faq() {
               category: item.category || "Umum",
             }));
             setFaqs(formatted);
-            // Buka FAQ pertama sebagai default jika ada data
             setActiveFaq(formatted[0].id);
           } else {
-            setFaqs(FAQ_DATA);
+            // Fallback multibahasa jika database server masih kosong
+            setFaqs(getLocalizedFaqData(currentLang));
             setActiveFaq(1);
           }
         }
       } catch (err) {
         console.warn(
-          "[Faq] Gagal menghubungi backend API, beralih ke data fallback lokal:",
+          "[Faq] Gagal menghubungi API server, beralih ke data fallback lokal:",
           err.message
         );
         if (isMounted) {
-          setFaqs(FAQ_DATA);
+          // Fallback multibahasa jika server offline/down
+          setFaqs(getLocalizedFaqData(currentLang));
           setActiveFaq(1);
         }
       } finally {
@@ -116,8 +120,7 @@ export default function Faq() {
 
         {/* Bagian Accordion Kanan */}
         <div className="space-y-4">
-          {loading ? (
-            // Skeleton Loader saat data sedang dimuat
+          {loading && faqs.length === 0 ? (
             [1, 2, 3, 4].map((i) => (
               <div
                 key={i}

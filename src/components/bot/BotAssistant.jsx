@@ -18,6 +18,27 @@ const handleNavigation = (url) => {
   window.location.href = url;
 };
 
+// Helper: Prioritaskan node "initial" sebagai entry point utama
+const getRootNode = (tree) => {
+  if (!tree || typeof tree !== "object") return null;
+  if (tree.initial) return tree.initial;
+  if (tree.main) return tree.main;
+  if (tree.root) return tree.root;
+
+  const keys = Object.keys(tree);
+  return keys.length > 0 ? tree[keys[0]] : null;
+};
+
+const getRootKey = (tree) => {
+  if (!tree || typeof tree !== "object") return "initial";
+  if ("initial" in tree) return "initial";
+  if ("main" in tree) return "main";
+  if ("root" in tree) return "root";
+
+  const keys = Object.keys(tree);
+  return keys.length > 0 ? keys[0] : "initial";
+};
+
 export default function BotAssistant({ botFlowData: initialBotFlowData }) {
   const { t, i18n } = useTranslation();
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -30,22 +51,21 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
   // 1. Fallback instan: Ambil data statis lokal sesuai bahasa aktif
   const localTree = STATIC_BOT_TREE[currentLang] || STATIC_BOT_TREE.id;
 
-  // 2. Inisialisasi state LANGSUNG dengan data lokal / props agar tidak pernah kosong sedetik pun
+  // 2. Inisialisasi state dengan data props atau data statis lokal
   const [activeFlowData, setActiveFlowData] = useState(
     initialBotFlowData || localTree
   );
 
   const buildInitialBotState = (data) => {
     const activeTree = data && Object.keys(data).length > 0 ? data : localTree;
-    const firstNodeKey = Object.keys(activeTree)[0];
-    const firstNode = activeTree[firstNodeKey];
+    const rootNode = getRootNode(activeTree);
 
     return [
       {
         id: Date.now(),
         sender: "bot",
-        text: firstNode?.message || t("bot.defaultMessage", "Halo! Ada yang bisa kami bantu?"),
-        options: firstNode?.options || [],
+        text: rootNode?.message || t("bot.defaultMessage", "Halo! Ada yang bisa kami bantu?"),
+        options: rootNode?.options || [],
       },
     ];
   };
@@ -62,7 +82,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
     scrollToBottom();
   }, [chatHistory, isChatOpen]);
 
-  // 3. Stale-While-Revalidate: Re-fetch ke Backend tanpa membuat UI blank jika BE down
+  // 3. Stale-While-Revalidate: Re-fetch ke Backend tanpa membuat UI blank jika BE offline
   useEffect(() => {
     let isMounted = true;
     const treeForLang = STATIC_BOT_TREE[currentLang] || STATIC_BOT_TREE.id;
@@ -74,9 +94,10 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
     const fetchLocalizedBotTree = async () => {
       try {
         const apiUrl =
+          import.meta.env.VITE_API_URL_LOCAL ||
           import.meta.env.VITE_API_BASE_URL ||
           import.meta.env.VITE_API_URL ||
-          "http://localhost:3000/api/v1";
+          "https://api.ecocash.id/api/v1";
 
         const response = await fetch(`${apiUrl}/bot/tree?lang=${currentLang}`);
         if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
@@ -87,7 +108,6 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
           setChatHistory(buildInitialBotState(result.data));
         }
       } catch (err) {
-        // Backend down / offline: tetap tenang, data lokal sudah aktif dan membungkus UI
         console.warn(
           "[BotAssistant] Backend offline/error, menggunakan static tree lokal:",
           err.message
@@ -104,15 +124,14 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
 
   const resetChat = () => {
     const currentTree = activeFlowData || localTree;
-    const firstNodeKey = Object.keys(currentTree)[0];
-    const firstNode = currentTree[firstNodeKey];
+    const rootNode = getRootNode(currentTree);
 
     setChatHistory([
       {
         id: Date.now(),
         sender: "bot",
         text: t("bot.resetNotice", "Sesi obrolan diulang. Apa yang ingin Anda eksplorasi?"),
-        options: firstNode?.options || [],
+        options: rootNode?.options || [],
       },
     ]);
   };
@@ -130,6 +149,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
     setChatHistory((prev) => [...prev, userMessage]);
 
     setTimeout(() => {
+      // Opsi Berupa Navigasi Tautan Halaman
       if (option.action === "LINK") {
         setChatHistory((prev) => [
           ...prev,
@@ -143,7 +163,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         setTimeout(() => handleNavigation(option.url), 800);
 
         setTimeout(() => {
-          const rootKey = Object.keys(currentTree)[0];
+          const rootNode = getRootNode(currentTree);
 
           setChatHistory((prev) => [
             ...prev,
@@ -151,7 +171,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
               id: Date.now() + 2,
               sender: "bot",
               text: t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
-              options: currentTree[rootKey]?.options || [],
+              options: rootNode?.options || [],
             },
           ]);
         }, 2200);
@@ -159,6 +179,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         return;
       }
 
+      // Opsi Berupa Bantuan CS WhatsApp
       if (option.action === "WHATSAPP") {
         setChatHistory((prev) => [
           ...prev,
@@ -174,7 +195,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         }, 800);
 
         setTimeout(() => {
-          const rootKey = Object.keys(currentTree)[0];
+          const rootNode = getRootNode(currentTree);
 
           setChatHistory((prev) => [
             ...prev,
@@ -182,7 +203,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
               id: Date.now() + 2,
               sender: "bot",
               text: t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
-              options: currentTree[rootKey]?.options || [],
+              options: rootNode?.options || [],
             },
           ]);
         }, 2200);
@@ -190,6 +211,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
         return;
       }
 
+      // Opsi Percabangan Berikutnya (Next Step)
       if (option.next && currentTree[option.next]) {
         const nextStep = currentTree[option.next];
 
@@ -202,7 +224,20 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
             options: nextStep.options,
           },
         ]);
+        return;
       }
+
+      // Fallback jika tombol tidak memiliki next maupun action (kembali ke root)
+      const rootNode = getRootNode(currentTree);
+      setChatHistory((prev) => [
+        ...prev,
+        {
+          id: Date.now() + 1,
+          sender: "bot",
+          text: rootNode?.message || t("bot.anythingElse", "Ada hal lain yang bisa saya bantu?"),
+          options: rootNode?.options || [],
+        },
+      ]);
     }, 400);
   };
 
@@ -323,7 +358,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
             onError={(e) => {
               e.target.style.display = "none";
               e.target.parentElement.innerHTML =
-                '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>';
+                '<svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>';
             }}
           />
         )}

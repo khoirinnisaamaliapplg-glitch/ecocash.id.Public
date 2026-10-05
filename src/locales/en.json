@@ -771,5 +771,22 @@
     "anythingElse": "Is there anything else I can help you with?",
     "openingWa": "Opening WhatsApp window...",
     "poweredBy": "Powered by EcoCash AI"
+  },
+  "allNews": {
+    "badge": "Information Center",
+    "heroTitle": "News & Articles",
+    "heroDesc": "Stay tuned with the latest updates on waste management innovations, sustainability initiatives, and EcoCash ecosystem milestones.",
+    "notFoundTitle": "No Articles Found",
+    "notFoundDesc": "Try searching with different keywords.",
+    "searchPlaceholder": "Search articles...",
+    "readMore": "Read More",
+    "newsletterDesc": "Subscribe your email to receive weekly updates, news, and circular insights from EcoCash.",
+    "subscribeBtn": "Subscribe",
+    "latestPosts": "Latest Posts",
+    "fullNamePlaceholder": "Full Name",
+    "emailPlaceholder": "Email Address",
+    "bannerTitle": "Join Our Green Community!",
+    "bannerDesc": "Start recycling and collect rewards today.",
+    "bannerBtn": "Download App"
   }
 }

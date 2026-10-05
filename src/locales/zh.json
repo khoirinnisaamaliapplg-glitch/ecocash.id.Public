@@ -772,5 +772,22 @@
     "anythingElse": "还有其他我可以协助您的吗？",
     "openingWa": "正在打开 WhatsApp 沟通窗口...",
     "poweredBy": "由 EcoCash AI 驱动"
+  },
+  "allNews": {
+    "badge": "资讯中枢",
+    "heroTitle": "新闻与深度资讯",
+    "heroDesc": "持续关注关于废弃物治理前沿创新、可持续生态倡议以及 EcoCash 体系的重要动态与成果。",
+    "notFoundTitle": "未找到匹配资讯",
+    "notFoundDesc": "请尝试更换其他关键词重新搜索。",
+    "searchPlaceholder": "搜索资讯...",
+    "readMore": "阅读全文",
+    "newsletterDesc": "订阅您的电子邮箱，定期接收 EcoCash 独家推送的行业动态与循环低碳趋势报告。",
+    "subscribeBtn": "立即订阅",
+    "latestPosts": "最新发布",
+    "fullNamePlaceholder": "真实姓名",
+    "emailPlaceholder": "电子邮箱",
+    "bannerTitle": "携手加入我们的绿色生态社区！",
+    "bannerDesc": "立即开启环保分类回收，赢取专属奖励。",
+    "bannerBtn": "下载应用"
   }
 }
