@@ -1,16 +1,20 @@
 import React, { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import BotAssistant from "../../../components/bot/BotAssistant";
 
 export default function Hero() {
+  const { t } = useTranslation();
   const [botFlowData, setBotFlowData] = useState(null);
 
   useEffect(() => {
     const fetchBotTree = async () => {
       try {
         const apiUrl =
-          import.meta.env.VITE_API_URL || "http://localhost:3000/api/v1";
+          import.meta.env.VITE_API_URL_LOCAL ||
+          import.meta.env.VITE_API_BASE_URL ||
+          import.meta.env.VITE_API_URL ||
+          "https://api.ecocash.id/api/v1";
         const response = await fetch(`${apiUrl}/bot/tree`);
-        console.log("API Response:", response); // Debugging: Periksa respons API
 
         if (!response.ok) throw new Error("Gagal mengambil data");
 
@@ -28,53 +32,64 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-sky-100/70 via-teal-50/50 to-white pt-16 lg:pt-24 pb-48 lg:pb-64">
-      <div className="absolute inset-0 z-0 pointer-events-none">
+    <section className="relative w-full overflow-hidden bg-white min-h-[85vh] lg:min-h-[90vh] flex items-center pt-24 pb-12 lg:pt-0 lg:pb-0">
+      {/* Background Ilustrasi: Di-scale & Digeser ke Bawah untuk Memotong Margin Putih Bawaan Gambar */}
+      <div className="absolute inset-0 w-full h-full z-0 pointer-events-none overflow-hidden">
         <img
-          src={"img/br.jpeg"}
+          src={"img/br2.jpeg"}
           alt="Ilustrasi Lanskap EcoCash Bandung"
-          className="w-full h-full object-cover object-bottom opacity-70"
+          className="w-full h-[125%] lg:h-[132%] -bottom-[10%] lg:-bottom-[12%] absolute left-0 object-cover object-bottom opacity-100 lg:opacity-95"
           onError={(e) => {
-            e.target.style.display = "none";
+            if (!e.target.dataset.tried) {
+              e.target.dataset.tried = "true";
+              e.target.src = "img/br2.jpeg";
+            } else {
+              e.target.style.display = "none";
+            }
           }}
         />
+
+        {/* Gradient Overlay untuk Menjaga Keterbacaan Teks */}
+        <div className="absolute inset-0 bg-gradient-to-b from-white/90 via-white/30 to-transparent lg:hidden"></div>
+        <div className="hidden lg:block absolute inset-0 bg-gradient-to-r from-white/95 via-white/50 to-transparent"></div>
       </div>
 
-      {/* Konten Teks & Tombol CTA Utama (Desain Tidak Diubah Sama Sekali) */}
-      <div className="max-w-7xl mx-auto px-6 pt-4 lg:px-10 relative z-20">
-        <div className="max-w-3xl space-y-6 text-left">
+      {/* Konten Teks, CTA, Rating & Logo (Terkunci Rapi di Sisi Kiri) */}
+      <div className="w-full max-w-7xl mx-auto px-6 lg:px-10 relative z-20">
+        <div className="max-w-xl space-y-4 sm:space-y-5 text-left mr-auto">
           {/* Judul Utama */}
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-eco-primary to-eco-cyan tracking-tight font-heading leading-[1.15]">
-            Ubah Sampah Jadi Uang
+            {t("hero.title", "Ubah Sampah Jadi Uang")}
           </h1>
 
           {/* Deskripsi Singkat */}
-          <p className="text-base sm:text-lg text-slate-700 font-body max-w-xl leading-relaxed">
-            Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular
-            untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi.
+          <p className="text-base sm:text-lg text-slate-700 font-body leading-relaxed max-w-lg">
+            {t(
+              "hero.description",
+              "Platform pengelolaan sampah berbasis AI, IoT, dan ekonomi sirkular untuk menciptakan lingkungan yang lebih bersih dan bernilai ekonomi."
+            )}
           </p>
 
-          {/* Tombol Aksi (CTA) - Solid Style */}
-          <div className="flex flex-wrap items-center gap-4 pt-4">
+          {/* Tombol CTA */}
+          <div className="flex flex-wrap items-center justify-start gap-4 pt-2">
             <a
               href="#location-map"
               className="bg-eco-cyan hover:bg-eco-cyan/70 text-white px-7 py-3.5 rounded-xl font-heading font-bold text-sm shadow-lg shadow-eco-cyan/25 transition-all transform hover:-translate-y-0.5 flex items-center justify-center"
             >
-              Mulai Sekarang
+              {t("hero.startNow", "Mulai Sekarang")}
             </a>
 
-            {/* Tombol Pelajari Lebih Lanjut */}
             <a
               href="#smart-rvm"
-              className="bg-white border border-slate-300 hover:border-2 hover:border-eco-secondary text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center"
+              className="bg-white/80 backdrop-blur-sm border border-slate-300 hover:border-2 hover:border-eco-secondary text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center lg:bg-transparent"
             >
-              Pelajari lebih lanjut
+              {t("hero.learnMore", "Pelajari lebih lanjut")}
             </a>
           </div>
 
-          {/* Rating Bintang 5 & Logo Mitra / Trust Badges */}
-          <div className="pt-6 space-y-3">
-            <div className="flex items-center gap-1 text-amber-400 text-lg">
+          {/* Rating Bintang & Logo Mitra (Pas Bersandar di Atas Bukit Hijau) */}
+          <div className="pt-3 sm:pt-4 space-y-2 flex flex-col items-start">
+            <div className="flex items-center justify-start gap-1 text-amber-400 text-base">
               <span>★</span>
               <span>★</span>
               <span>★</span>
@@ -82,11 +97,11 @@ export default function Hero() {
               <span>★</span>
             </div>
 
-            <div className="flex flex-wrap items-center gap-6 pt-2 opacity-90">
+            <div className="flex items-center justify-start pt-1 opacity-90">
               <img
                 src={"img/logo-ecocash-2.png"}
                 alt="Logo Mitra"
-                className="h-8"
+                className="h-7 sm:h-8 object-contain"
               />
             </div>
           </div>
