@@ -380,7 +380,9 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
       {/* Floating Action Button */}
       <button
         onClick={() => setIsChatOpen(!isChatOpen)}
-        className="w-14 h-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all transform hover:scale-105 bg-eco-cyan text-white hover:bg-eco-cyan/90"
+        className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center cursor-pointer transition-all transform hover:scale-105  text-white ${
+          isChatOpen && "bg-eco-cyan/90 hover:bg-eco-cyan"
+        }`}
       >
         {isChatOpen ? (
           <svg
@@ -400,7 +402,7 @@ export default function BotAssistant({ botFlowData: initialBotFlowData }) {
           <img
             src="img/cs-new.png"
             alt="CS EcoCash"
-            className="w-9 h-auto cursor-pointer"
+            className="w-31 h-auto cursor-pointer"
             onError={(e) => {
               e.target.style.display = "none";
               e.target.parentElement.innerHTML =
