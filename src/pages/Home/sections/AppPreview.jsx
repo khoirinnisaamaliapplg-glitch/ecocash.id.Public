@@ -30,21 +30,20 @@ export default function AppPreview() {
               </div>
 
               <h2 className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-slate-900 leading-[1.2] font-heading">
-                {t("appPreview.title", "Kelola Sampah Lebih Mudah")} <br />{" "}
+                {t("appPreview.title", "Kelola Sampah Lebih Mudah")}{" "}
                 {t("appPreview.titleSuffix", "dengan EcoCash App")}
-
               </h2>
 
               <p className="text-lg text-slate-600 leading-relaxed font-body">
                 {t(
                   "appPreview.desc1",
-                  "Aplikasi EcoCash membantu pengguna mengelola sampah secara lebih praktis, modern, dan terintegrasi langsung dari smartphone. Mulai dari verifikasi penjemputan, hingga pengumpulan reward digital."
+                  "Aplikasi EcoCash membantu pengguna mengelola sampah secara lebih praktis, modern, dan terintegrasi langsung dari smartphone. Mulai dari verifikasi penjemputan, hingga pengumpulan reward digital.",
                 )}
               </p>
               <p className="text-lg text-slate-600 leading-relaxed font-body">
                 {t(
                   "appPreview.desc2",
-                  "Dengan teknologi AI dan IoT, EcoCash memberikan pengalaman pengelolaan sampah yang lebih cepat, transparan, dan efisien untuk mendukung ekonomi sirkular di Indonesia."
+                  "Dengan teknologi AI dan IoT, EcoCash memberikan pengalaman pengelolaan sampah yang lebih cepat, transparan, dan efisien untuk mendukung ekonomi sirkular di Indonesia.",
                 )}
               </p>
 

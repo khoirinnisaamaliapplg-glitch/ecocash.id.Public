@@ -80,10 +80,25 @@ export default function Hero() {
             </a>
 
             <a
-              href="#smart-rvm"
-              className="bg-white/80 backdrop-blur-sm border border-slate-300 hover:border-2 hover:border-eco-cyan text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center lg:bg-transparent"
+              href="https://ecocash.id/brosur_ecocash.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-white/80 backdrop-blur-sm border border-slate-300 hover:border-2 hover:border-eco-cyan text-slate-700 hover:text-eco-cyan px-7 py-3.5 rounded-xl font-heading font-semibold text-sm shadow-sm transition-all flex items-center justify-center lg:bg-transparent gap-0.5 group"
             >
-              {t("hero.learnMore", "Pelajari lebih lanjut")}
+              <svg
+                className="w-5 h-5 text-slate-700 group-hover:text-eco-cyan transition-colors"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                />
+              </svg>
+              {t("hero.brochure", "Lihat Brosur EcoCash")}
             </a>
           </div>
 
