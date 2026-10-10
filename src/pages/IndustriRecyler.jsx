@@ -86,7 +86,7 @@ export default function IndustriRecyler() {
             </p>
 
             <Link
-              to="/partnership"
+              to="/daftar-kemitraan"
               className="inline-flex items-center gap-3 bg-eco-cyan hover:bg-[#1eb5b1] text-white px-8 py-4 rounded-xl font-heading font-bold text-[15px] transition-all transform hover:-translate-y-0.5 shadow-lg shadow-eco-cyan/30"
             >
               {t("industriRecycler.heroBtn", "Bermitra Sebagai Recycler")}

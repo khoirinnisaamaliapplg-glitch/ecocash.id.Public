@@ -38,25 +38,25 @@ export const NAV_ITEMS = [
         key: "cooperatives",
         label: "Koperasi & ESG",
         text: "Solusi keberlanjutan untuk perusahaan",
-        url: "/cooperatives-esg",
+        url: "/solusi-perusahaan",
       },
       {
         key: "schools",
         label: "Sekolah & Kampus",
         text: "Edukasi daur ulang di lingkungan pendidikan",
-        url: "/schools-universities",
+        url: "/solusi-kampus",
       },
       {
         key: "retail",
         label: "Ritel & Mall",
         text: "Integrasi RVM di pusat perbelanjaan",
-        url: "/retail-malls",
+        url: "/solusi-retail",
       },
       {
         key: "government",
         label: "Pemerintahan",
         text: "Pengelolaan sampah di lingkungan daerah",
-        url: "/government",
+        url: "/solusi-pemerintah",
       },
     ],
   },
@@ -116,7 +116,7 @@ export const NAV_ITEMS = [
         key: "partnership",
         label: "Daftar Kemitraan",
         text: "Informasi pendaftaran partner baru",
-        url: "/partnership",
+        url: "/daftar-kemitraan",
       },
     ],
   },
@@ -399,7 +399,8 @@ export const ARTICLES_I18N = {
     },
     {
       id: 5,
-      title: "Menghitung Jejak Karbon Pribadi dengan Fitur Terbaru Aplikasi Kami",
+      title:
+        "Menghitung Jejak Karbon Pribadi dengan Fitur Terbaru Aplikasi Kami",
       category: "Inovasi Sirkular",
       time: "5 min read",
       img: "/img/akademi-5.jpg",
@@ -450,7 +451,8 @@ export const ARTICLES_I18N = {
     },
     {
       id: 6,
-      title: "From Independent Collector to Industrial Supplier: Anton's Journey",
+      title:
+        "From Independent Collector to Industrial Supplier: Anton's Journey",
       category: "Partner Stories",
       time: "8 min read",
       img: "/img/akademi-6.jpg",

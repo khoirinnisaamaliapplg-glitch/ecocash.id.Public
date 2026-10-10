@@ -41,7 +41,7 @@ export default function App() {
 
             {/* Partner Pages List */}
             {/* Daftar Kemitraan Page */}
-            <Route path="/partnership" element={<DaftarKemitraan />} />
+            <Route path="/daftar-kemitraan" element={<DaftarKemitraan />} />
             {/* Industries Detail Page */}
             <Route path="/industries" element={<IndustriRecyler />} />
             {/* Bank Sampah Detail Page */}
@@ -61,16 +61,19 @@ export default function App() {
 
             {/* Solution menu list */}
             {/* Government Solution Page */}
-            <Route path="/government" element={<GovernmentSolution />} />
+            <Route path="/solusi-pemerintah" element={<GovernmentSolution />} />
             {/* University/School Solution Page */}
             <Route
-              path="/schools-universities"
+              path="/solusi-kampus"
               element={<UniversitySchoolSolution />}
             />
             {/* Retail/Mall Solution Page */}
-            <Route path="/retail-malls" element={<RetailMallSolution />} />
+            <Route path="/solusi-retail" element={<RetailMallSolution />} />
             {/* Corporation Solution Page */}
-            <Route path="/cooperatives-esg" element={<CorporationSolution />} />
+            <Route
+              path="/solusi-perusahaan"
+              element={<CorporationSolution />}
+            />
 
             {/* Cara Kerja menu list */}
             {/* Untuk Pengguna */}
