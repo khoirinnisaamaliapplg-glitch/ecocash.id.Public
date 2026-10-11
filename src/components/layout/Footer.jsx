@@ -125,7 +125,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <strong className="text-slate-600">Email:</strong>{" "}
-                  edvolution-tecnologi@gmail.com
+                  info@ecocash.id
                 </li>
               </ul>
             </div>
@@ -170,9 +170,14 @@ export default function Footer() {
                 />
               </a>
             </div>
-            <p className="font-semibold text-eco-cyan font-heading mb-1">
+            <a
+              href="https://edvolution-technology.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-semibold text-eco-cyan font-heading mb-1"
+            >
               PT Ideas Edvolution Technology
-            </p>
+            </a>
             <p>
               Bandung, Bumi Panyawangan, Jl. Garcinia Indah III No. 13,
               <br />
