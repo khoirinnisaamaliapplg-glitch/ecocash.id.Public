@@ -53,7 +53,9 @@ export default function AppPreview() {
                 </p>
                 <div className="flex space-x-4">
                   <a
-                    href="#download"
+                    href="https://github.com/ideasedvolutiontechnology-cell/ecocash-download/releases/download/v1.0.0/app-release.apk"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="transition-transform duration-300 hover:scale-105 hover:shadow-lg hover:shadow-teal-500/20 rounded-2xl inline-block"
                   >
                     <img
