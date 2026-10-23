@@ -184,7 +184,7 @@ export default function Footer() {
               Kec. Cileunyi, Jawa Barat 40393
             </p>
             <div className="mt-2 text-eco-cyan font-mono text-xs">
-              <span className="text-slate-400 font-sans">BSI:</span> 7234567890
+              <span className="text-slate-400 font-sans">BSI:</span> 7358469102
               (A.N. PT Ideas Edvolution Technology)
             </div>
           </div>
